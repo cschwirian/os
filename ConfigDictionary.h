@@ -13,9 +13,9 @@
 #ifndef ConfigDictionary_H
 #define ConfigDictionary_H
 
-#include "StandardFunctions.h"
+#include "Utilities.h"
 
-struct ConfigDictionary
+typdef struct ConfigDictionary
 {
     int versionNumber;
     char filePath[ 30 ];
@@ -37,6 +37,5 @@ enum MESSAGE_CODES
 };
 
 int getConfigFromFile( struct ConfigDictionary **configData, char *filename );
-void copyString( char *target, char *original );
 
 #endif

@@ -16,7 +16,7 @@
 #ifndef MetaDataLinkedList_H
 #define MetaDataLinkedList_H
 
-#include "StandardFunctions.h"
+#include "Utilities.h"
 
 // global constants, forward declaration
 
@@ -40,6 +40,5 @@ enum MESSAGE_CODES
 struct Node *addNode( struct Node *headNode, struct Node *newNode );
 struct Node *clearList( struct Node *headNode );
 struct Node *makeNode( char inCommandLetter, char *inOperation, int inCommandValue );
-void copyString( char *target, char *original );
 
 #endif

@@ -84,17 +84,4 @@ struct Node *findNodeByData( struct Node *workingNode, char *data )
     return NULL;
 }
 
-void copyString( char *target, char *original )
-{
-    int stringIndex = 0;
-
-    while( stringIndex <= sizeof( original ) )
-    {
-        target[ stringIndex ] = original[ stringIndex ];
-
-        stringIndex++;
-    }
-
-}
-
 #endif
