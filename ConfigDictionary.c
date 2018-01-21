@@ -15,4 +15,30 @@
 
 #include "ConfigDictionary.h"
 
+ConfigDictionary makeDictionary(
+                                    ConfigDictionary *config,
+                                    int versionNumber,
+                                    char *filePath,
+                                    char *schedulingCode,
+                                    int quantumTime,
+                                    int memoryAvailible,
+                                    int processorCycleTime,
+                                    int ioCyleTime,
+                                    char *logInstruction,
+                                    char *logFilePath
+                                )
+{
+
+}
+
+ConfigDictionary clearDictionary( ConfigDictionary *config )
+{
+
+}
+
+int getConfigFromFile( ConfigDictionary **configData, char *fileName )
+{
+
+}
+
 #endif

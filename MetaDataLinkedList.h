@@ -21,13 +21,13 @@
 // global constants, forward declaration
 
 // struct declaration
-struct Node
+typedef struct MetaDataNode
 {
     char commandLetter;
     char operation[ 10 ];
     int commandValue;
-    struct Node *next;
-};
+    MetaDataNode *next;
+} MetaDataNode;
 
 enum MESSAGE_CODES
 {
@@ -37,8 +37,9 @@ enum MESSAGE_CODES
 };
 
 // function prototypes
-struct Node *addNode( struct Node *headNode, struct Node *newNode );
-struct Node *clearList( struct Node *headNode );
-struct Node *makeNode( char inCommandLetter, char *inOperation, int inCommandValue );
+MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode );
+MetaDataNode *clearList( MetaDataNode *headNode );
+MetaDataNode *makeNode( char inCmdLetter, char *inOperation, int inCmdValue );
+int getMetaDataFromFile( MetaDataNode **headNode, char *fileName);
 
 #endif

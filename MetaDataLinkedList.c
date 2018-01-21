@@ -22,7 +22,7 @@
 // supporting function implementations
 
 
-struct Node *addNode( struct Node *headNode, struct Node *newNode )
+MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode )
 {
     if( headNode != NULL )
     {
@@ -37,19 +37,19 @@ struct Node *addNode( struct Node *headNode, struct Node *newNode )
 }
 
 // function eliminates redundant code in addNode
-struct Node *makeNode( char inCommandLetter, char *inOperation, int inCommandValue )
+MetaDataNode *makeNode( char inCmdLetter, char *inOperation, int inCmdValue )
 {
-    struct Node *newNode = ( struct Node * ) malloc( sizeof( struct Node ) );
+    MetaDataNode *newNode = ( MetaDataNode * ) malloc( sizeof( MetaDataNode ) );
 
-    newNode->commandLetter = inCommandLetter;
+    newNode->commandLetter = inCmdLetter;
     copyString( newNode->operation, inOperation );
-    newNode->commandValue = inCommandValue;
+    newNode->commandValue = inCmdValue;
     newNode->next = NULL;
 
     return newNode;
 }
 
-struct Node *clearList( struct NodeType *headNode )
+MetaDataNode *clearList( MetaDataNode *headNode )
 {
     if( headNode == NULL )
     {
@@ -67,21 +67,9 @@ struct Node *clearList( struct NodeType *headNode )
     return headNode;
 }
 
-// returned node memory is not freed inside linked list
-// it must be freed in calling function
-struct Node *findNodeByData( struct Node *workingNode, char *data )
+int getMetaDataFromFile( MetaDataNode **headNode, char *fileName)
 {
-    if( workingNode != NULL )
-    {
-        if( strcmp( workingNode->data, data ) == 0 )
-        {
-            return makeNode( workingNode->data );
-        }
-
-        return findNodeByName( workingNode->next, data );
-    }
-
-    return NULL;
+    
 }
 
 #endif

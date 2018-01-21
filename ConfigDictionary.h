@@ -26,7 +26,7 @@ typdef struct ConfigDictionary
     int ioCyleTime;
     char logInstruction[ 7 ];
     char logFilePath[ 30 ];
-};
+} ConfigDictionary;
 
 // Message codes for file access
 enum MESSAGE_CODES
@@ -36,6 +36,20 @@ enum MESSAGE_CODES
     END_FILE_FOUND_MSG
 };
 
-int getConfigFromFile( struct ConfigDictionary **configData, char *filename );
+ConfigDictionary makeDictionary(
+                                    ConfigDictionary *config,
+                                    int versionNumber,
+                                    char *filePath,
+                                    char *schedulingCode,
+                                    int quantumTime,
+                                    int memoryAvailible,
+                                    int processorCycleTime,
+                                    int ioCyleTime,
+                                    char *logInstruction,
+                                    char *logFilePath
+                                );
+
+ConfigDictionary clearDictionary( ConfigDictionary *config );
+int getConfigFromFile( ConfigDictionary **configData, char *fileName );
 
 #endif
