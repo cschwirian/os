@@ -15,6 +15,11 @@
 
 #include "Utilities.h"
 
+const char READ_ONLY_FLAG[] = "r";
+const char NULL_CHAR = '\0';
+const char SEMICOLON = ';';
+const char SPACE = ' ';
+
 void copyString( char *target, char *original )
 {
     int stringIndex = 0;

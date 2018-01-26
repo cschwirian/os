@@ -16,7 +16,6 @@
 #define MetaDataLinkedList_C
 
 // header files
-
 #include "MetaDataLinkedList.h"
 
 // supporting function implementations
@@ -69,7 +68,11 @@ MetaDataNode *clearList( MetaDataNode *headNode )
 
 int getMetaDataFromFile( MetaDataNode **headNode, char *fileName)
 {
-    
+    File filePointer;
+    int strIndex, charAsInt;
+    char tempChar, stringBuffer[  ];
+    Boolean inProgress = TRUE;
+    MetaDataNode *tempNode = ( MetaDataNode *)malloc( sizeof( MetaDataNode ) );
 }
 
 #endif

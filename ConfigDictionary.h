@@ -37,16 +37,15 @@ enum MESSAGE_CODES
 };
 
 ConfigDictionary makeDictionary(
-                                    ConfigDictionary *config,
-                                    int versionNumber,
-                                    char *filePath,
-                                    char *schedulingCode,
-                                    int quantumTime,
-                                    int memoryAvailible,
-                                    int processorCycleTime,
-                                    int ioCyleTime,
-                                    char *logInstruction,
-                                    char *logFilePath
+                                    int inVersionNumber,
+                                    char *inFilePath,
+                                    char *inSchedulingCode,
+                                    int inQuantumTime,
+                                    int inMemoryAvailible,
+                                    int inProcessorCycleTime,
+                                    int inIOCyleTime,
+                                    char *inLogInstruction,
+                                    char *inLogFilePath
                                 );
 
 ConfigDictionary clearDictionary( ConfigDictionary *config );

@@ -16,29 +16,46 @@
 #include "ConfigDictionary.h"
 
 ConfigDictionary makeDictionary(
-                                    ConfigDictionary *config,
-                                    int versionNumber,
-                                    char *filePath,
-                                    char *schedulingCode,
-                                    int quantumTime,
-                                    int memoryAvailible,
-                                    int processorCycleTime,
-                                    int ioCyleTime,
-                                    char *logInstruction,
-                                    char *logFilePath
+                                    int inVersionNumber,
+                                    char *inFilePath,
+                                    char *inSchedulingCode,
+                                    int inQuantumTime,
+                                    int inMemoryAvailible,
+                                    int inProcessorCycleTime,
+                                    int inIOCyleTime,
+                                    char *inLogInstruction,
+                                    char *inLogFilePath
                                 )
 {
+    ConfigDictionary config = malloc( sizeof( ConfigDictionary * ) );
 
+    config->versionNumber = inVersionNumber;
+    config->filePath = inFilePath;
+    config->schedulingCode = inSchedulingCode;
+    config->quantumTime = inQuantumTime;
+    config->memoryAvailible = inMemoryAvailible;
+    config->processorCycleTime = inProcessorCycleTime;
+    config->ioCyleTime = inIOCyleTime;
+    config->logInstruction = inLogInstruction;
+    config->logFilePath = inLogFilePath;
+
+    return config;
 }
 
 ConfigDictionary clearDictionary( ConfigDictionary *config )
 {
+    free( config );
+    config = NULL;
 
+    return config;
 }
 
 int getConfigFromFile( ConfigDictionary **configData, char *fileName )
 {
-
+    File filePointer;
+    int strIndex, charAsInt;
+    char tempChar, stringBuffer[  ];
+    Boolean inProgress = TRUE;
 }
 
 #endif

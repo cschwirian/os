@@ -14,9 +14,9 @@
 #ifndef Utilities_H
 #define Utilities_H
 
-// TODO: Ask about these.
-#define TRUE 1
-#define FALSE 0
+typedef int Boolean;
+Boolean TRUE = 1;
+Boolean FALSE = 0;
 
 #include <stdio.h>
 #include <stdlib.h>
