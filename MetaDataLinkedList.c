@@ -65,7 +65,7 @@ MetaDataNode *clearList( MetaDataNode *headNode )
 
     return headNode;
 }
-
+/*
 int getMetaDataFromFile( MetaDataNode **headNode, char *fileName)
 {
     File filePointer;
@@ -73,6 +73,6 @@ int getMetaDataFromFile( MetaDataNode **headNode, char *fileName)
     char tempChar, stringBuffer[  ];
     Boolean inProgress = TRUE;
     MetaDataNode *tempNode = ( MetaDataNode *)malloc( sizeof( MetaDataNode ) );
-}
+}*/
 
 #endif

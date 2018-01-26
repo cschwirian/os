@@ -12,6 +12,8 @@
 #define InputData_H
 
 #include "ConfigDictionary.h"
-#include "MetaDataLinkedList"
+#include "MetaDataLinkedList.h"
+
+int main( int argc, char *argv[] );
 
 #endif

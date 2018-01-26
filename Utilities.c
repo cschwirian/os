@@ -15,21 +15,46 @@
 
 #include "Utilities.h"
 
-const char READ_ONLY_FLAG[] = "r";
-const char NULL_CHAR = '\0';
-const char SEMICOLON = ';';
-const char SPACE = ' ';
-
 void copyString( char *target, char *original )
 {
     int stringIndex = 0;
 
-    while( stringIndex <= sizeof( original ) )
+    while( original[ stringIndex ] )
     {
         target[ stringIndex ] = original[ stringIndex ];
 
         stringIndex++;
     }
+}
+
+int compareString( char *string1, char *string2 )
+{
+    while( *string1 == *string2 )
+    {
+        if( *string1 == '\0' && *string2 == '\0' )
+        {
+            return 0;
+        }
+        string1++;
+        string2++;
+    }
+
+    return (int)( string1 ) - (int)( string2 );
+}
+
+int stringToInt( char *string )
+{
+    int returnVal = 0;
+    int strIndex = 0;
+
+    while( string[ strIndex ] != '\0' && string[ strIndex ] != '.' )
+    {
+        returnVal = returnVal * 10 + string[ strIndex ] - '0';
+
+        strIndex++;
+    }
+
+    return returnVal;
 }
 
 #endif

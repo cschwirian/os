@@ -15,7 +15,7 @@
 
 #include "Utilities.h"
 
-typdef struct ConfigDictionary
+typedef struct ConfigDictionary
 {
     int versionNumber;
     char filePath[ 30 ];
@@ -29,26 +29,32 @@ typdef struct ConfigDictionary
 } ConfigDictionary;
 
 // Message codes for file access
-enum MESSAGE_CODES
+enum CONFIG_MESSAGE_CODES
 {
-    UNKNOWN_ERR = -1000, FILE_OPEN_ERR,
-    INCOMPLETE_FILE_ERR, NO_ERROR_MSG = 0,
-    END_FILE_FOUND_MSG
+    UNKNOWN_ERROR = -1,
+    NO_ERROR_MSG = 0,
+    INIT_ERROR = 1,
+    DATA_ORDER_ERROR = 2,
+    DATA_FORMAT_ERROR = 3,
+    INCOMPLETE_DATA_ERROR = 4,
+    FILE_END_ERROR = 5
 };
 
-ConfigDictionary makeDictionary(
-                                    int inVersionNumber,
-                                    char *inFilePath,
-                                    char *inSchedulingCode,
-                                    int inQuantumTime,
-                                    int inMemoryAvailible,
-                                    int inProcessorCycleTime,
-                                    int inIOCyleTime,
-                                    char *inLogInstruction,
-                                    char *inLogFilePath
-                                );
+enum DATA_CODES
+{
+    VERSION = 0,
+    FILE_PATH = 1,
+    CPU_CODE = 2,
+    QUANTUM_TIME = 3,
+    MEMORY = 4,
+    P_CYCLE_TIME = 5,
+    IO_CYCLE_TIME = 6,
+    LOG_INSTRUCTION = 7,
+    LOG_PATH = 8
+};
 
-ConfigDictionary clearDictionary( ConfigDictionary *config );
-int getConfigFromFile( ConfigDictionary **configData, char *fileName );
+void clearDictionary( ConfigDictionary *config );
+int getConfigFromFile( ConfigDictionary *config, const char *fileName );
+int logConfigData( ConfigDictionary *config, const char *fileName );
 
 #endif

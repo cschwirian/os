@@ -13,4 +13,16 @@
 
 #include "InputData.h"
 
+int main( int argc, char *argv[] )
+{
+    ConfigDictionary *config = malloc( sizeof( ConfigDictionary ) );
+
+    getConfigFromFile( config, argv[ 1 ] );
+
+    printf( "%d\n", config->versionNumber );
+
+    free( config );
+    config = NULL;
+}
+
 #endif

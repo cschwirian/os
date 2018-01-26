@@ -26,15 +26,8 @@ typedef struct MetaDataNode
     char commandLetter;
     char operation[ 10 ];
     int commandValue;
-    MetaDataNode *next;
+    struct MetaDataNode *next;
 } MetaDataNode;
-
-enum MESSAGE_CODES
-{
-    UNKNOWN_ERR = -1000, FILE_OPEN_ERR,
-    INCOMPLETE_FILE_ERR, NO_ERROR_MSG = 0,
-    END_FILE_FOUND_MSG
-};
 
 // function prototypes
 MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode );
