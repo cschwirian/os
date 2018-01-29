@@ -17,9 +17,13 @@ int main( int argc, char *argv[] )
 {
     ConfigDictionary *config = malloc( sizeof( ConfigDictionary ) );
 
-    getConfigFromFile( config, argv[ 1 ] );
+    int configMessageCode = getConfigFromFile(config, argv[ 1] );
+    printf( "%d\n", configMessageCode );
 
-    printf( "%d\n", config->versionNumber );
+    if( configMessageCode == 0 )
+    {
+        logConfigData( config, config->logFilePath );
+    }
 
     free( config );
     config = NULL;

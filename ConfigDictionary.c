@@ -15,6 +15,16 @@
 
 #include "ConfigDictionary.h"
 
+const int STD_STR_LEN = 40;
+const int MAX_STR_LEN = 60;
+const int NOT_AT_FILE_END = 0;
+const char READ_ONLY_FLAG[] = "r";
+const char WRITE_ONLY_FLAG[] = "w";
+const char NULL_CHAR = '\0';
+const char COLON = ':';
+const char SPACE = ' ';
+const char NEWLINE = '\n';
+
 void clearDictionary( ConfigDictionary *config )
 {
     free( config );
@@ -89,8 +99,6 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                     }
                 }
 
-                printf( "%s\n", strBuffer );
-
                 // Push off colon.
                 charAsInt = fgetc( filePointer );
 
@@ -112,8 +120,6 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
 
                     charAsInt = fgetc( filePointer );
                 }
-
-                printf( "%s\n", dataStrBuffer );
 
                 switch( stepIndex )
                 {
@@ -230,7 +236,35 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
 
 int logConfigData( ConfigDictionary *config, const char *fileName )
 {
+    FILE *filePointer;
+
+    filePointer = fopen( fileName, WRITE_ONLY_FLAG );
+
+    fprintf( filePointer, "Config File Log\n");
+    fprintf( filePointer, "===============\n");
+    fprintf( filePointer, "Version            : ");
+    fprintf( filePointer, "%d\n", config->versionNumber );
+    fprintf( filePointer, "Program File Name  : ");
+    fprintf( filePointer, "%s\n", config->filePath );
+    fprintf( filePointer, "CPU Schedule Code  : ");
+    fprintf( filePointer, "%s\n", config->schedulingCode );
+    fprintf( filePointer, "Quantum Time       : ");
+    fprintf( filePointer, "%d\n", config->quantumTime );
+    fprintf( filePointer, "Process Cycle Time : ");
+    fprintf( filePointer, "%d\n", config->memoryAvailible );
+    fprintf( filePointer, "Memory Available   : ");
+    fprintf( filePointer, "%d\n", config->processorCycleTime );
+    fprintf( filePointer, "I/O Cycle Time     : ");
+    fprintf( filePointer, "%d\n", config->ioCyleTime );
+    fprintf( filePointer, "Log To             : ");
+    fprintf( filePointer, "%s\n", config->logInstruction );
+    fprintf( filePointer, "Log File Name      : ");
+    fprintf( filePointer, "%s\n", config->logFilePath );
+
+    fclose( filePointer );
+
     return 1;
+
 }
 
 #endif

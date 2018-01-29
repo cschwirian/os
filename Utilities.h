@@ -19,18 +19,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int STD_STR_LEN = 40;
-const int MAX_STR_LEN = 60;
-const int NOT_AT_FILE_END = 0;
-const char READ_ONLY_FLAG[] = "r";
-const char NULL_CHAR = '\0';
-const char COLON = ':';
-const char SPACE = ' ';
-const char NEWLINE = '\n';
-
 typedef int Boolean;
-Boolean True = 1;
-Boolean False = 0;
+enum
+{
+    False,
+    True
+};
 
 void copyString( char *target, char *original );
 int compareString( char *string1, char *string2 );

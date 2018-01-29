@@ -19,12 +19,12 @@ typedef struct ConfigDictionary
 {
     int versionNumber;
     char filePath[ 30 ];
-    char schedulingCode[ 6 ];
+    char schedulingCode[ 7 ];
     int quantumTime;
     int memoryAvailible;
     int processorCycleTime;
     int ioCyleTime;
-    char logInstruction[ 7 ];
+    char logInstruction[ 8 ];
     char logFilePath[ 30 ];
 } ConfigDictionary;
 
