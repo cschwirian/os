@@ -33,6 +33,6 @@ typedef struct MetaDataNode
 MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode );
 MetaDataNode *clearList( MetaDataNode *headNode );
 MetaDataNode *makeNode( char inCmdLetter, char *inOperation, int inCmdValue );
-int getMetaDataFromFile( MetaDataNode **headNode, char *fileName);
+int getMetaDataFromFile( MetaDataNode *headNode, char *fileName);
 
 #endif

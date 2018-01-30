@@ -18,20 +18,6 @@
 // header files
 #include "MetaDataLinkedList.h"
 
-// supporting function implementations
-
-const int STD_STR_LEN = 40;
-const int MAX_STR_LEN = 60;
-const int NOT_AT_FILE_END = 0;
-const char READ_ONLY_FLAG[] = "r";
-const char WRITE_ONLY_FLAG[] = "w";
-const char NULL_CHAR = '\0';
-const char SEMICOLON = ';';
-const char OPEN_PAREN = '(';
-const char CLOSE_PAREN = ')';
-const char SPACE = ' ';
-const char NEWLINE = '\n';
-
 MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode )
 {
     if( headNode != NULL )
@@ -77,11 +63,12 @@ MetaDataNode *clearList( MetaDataNode *headNode )
     return headNode;
 }
 
-int getMetaDataFromFile( MetaDataNode **headNode, char *fileName)
+int getMetaDataFromFile( MetaDataNode *headNode, char *fileName)
 {
-    File filePointer;
-    int strIndex, charAsInt;
-    char tempChar, stringBuffer[ MAX_STR_LEN ];
+    FILE *filePointer;
+    int strIndex, charAsInt, tempCmdValue;
+    char tempCmdLetter;
+    char strBuffer[ MAX_STR_LEN ];
     Boolean inProgress = True;
     MetaDataNode *tempNode = ( MetaDataNode *)malloc( sizeof( MetaDataNode ) );
 
@@ -95,6 +82,7 @@ int getMetaDataFromFile( MetaDataNode **headNode, char *fileName)
 
         while( feof( filePointer ) == NOT_AT_FILE_END && charAsInt != (int)( '\n' ) )
         {
+            printf( "%c", (char)( charAsInt ) );
             strBuffer[ strIndex ] = (char)( charAsInt );
 
             strIndex++;
@@ -121,19 +109,25 @@ int getMetaDataFromFile( MetaDataNode **headNode, char *fileName)
                     charAsInt = fgetc( filePointer );
                 }
 
-                strIndex = 0;
+                tempCmdLetter = (char)( charAsInt );
 
-                while( charAsInt != (int)( OPEN_PAREN ) )
+                charAsInt = fgetc( filePointer );
+                if( charAsInt != (int)( OPEN_PAREN ) )
                 {
-                    strBuffer[ strIndex ] = (char)( charAsInt );
-
-                    strIndex++;
-
-                    strBuffer[ strIndex ] = NULL_CHAR;
-
-                    charAsInt = fgetc( filePointer );
+                    fclose( filePointer );
+                    return DATA_FORMAT_ERROR;
                 }
-                printf( "%s", strBuffer );
+
+                // TODO: while to catch operation
+
+                // TODO: catch close paren
+
+                // TODO: take in command value
+
+                // TODO: check for semicolon
+
+                // TODO: put data in new node and add to list
+
                 return 1;
             }
         }

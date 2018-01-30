@@ -15,16 +15,6 @@
 
 #include "ConfigDictionary.h"
 
-const int STD_STR_LEN = 40;
-const int MAX_STR_LEN = 60;
-const int NOT_AT_FILE_END = 0;
-const char READ_ONLY_FLAG[] = "r";
-const char WRITE_ONLY_FLAG[] = "w";
-const char NULL_CHAR = '\0';
-const char COLON = ':';
-const char SPACE = ' ';
-const char NEWLINE = '\n';
-
 void clearDictionary( ConfigDictionary *config )
 {
     free( config );

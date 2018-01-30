@@ -26,6 +26,31 @@ enum
     True
 };
 
+const int STD_STR_LEN;
+const int MAX_STR_LEN;
+const int NOT_AT_FILE_END;
+const char READ_ONLY_FLAG[ 1 ];
+const char WRITE_ONLY_FLAG[ 1 ];
+const char NULL_CHAR;
+const char SEMICOLON;
+const char OPEN_PAREN;
+const char CLOSE_PAREN;
+const char COLON;
+const char SPACE ;
+const char NEWLINE;
+
+enum ERROR_MESSAGE_CODES
+{
+    UNKNOWN_ERROR = -1,
+    NO_ERROR_MSG = 0,
+    INIT_ERROR = 1,
+    DATA_ORDER_ERROR = 2,
+    DATA_FORMAT_ERROR = 3,
+    INCOMPLETE_DATA_ERROR = 4,
+    FILE_END_ERROR = 5,
+    FILE_NOT_FOUND = 6
+};
+
 void copyString( char *target, char *original );
 int compareString( char *string1, char *string2 );
 int stringToInt( char *string );

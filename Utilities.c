@@ -15,6 +15,19 @@
 
 #include "Utilities.h"
 
+const int STD_STR_LEN = 40;
+const int MAX_STR_LEN = 60;
+const int NOT_AT_FILE_END = 0;
+const char READ_ONLY_FLAG[] = "r";
+const char WRITE_ONLY_FLAG[] = "w";
+const char NULL_CHAR = '\0';
+const char SEMICOLON = ';';
+const char OPEN_PAREN = '(';
+const char CLOSE_PAREN = ')';
+const char COLON = ':';
+const char SPACE = ' ';
+const char NEWLINE = '\n';
+
 void copyString( char *target, char *original )
 {
     int stringIndex = 0;
