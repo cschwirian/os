@@ -28,6 +28,7 @@ int main( int argc, char *argv[] )
     MetaDataNode *metaData = malloc( sizeof( MetaDataNode ) );
 
     printf( "%d\n", getMetaDataFromFile( metaData, argv[ 2 ] ) );
+    printf( "%d\n", metaData->commandValue );
 
     free( metaData );
     metaData = NULL;

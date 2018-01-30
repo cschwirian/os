@@ -66,9 +66,9 @@ MetaDataNode *clearList( MetaDataNode *headNode )
 int getMetaDataFromFile( MetaDataNode *headNode, char *fileName)
 {
     FILE *filePointer;
-    int strIndex, charAsInt, tempCmdValue;
+    int strIndex, charAsInt;
     char tempCmdLetter;
-    char strBuffer[ MAX_STR_LEN ];
+    char strBuffer[ MAX_STR_LEN ], tempOperation[ STD_STR_LEN ];
     Boolean inProgress = True;
     MetaDataNode *tempNode = ( MetaDataNode *)malloc( sizeof( MetaDataNode ) );
 
@@ -82,7 +82,6 @@ int getMetaDataFromFile( MetaDataNode *headNode, char *fileName)
 
         while( feof( filePointer ) == NOT_AT_FILE_END && charAsInt != (int)( '\n' ) )
         {
-            printf( "%c", (char)( charAsInt ) );
             strBuffer[ strIndex ] = (char)( charAsInt );
 
             strIndex++;
@@ -102,36 +101,76 @@ int getMetaDataFromFile( MetaDataNode *headNode, char *fileName)
         {
             charAsInt = fgetc( filePointer );
 
-            if( feof( filePointer ) == NOT_AT_FILE_END )
+            if( feof( filePointer ) == NOT_AT_FILE_END && charAsInt != (char)( NEWLINE ) )
             {
                 while( charAsInt == (int)( SPACE ) )
                 {
                     charAsInt = fgetc( filePointer );
                 }
 
+                strIndex = 0;
+
+                if( charAsInt == (int)( 'E' ) )
+                {
+                    while( charAsInt != (int)( '.' ) )
+                    {
+                        strBuffer[ strIndex ] = (char)( charAsInt );
+                        strIndex++;
+                        strBuffer[ strIndex ] = NULL_CHAR;
+                        charAsInt = fgetc( filePointer );
+                    }
+
+                    if( compareString( strBuffer, "End Program Meta-Data Code") == 0)
+                    {
+                        fclose( filePointer );
+                        return NO_ERROR_MSG;
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return FILE_END_ERROR;
+                    }
+                }
+
                 tempCmdLetter = (char)( charAsInt );
 
                 charAsInt = fgetc( filePointer );
+                printf( "%c\n", (char)( charAsInt ) );
                 if( charAsInt != (int)( OPEN_PAREN ) )
                 {
                     fclose( filePointer );
                     return DATA_FORMAT_ERROR;
                 }
 
-                // TODO: while to catch operation
+                strIndex = 0;
 
-                // TODO: catch close paren
+                charAsInt = fgetc( filePointer );
+                while( charAsInt != (char)( CLOSE_PAREN ) )
+                {
+                    tempOperation[ strIndex ] = (char)( charAsInt );
+                    strIndex++;
+                    tempOperation[ strIndex ] = NULL_CHAR;
+                    charAsInt = fgetc( filePointer );
+                }
 
-                // TODO: take in command value
+                strIndex = 0;
 
-                // TODO: check for semicolon
+                charAsInt = fgetc( filePointer );
+                while( charAsInt != (int)( SEMICOLON ) )
+                {
+                    strBuffer[ strIndex ] = (char)( charAsInt );
+                    strIndex++;
+                    strBuffer[ strIndex ] = NULL_CHAR;
+                    charAsInt = fgetc( filePointer );
+                }
 
-                // TODO: put data in new node and add to list
-
-                return 1;
+                tempNode = makeNode( tempCmdLetter, tempOperation, stringToInt( strBuffer ) );
+                addNode( headNode, tempNode );
             }
         }
     }
+
+    return 1;
 }
 
 #endif
