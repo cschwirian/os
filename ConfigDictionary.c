@@ -134,6 +134,7 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                             return DATA_ORDER_ERROR;
                         }
                         break;
+
                     case FILE_PATH:
                         if( compareString( strBuffer, "File Path" ) == 0 )
                         {
@@ -145,6 +146,7 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                             return DATA_ORDER_ERROR;
                         }
                         break;
+
                     case CPU_CODE:
                         if( compareString( strBuffer, "CPU Scheduling Code" ) == 0 )
                         {
@@ -156,6 +158,7 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                             return DATA_ORDER_ERROR;
                         }
                         break;
+
                     case QUANTUM_TIME:
                         if( compareString( strBuffer, "Quantum Time (cycles)" ) == 0 )
                         {
@@ -167,6 +170,7 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                             return DATA_ORDER_ERROR;
                         }
                         break;
+
                     case MEMORY:
                         if( compareString( strBuffer, "Memory Available (KB)" ) == 0 )
                         {
@@ -178,6 +182,7 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                             return DATA_ORDER_ERROR;
                         }
                         break;
+
                     case P_CYCLE_TIME:
                         if( compareString( strBuffer, "Processor Cycle Time (msec)" ) == 0 )
                         {
@@ -189,6 +194,7 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                             return DATA_ORDER_ERROR;
                         }
                         break;
+
                     case IO_CYCLE_TIME:
                         if( compareString( strBuffer, "I/O Cycle Time (msec)" ) == 0 )
                         {
@@ -200,6 +206,7 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                             return DATA_ORDER_ERROR;
                         }
                         break;
+
                     case LOG_INSTRUCTION:
                         if( compareString( strBuffer, "Log To" ) == 0 )
                         {
@@ -211,6 +218,7 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                             return DATA_ORDER_ERROR;
                         }
                         break;
+
                     case LOG_PATH:
                         if( compareString( strBuffer, "Log File Path" ) == 0 )
                         {
@@ -227,6 +235,11 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                 stepIndex++;
             }
         }
+    }
+    else
+    {
+        fclose( filePointer );
+        return 6;
     }
 
     fclose( filePointer );
@@ -263,7 +276,7 @@ int logConfigData( ConfigDictionary *config, const char *fileName )
 
     fclose( filePointer );
 
-    return 1;
+    return NO_ERROR_MSG;
 
 }
 

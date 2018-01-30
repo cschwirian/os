@@ -17,13 +17,20 @@ int main( int argc, char *argv[] )
 {
     ConfigDictionary *config = malloc( sizeof( ConfigDictionary ) );
 
-    int configMessageCode = getConfigFromFile(config, argv[ 1] );
+    int configMessageCode = getConfigFromFile(config, argv[ 1 ] );
     printf( "%d\n", configMessageCode );
 
     if( configMessageCode == 0 )
     {
         logConfigData( config, config->logFilePath );
     }
+
+    MetaDataNode *metaData = malloc( sizeof( MetaDataNode ) );
+
+    getMetaDataFromFile( metaData, argv[ 2 ] );
+
+    free( metaData );
+    metaData = NULL;
 
     free( config );
     config = NULL;

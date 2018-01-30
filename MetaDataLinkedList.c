@@ -20,6 +20,17 @@
 
 // supporting function implementations
 
+const int STD_STR_LEN = 40;
+const int MAX_STR_LEN = 60;
+const int NOT_AT_FILE_END = 0;
+const char READ_ONLY_FLAG[] = "r";
+const char WRITE_ONLY_FLAG[] = "w";
+const char NULL_CHAR = '\0';
+const char SEMICOLON = ';';
+const char OPEN_PAREN = '(';
+const char CLOSE_PAREN = ')';
+const char SPACE = ' ';
+const char NEWLINE = '\n';
 
 MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode )
 {
@@ -65,14 +76,68 @@ MetaDataNode *clearList( MetaDataNode *headNode )
 
     return headNode;
 }
-/*
+
 int getMetaDataFromFile( MetaDataNode **headNode, char *fileName)
 {
     File filePointer;
     int strIndex, charAsInt;
-    char tempChar, stringBuffer[  ];
-    Boolean inProgress = TRUE;
+    char tempChar, stringBuffer[ MAX_STR_LEN ];
+    Boolean inProgress = True;
     MetaDataNode *tempNode = ( MetaDataNode *)malloc( sizeof( MetaDataNode ) );
-}*/
+
+    filePointer = fopen( fileName, READ_ONLY_FLAG );
+
+    if( filePointer != NULL )
+    {
+        strIndex = 0;
+
+        charAsInt = fgetc( filePointer );
+
+        while( feof( filePointer ) == NOT_AT_FILE_END && charAsInt != (int)( '\n' ) )
+        {
+            strBuffer[ strIndex ] = (char)( charAsInt );
+
+            strIndex++;
+
+            strBuffer[ strIndex ] = NULL_CHAR;
+
+            charAsInt = fgetc( filePointer );
+        }
+
+        if( compareString( strBuffer, "Start Program Meta-Data Code:" ) != 0 )
+        {
+            fclose( filePointer );
+            return INIT_ERROR;
+        }
+
+        while( inProgress == True )
+        {
+            charAsInt = fgetc( filePointer );
+
+            if( feof( filePointer ) == NOT_AT_FILE_END )
+            {
+                while( charAsInt == (int)( SPACE ) )
+                {
+                    charAsInt = fgetc( filePointer );
+                }
+
+                strIndex = 0;
+
+                while( charAsInt != (int)( OPEN_PAREN ) )
+                {
+                    strBuffer[ strIndex ] = (char)( charAsInt );
+
+                    strIndex++;
+
+                    strBuffer[ strIndex ] = NULL_CHAR;
+
+                    charAsInt = fgetc( filePointer );
+                }
+                printf( "%s", strBuffer );
+                return 1;
+            }
+        }
+    }
+}
 
 #endif
