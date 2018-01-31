@@ -7,6 +7,8 @@
   *
   * Required by ConfigLinkedList.c
   *
+  * Version 1.0 31/1/2018
+  *
   * Version 0.1 (Development) 17/1/2018
 **/
 

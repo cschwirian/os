@@ -9,13 +9,14 @@
   *
   * Requires MetaDataLinkedList.h
   *
+  * Version 1.0 31/1/2018
+  *
   * Version 0.1 (Development) 17/1/2018
 **/
 
 #ifndef MetaDataLinkedList_C
 #define MetaDataLinkedList_C
 
-// header files
 #include "MetaDataLinkedList.h"
 
 MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode )
@@ -26,13 +27,13 @@ MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode )
         return headNode;
     }
 
-    headNode = makeNode( newNode->commandLetter, newNode->operation,
-                                                    newNode->commandValue );
+    headNode = makeNode( newNode->commandLetter,
+                         newNode->operation,
+                         newNode->commandValue );
 
     return headNode;
 }
 
-// function eliminates redundant code in addNode
 MetaDataNode *makeNode( char inCmdLetter, char *inOperation, int inCmdValue )
 {
     MetaDataNode *newNode = (MetaDataNode *)malloc( sizeof( MetaDataNode ) );
@@ -57,7 +58,6 @@ MetaDataNode *clearList( MetaDataNode *headNode )
     }
 
     free( headNode );
-
     headNode = NULL;
 
     return headNode;
@@ -84,14 +84,12 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
 
     charAsInt = fgetc( filePointer );
 
-    while( feof( filePointer ) == NOT_AT_FILE_END && charAsInt != (int)( '\n' ) )
+    while( feof( filePointer ) == NOT_AT_FILE_END &&
+           charAsInt != (int)( '\n' ) )
     {
         strBuffer[ strIndex ] = (char)( charAsInt );
-
         strIndex++;
-
         strBuffer[ strIndex ] = NULL_CHAR;
-
         charAsInt = fgetc( filePointer );
     }
 
@@ -107,7 +105,9 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
 
         if( feof( filePointer ) == NOT_AT_FILE_END )
         {
-            while( charAsInt == (int)( SPACE ) || charAsInt == (int)( NEWLINE ) )
+            while( charAsInt == (int)( SPACE ) ||
+                   charAsInt == (int)( NEWLINE )
+                 )
             {
                 charAsInt = fgetc( filePointer );
             }
@@ -124,7 +124,8 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
                     charAsInt = fgetc( filePointer );
                 }
 
-                if( compareString( strBuffer, "End Program Meta-Data Code") == 0)
+                if( compareString( strBuffer,
+                                   "End Program Meta-Data Code" ) == 0 )
                 {
                     fclose( filePointer );
                     return logMetaData( *headNode, instruction, logFilePath );
@@ -172,11 +173,17 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
 
             if( operationIsValid( tempOperation ) == False )
             {
+                fclose( filePointer );
                 return DATA_ERROR;
             }
 
-            tempNode = makeNode( tempCmdLetter, tempOperation, stringToInt( strBuffer ) );
+            tempNode = makeNode( tempCmdLetter,
+                                 tempOperation,
+                                 stringToInt( strBuffer ) );
+
             *headNode = addNode( *headNode, tempNode );
+
+            free( tempNode );
         }
     }
 
@@ -187,7 +194,7 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
 int logMetaData( MetaDataNode *headNode, char *instruction, char *logFilePath )
 {
     if( compareString( instruction, "Monitor" ) == 0 ||
-        compareString( instruction, "Both" ) == 0 )
+        compareString( instruction, "Both" )    == 0 )
     {
         MetaDataNode *currentNode = headNode;
 

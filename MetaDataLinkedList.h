@@ -9,10 +9,11 @@
   *
   * Required by MetaDataLinkedList.c
   *
+  * Version 1.0 31/1/2018
+  *
   * Version 0.1 (Development) 17/1/2018
 **/
 
-// Precompiler directive, to eliminate multiple compiles of h file
 #ifndef MetaDataLinkedList_H
 #define MetaDataLinkedList_H
 
@@ -29,6 +30,7 @@ typedef struct MetaDataNode
 MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode );
 MetaDataNode *clearList( MetaDataNode *headNode );
 MetaDataNode *makeNode( char inCmdLetter, char *inOperation, int inCmdValue );
+
 int getMetaData( MetaDataNode **headNode, char *fileName,
                  char *instruction, char *logFilePath );
 

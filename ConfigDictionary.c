@@ -7,6 +7,8 @@
   *
   * Requires ConfigLinkedList.h
   *
+  * Version 1.0 31/1/2018
+  *
   * Version 0.1 (Development) 17/1/2018
 **/
 
@@ -35,18 +37,17 @@ int getConfig( ConfigDictionary *config, const char *fileName )
 
         charAsInt = fgetc( filePointer );
 
-        while( feof( filePointer ) == NOT_AT_FILE_END && charAsInt != (int)( '\n' ) )
+        while( feof( filePointer ) == NOT_AT_FILE_END &&
+               charAsInt != (int)( '\n' ) )
         {
             strBuffer[ strIndex ] = (char)( charAsInt );
-
             strIndex++;
-
             strBuffer[ strIndex ] = NULL_CHAR;
-
             charAsInt = fgetc( filePointer );
         }
 
-        if( compareString( strBuffer, "Start Simulator Configuration File" ) != 0 )
+        if( compareString( strBuffer,
+                           "Start Simulator Configuration File" ) != 0 )
         {
             fclose( filePointer );
             return INIT_ERROR;
@@ -64,16 +65,14 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                    feof( filePointer ) == NOT_AT_FILE_END )
             {
                 strBuffer[ strIndex ] = (char)( charAsInt );
-
                 strIndex++;
-
                 strBuffer[ strIndex ] = NULL_CHAR;
-
                 charAsInt = fgetc( filePointer );
 
                 if( charAsInt == (int)( PERIOD ) )
                 {
-                    if( compareString( strBuffer, "End Simulator Configuration File" ) == 0 )
+                    if( compareString( strBuffer,
+                                     "End Simulator Configuration File" ) == 0 )
                     {
                         fclose( filePointer );
                         return logConfig( config, config->logFilePath );
@@ -87,10 +86,8 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                 }
             }
 
-            // Push off colon.
             charAsInt = fgetc( filePointer );
 
-            // Skip whitespace.
             while( charAsInt == (int)( SPACE ) )
             {
                 charAsInt = fgetc( filePointer );
@@ -102,11 +99,8 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                    feof( filePointer ) == NOT_AT_FILE_END )
             {
                 dataStrBuffer[ dataStrIndex ] = (char)( charAsInt );
-
                 dataStrIndex++;
-
                 dataStrBuffer[ dataStrIndex ] = NULL_CHAR;
-
                 charAsInt = fgetc( filePointer );
             }
 
@@ -156,7 +150,8 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                             }
                             else
                             {
-                                copyString( config->schedulingCode, dataStrBuffer );
+                                copyString( config->schedulingCode,
+                                            dataStrBuffer );
                             }
                         }
                         else
@@ -173,7 +168,8 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                     break;
 
                 case QUANTUM_TIME:
-                    if( compareString( strBuffer, "Quantum Time (cycles)" ) == 0 )
+                    if( compareString( strBuffer,
+                                       "Quantum Time (cycles)" ) == 0 )
                     {
                         int tempQuantumTime = stringToInt( dataStrBuffer );
                         if( quantumTimeIsValid( tempQuantumTime ) )
@@ -194,7 +190,8 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                     break;
 
                 case MEMORY:
-                    if( compareString( strBuffer, "Memory Available (KB)" ) == 0 )
+                    if( compareString( strBuffer,
+                        "Memory Available (KB)" ) == 0 )
                     {
                         int tempMemory = stringToInt( dataStrBuffer );
                         if( memoryIsValid( tempMemory ) )
@@ -215,7 +212,8 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                     break;
 
                 case P_CYCLE_TIME:
-                    if( compareString( strBuffer, "Processor Cycle Time (msec)" ) == 0 )
+                    if( compareString( strBuffer,
+                        "Processor Cycle Time (msec)" ) == 0 )
                     {
                         int tempCycle = stringToInt( dataStrBuffer );
                         if( processorCycleIsValid( tempCycle ) )
@@ -236,7 +234,8 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                     break;
 
                 case IO_CYCLE_TIME:
-                    if( compareString( strBuffer, "I/O Cycle Time (msec)" ) == 0 )
+                    if( compareString( strBuffer,
+                        "I/O Cycle Time (msec)" ) == 0 )
                     {
                         int tempCycle = stringToInt( dataStrBuffer );
                         if( ioCycleIsValid( tempCycle ) )
@@ -279,7 +278,8 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                 case LOG_PATH:
                     if( compareString( strBuffer, "Log File Path" ) == 0 )
                     {
-                        if( compareString( config->logInstruction, "MONITOR" ) == 0 )
+                        if( compareString( config->logInstruction,
+                                           "MONITOR" ) == 0 )
                         {
                             copyString( config->logFilePath, "none" );
                         }

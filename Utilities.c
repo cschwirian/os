@@ -7,6 +7,8 @@
   *
   * Requires Utilities.h
   *
+  * Version 1.0 31/1/2018
+  *
   * Version 1.0 17/1/2018
 **/
 
@@ -56,7 +58,7 @@ int compareString( char *string1, char *string2 )
         string2++;
     }
 
-    return (int)( string1 ) - (int)( string2 );
+    return (int)( *string1 ) - (int)( *string2 );
 }
 
 int stringToInt( char *string )
