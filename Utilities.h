@@ -31,6 +31,7 @@ const int MAX_STR_LEN;
 const int NOT_AT_FILE_END;
 const char READ_ONLY_FLAG[ 1 ];
 const char WRITE_ONLY_FLAG[ 1 ];
+const char APPEND[ 1 ];
 const char NULL_CHAR;
 const char SEMICOLON;
 const char OPEN_PAREN;

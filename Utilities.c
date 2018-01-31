@@ -20,6 +20,7 @@ const int MAX_STR_LEN = 60;
 const int NOT_AT_FILE_END = 0;
 const char READ_ONLY_FLAG[] = "r";
 const char WRITE_ONLY_FLAG[] = "w";
+const char APPEND[] = "a";
 const char NULL_CHAR = '\0';
 const char SEMICOLON = ';';
 const char OPEN_PAREN = '(';

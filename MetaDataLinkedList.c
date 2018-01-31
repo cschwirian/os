@@ -63,7 +63,8 @@ MetaDataNode *clearList( MetaDataNode *headNode )
     return headNode;
 }
 
-int getMetaData( MetaDataNode **headNode, char *fileName, char *logFileName )
+int getMetaData( MetaDataNode **headNode, char *fileName,
+                 char *instruction, char *logFilePath )
 {
     FILE *filePointer;
     int strIndex, charAsInt;
@@ -126,7 +127,7 @@ int getMetaData( MetaDataNode **headNode, char *fileName, char *logFileName )
                 if( compareString( strBuffer, "End Program Meta-Data Code") == 0)
                 {
                     fclose( filePointer );
-                    return logMetaData( *headNode, logFileName );
+                    return logMetaData( *headNode, instruction, logFilePath );
                 }
                 else
                 {
@@ -175,9 +176,59 @@ int getMetaData( MetaDataNode **headNode, char *fileName, char *logFileName )
     return UNKNOWN_ERROR;
 }
 
-int logMetaData( MetaDataNode *headNode, char *logFileName )
+int logMetaData( MetaDataNode *headNode, char *instruction, char *logFilePath )
 {
-    return 1;
+    if( compareString( instruction, "Monitor" ) == 0 ||
+        compareString( instruction, "Both" ) )
+    {
+        MetaDataNode *currentNode = headNode;
+
+        printf( "Meta-Data File Log\n");
+        printf( "==================\n");
+
+        while( currentNode != NULL )
+        {
+            printf( "The data item component letter is: ");
+            printf( "%c\n", currentNode->commandLetter );
+            printf( "The data item operation string is: ");
+            printf( "%s\n", currentNode->operation );
+            printf( "The data item cycle time is      : ");
+            printf( "%d\n\n", currentNode->commandValue );
+
+            currentNode = currentNode->next;
+        }
+
+        return NO_ERROR_MSG;
+    }
+    if( compareString( instruction, "File" ) == 0 ||
+        compareString( instruction, "Both" ) )
+    {
+        FILE *filePointer;
+
+        filePointer = fopen( logFilePath, APPEND );
+
+        MetaDataNode *currentNode = headNode;
+
+        fprintf( filePointer, "Meta-Data File Log\n");
+        fprintf( filePointer, "==================\n");
+
+        while( currentNode != NULL )
+        {
+            fprintf( filePointer, "The data item component letter is: ");
+            fprintf( filePointer, "%c\n", currentNode->commandLetter );
+            fprintf( filePointer, "The data item operation string is: ");
+            fprintf( filePointer, "%s\n", currentNode->operation );
+            fprintf( filePointer, "The data item cycle time is      : ");
+            fprintf( filePointer, "%d\n\n", currentNode->commandValue );
+
+            currentNode = currentNode->next;
+        }
+
+        fclose( filePointer );
+        return NO_ERROR_MSG;
+    }
+
+    return UNKNOWN_ERROR;
 }
 
 #endif

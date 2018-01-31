@@ -221,7 +221,14 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                     case LOG_PATH:
                         if( compareString( strBuffer, "Log File Path" ) == 0 )
                         {
-                            copyString( config->logFilePath, dataStrBuffer );
+                            if( compareString( config->logInstruction, "MONITOR" ) == 0 )
+                            {
+                                copyString( config->logFilePath, "none" );
+                            }
+                            else
+                            {
+                                copyString( config->logFilePath, dataStrBuffer );
+                            }
                         }
                         else
                         {
@@ -238,42 +245,70 @@ int getConfig( ConfigDictionary *config, const char *fileName )
     else
     {
         fclose( filePointer );
-        return 6;
+        return FILE_NOT_FOUND;
     }
 
     fclose( filePointer );
 
-    return -1;
+    return UNKNOWN_ERROR;
 }
 
 int logConfig( ConfigDictionary *config, const char *fileName )
 {
-    FILE *filePointer;
+    if( compareString( config->logInstruction, "Both" ) == 0 ||
+        compareString( config->logInstruction, "File" ) )
+    {
+        FILE *filePointer;
 
-    filePointer = fopen( fileName, WRITE_ONLY_FLAG );
+        filePointer = fopen( fileName, WRITE_ONLY_FLAG );
 
-    fprintf( filePointer, "Config File Log\n");
-    fprintf( filePointer, "===============\n");
-    fprintf( filePointer, "Version            : ");
-    fprintf( filePointer, "%d\n", config->versionNumber );
-    fprintf( filePointer, "Program File Name  : ");
-    fprintf( filePointer, "%s\n", config->filePath );
-    fprintf( filePointer, "CPU Schedule Code  : ");
-    fprintf( filePointer, "%s\n", config->schedulingCode );
-    fprintf( filePointer, "Quantum Time       : ");
-    fprintf( filePointer, "%d\n", config->quantumTime );
-    fprintf( filePointer, "Process Cycle Time : ");
-    fprintf( filePointer, "%d\n", config->memoryAvailible );
-    fprintf( filePointer, "Memory Available   : ");
-    fprintf( filePointer, "%d\n", config->processorCycleTime );
-    fprintf( filePointer, "I/O Cycle Time     : ");
-    fprintf( filePointer, "%d\n", config->ioCyleTime );
-    fprintf( filePointer, "Log To             : ");
-    fprintf( filePointer, "%s\n", config->logInstruction );
-    fprintf( filePointer, "Log File Name      : ");
-    fprintf( filePointer, "%s\n", config->logFilePath );
+        fprintf( filePointer, "Config File Log\n");
+        fprintf( filePointer, "===============\n");
+        fprintf( filePointer, "Version            : ");
+        fprintf( filePointer, "%d\n", config->versionNumber );
+        fprintf( filePointer, "Program File Name  : ");
+        fprintf( filePointer, "%s\n", config->filePath );
+        fprintf( filePointer, "CPU Schedule Code  : ");
+        fprintf( filePointer, "%s\n", config->schedulingCode );
+        fprintf( filePointer, "Quantum Time       : ");
+        fprintf( filePointer, "%d\n", config->quantumTime );
+        fprintf( filePointer, "Process Cycle Time : ");
+        fprintf( filePointer, "%d\n", config->memoryAvailible );
+        fprintf( filePointer, "Memory Available   : ");
+        fprintf( filePointer, "%d\n", config->processorCycleTime );
+        fprintf( filePointer, "I/O Cycle Time     : ");
+        fprintf( filePointer, "%d\n", config->ioCyleTime );
+        fprintf( filePointer, "Log To             : ");
+        fprintf( filePointer, "%s\n", config->logInstruction );
+        fprintf( filePointer, "Log File Name      : ");
+        fprintf( filePointer, "%s\n\n", config->logFilePath );
 
-    fclose( filePointer );
+        fclose( filePointer );
+    }
+    if(compareString( config->logInstruction, "Monitor" ) == 0 ||
+        compareString( config->logInstruction, "Both" ) == 0 )
+    {
+        printf( "Config File Log\n");
+        printf( "===============\n");
+        printf( "Version            : ");
+        printf( "%d\n", config->versionNumber );
+        printf( "Program File Name  : ");
+        printf( "%s\n", config->filePath );
+        printf( "CPU Schedule Code  : ");
+        printf( "%s\n", config->schedulingCode );
+        printf( "Quantum Time       : ");
+        printf( "%d\n", config->quantumTime );
+        printf( "Process Cycle Time : ");
+        printf( "%d\n", config->memoryAvailible );
+        printf( "Memory Available   : ");
+        printf( "%d\n", config->processorCycleTime );
+        printf( "I/O Cycle Time     : ");
+        printf( "%d\n", config->ioCyleTime );
+        printf( "Log To             : ");
+        printf( "%s\n", config->logInstruction );
+        printf( "Log File Name      : ");
+        printf( "%s\n\n", config->logFilePath );
+    }
 
     return NO_ERROR_MSG;
 

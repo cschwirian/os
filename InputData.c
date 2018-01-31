@@ -21,7 +21,8 @@ int main( int argc, char *argv[] )
 
     MetaDataNode *metaData = NULL;
 
-    printf( "%d", getMetaData( &metaData, config->filePath, config->logFilePath ) );
+    getMetaData( &metaData, config->filePath,
+                 config->logInstruction, config->logFilePath );
 
     clearList( metaData );
 
