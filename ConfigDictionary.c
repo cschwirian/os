@@ -141,7 +141,15 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                     case CPU_CODE:
                         if( compareString( strBuffer, "CPU Scheduling Code" ) == 0 )
                         {
-                            copyString( config->schedulingCode, dataStrBuffer );
+                            if( compareString( dataStrBuffer, "NONE" ) == 0 )
+                            {
+                                copyString( config->schedulingCode, "FCFS-N" );
+                            }
+                            // TODO: Else if validate input
+                            else
+                            {
+                                copyString( config->schedulingCode, dataStrBuffer );
+                            }
                         }
                         else
                         {

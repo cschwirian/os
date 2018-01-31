@@ -35,7 +35,7 @@ MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode )
 // function eliminates redundant code in addNode
 MetaDataNode *makeNode( char inCmdLetter, char *inOperation, int inCmdValue )
 {
-    MetaDataNode *newNode = ( MetaDataNode * ) malloc( sizeof( MetaDataNode ) );
+    MetaDataNode *newNode = (MetaDataNode *)malloc( sizeof( MetaDataNode ) );
 
     newNode->commandLetter = inCmdLetter;
     copyString( newNode->operation, inOperation );
@@ -63,7 +63,7 @@ MetaDataNode *clearList( MetaDataNode *headNode )
     return headNode;
 }
 
-int getMetaData( MetaDataNode *headNode, char *fileName, char *logFileName )
+int getMetaData( MetaDataNode **headNode, char *fileName, char *logFileName )
 {
     FILE *filePointer;
     int strIndex, charAsInt;
@@ -126,7 +126,7 @@ int getMetaData( MetaDataNode *headNode, char *fileName, char *logFileName )
                 if( compareString( strBuffer, "End Program Meta-Data Code") == 0)
                 {
                     fclose( filePointer );
-                    return NO_ERROR_MSG;
+                    return logMetaData( *headNode, logFileName );
                 }
                 else
                 {
@@ -146,8 +146,6 @@ int getMetaData( MetaDataNode *headNode, char *fileName, char *logFileName )
 
             strIndex = 0;
 
-            return 1;
-
             charAsInt = fgetc( filePointer );
             while( charAsInt != (char)( CLOSE_PAREN ) )
             {
@@ -160,7 +158,7 @@ int getMetaData( MetaDataNode *headNode, char *fileName, char *logFileName )
             strIndex = 0;
 
             charAsInt = fgetc( filePointer );
-            while( charAsInt != (int)( SEMICOLON ) )
+            while( charAsInt != (int)( SEMICOLON ) && charAsInt != (int)( '.' ) )
             {
                 strBuffer[ strIndex ] = (char)( charAsInt );
                 strIndex++;
@@ -169,12 +167,17 @@ int getMetaData( MetaDataNode *headNode, char *fileName, char *logFileName )
             }
 
             tempNode = makeNode( tempCmdLetter, tempOperation, stringToInt( strBuffer ) );
-            addNode( headNode, tempNode );
+            *headNode = addNode( *headNode, tempNode );
         }
     }
 
     fclose( filePointer );
     return UNKNOWN_ERROR;
+}
+
+int logMetaData( MetaDataNode *headNode, char *logFileName )
+{
+    return 1;
 }
 
 #endif

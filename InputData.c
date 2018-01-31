@@ -19,9 +19,9 @@ int main( int argc, char *argv[] )
 
     getConfig(config, argv[ 1 ] );
 
-    MetaDataNode *metaData = malloc( sizeof( MetaDataNode ) );
+    MetaDataNode *metaData = NULL;
 
-    printf( "%d", getMetaData( metaData, config->filePath, config->logFilePath ) );
+    printf( "%d", getMetaData( &metaData, config->filePath, config->logFilePath ) );
 
     clearList( metaData );
 
