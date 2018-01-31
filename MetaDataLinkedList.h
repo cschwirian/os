@@ -36,5 +36,6 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
 
 int logMetaData( MetaDataNode *headNode, char *instruction, char *logFilePath );
 int operationIsValid( char *operation );
+int commandIsValid( char command );
 
 #endif

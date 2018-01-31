@@ -171,6 +171,12 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
                 charAsInt = fgetc( filePointer );
             }
 
+            if( commandIsValid( tempCmdLetter ) == False )
+            {
+                fclose( filePointer );
+                return DATA_ERROR;
+            }
+
             if( operationIsValid( tempOperation ) == False )
             {
                 fclose( filePointer );
@@ -255,6 +261,17 @@ int operationIsValid( char *operation )
         compareString( operation, "monitor" )    == 0 ||
         compareString( operation, "run" )        == 0 ||
         compareString( operation, "start" )      == 0 )
+    {
+        return True;
+    }
+
+    return False;
+}
+
+int commandIsValid( char command )
+{
+    if ( command == 'S' || command == 'A' || command == 'M' ||
+         command == 'P' || command == 'I' || command == 'O' )
     {
         return True;
     }
