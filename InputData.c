@@ -1,7 +1,7 @@
 /**
   * InputData.c
   *
-  * Created by Connor Schwirian on 17 January 2018
+  * Created by -REDACTED- on 17 January 2018
   *
   *
   *
@@ -17,21 +17,13 @@ int main( int argc, char *argv[] )
 {
     ConfigDictionary *config = malloc( sizeof( ConfigDictionary ) );
 
-    int configMessageCode = getConfigFromFile(config, argv[ 1 ] );
-    printf( "%d\n", configMessageCode );
-
-    if( configMessageCode == 0 )
-    {
-        logConfigData( config, config->logFilePath );
-    }
+    getConfig(config, argv[ 1 ] );
 
     MetaDataNode *metaData = malloc( sizeof( MetaDataNode ) );
 
-    printf( "%d\n", getMetaDataFromFile( metaData, argv[ 2 ] ) );
-    printf( "%d\n", metaData->commandValue );
+    printf( "%d", getMetaData( metaData, config->filePath, config->logFilePath ) );
 
-    free( metaData );
-    metaData = NULL;
+    clearList( metaData );
 
     free( config );
     config = NULL;

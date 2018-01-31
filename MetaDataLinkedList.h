@@ -1,7 +1,7 @@
 /**
   * MetaDataLinkedList.h
   *
-  * Created by Connor Schwirian on 17 January 2018
+  * Created by -REDACTED- on 17 January 2018
   *
   * Heavily modified from provided linkedlist.h
   *
@@ -33,6 +33,6 @@ typedef struct MetaDataNode
 MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode );
 MetaDataNode *clearList( MetaDataNode *headNode );
 MetaDataNode *makeNode( char inCmdLetter, char *inOperation, int inCmdValue );
-int getMetaDataFromFile( MetaDataNode *headNode, char *fileName);
+int getMetaData( MetaDataNode *headNode, char *fileName, char *logFileName );
 
 #endif

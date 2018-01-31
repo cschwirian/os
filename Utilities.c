@@ -1,7 +1,7 @@
 /**
   * StandardFunctions.c
   *
-  * Created by Connor Schwirian on 17 January 2018
+  * Created by -REDACTED- on 17 January 2018
   *
   * Contains disallowed standard functions that I have recreated
   *
@@ -38,6 +38,8 @@ void copyString( char *target, char *original )
 
         stringIndex++;
     }
+
+    target[ stringIndex ] = '\0';
 }
 
 int compareString( char *string1, char *string2 )

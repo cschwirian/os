@@ -1,7 +1,7 @@
 /**
   * StandardFunctions.h
   *
-  * Created by Connor Schwirian on 17 January 2018
+  * Created by -REDACTED- on 17 January 2018
   *
   * Contains disallowed standard functions that I have recreated with useful
   * constants. Additionally takes care of boilerplate inclusions.

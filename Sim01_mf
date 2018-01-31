@@ -19,4 +19,4 @@ Utilities.o : Utilities.c Utilities.h
 	$(CC) $(CFLAGS) Utilities.c
 
 clean:
-	\rm *.o Sim01
+	\rm *.o Sim01 *.lgf

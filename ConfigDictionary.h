@@ -1,7 +1,7 @@
 /**
   * ConfigDictionary.h
   *
-  * Created by Connor Schwirian on 17 January 2018
+  * Created by -REDACTED- on 17 January 2018
   *
   * Contains .cnf file data
   *
@@ -42,7 +42,7 @@ enum DATA_CODES
 };
 
 void clearDictionary( ConfigDictionary *config );
-int getConfigFromFile( ConfigDictionary *config, const char *fileName );
-int logConfigData( ConfigDictionary *config, const char *fileName );
+int getConfig( ConfigDictionary *config, const char *fileName );
+int logConfig( ConfigDictionary *config, const char *fileName );
 
 #endif

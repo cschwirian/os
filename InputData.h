@@ -1,7 +1,7 @@
 /**
   * InputData.h
   *
-  * Created by Connor Schwirian on 17 January 2018
+  * Created by -REDACTED- on 17 January 2018
   *
   *
   *

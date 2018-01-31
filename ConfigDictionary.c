@@ -1,7 +1,7 @@
 /**
   * ConfigDictionary.c
   *
-  * Created by Connor Schwirian on 17 January 2018
+  * Created by -REDACTED- on 17 January 2018
   *
   * Contains .cnf file data
   *
@@ -21,7 +21,7 @@ void clearDictionary( ConfigDictionary *config )
     config = NULL;
 }
 
-int getConfigFromFile( ConfigDictionary *config, const char *fileName )
+int getConfig( ConfigDictionary *config, const char *fileName )
 {
     FILE *filePointer;
     int strIndex, dataStrIndex, charAsInt, stepIndex;
@@ -79,7 +79,8 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
                         if( compareString( strBuffer, "End Simulator Configuration File" ) == 0 )
                         {
                             fclose( filePointer );
-                            return NO_ERROR_MSG;
+                            return logConfig( config, config->logFilePath );
+
                         }
                         else
                         {
@@ -237,7 +238,7 @@ int getConfigFromFile( ConfigDictionary *config, const char *fileName )
     return -1;
 }
 
-int logConfigData( ConfigDictionary *config, const char *fileName )
+int logConfig( ConfigDictionary *config, const char *fileName )
 {
     FILE *filePointer;
 
