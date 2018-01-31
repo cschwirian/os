@@ -39,6 +39,7 @@ const char CLOSE_PAREN;
 const char COLON;
 const char SPACE ;
 const char NEWLINE;
+const char PERIOD;
 
 enum ERROR_MESSAGE_CODES
 {
@@ -47,9 +48,10 @@ enum ERROR_MESSAGE_CODES
     INIT_ERROR = 1,
     DATA_ORDER_ERROR = 2,
     DATA_FORMAT_ERROR = 3,
-    INCOMPLETE_DATA_ERROR = 4,
-    FILE_END_ERROR = 5,
-    FILE_NOT_FOUND = 6
+    DATA_ERROR = 4,
+    INCOMPLETE_DATA_ERROR = 5,
+    FILE_END_ERROR = 6,
+    FILE_NOT_FOUND = 7
 };
 
 void copyString( char *target, char *original );

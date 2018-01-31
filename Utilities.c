@@ -28,6 +28,7 @@ const char CLOSE_PAREN = ')';
 const char COLON = ':';
 const char SPACE = ' ';
 const char NEWLINE = '\n';
+const char PERIOD = '.';
 
 void copyString( char *target, char *original )
 {

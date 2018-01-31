@@ -44,5 +44,12 @@ enum DATA_CODES
 void clearDictionary( ConfigDictionary *config );
 int getConfig( ConfigDictionary *config, const char *fileName );
 int logConfig( ConfigDictionary *config, const char *fileName );
+int versionIsValid( int versionNumber );
+int cpuCodeIsValid( char *cpuCode );
+int quantumTimeIsValid( int quantumTime );
+int memoryIsValid( int memory );
+int processorCycleIsValid( int processorCycle );
+int ioCycleIsValid( int ioCycle );
+int logInstructionIsValid( char *instruction );
 
 #endif

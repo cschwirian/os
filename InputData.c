@@ -17,12 +17,15 @@ int main( int argc, char *argv[] )
 {
     ConfigDictionary *config = malloc( sizeof( ConfigDictionary ) );
 
-    getConfig(config, argv[ 1 ] );
+    int configMessage = getConfig(config, argv[ 1 ] );
 
     MetaDataNode *metaData = NULL;
 
-    getMetaData( &metaData, config->filePath,
-                 config->logInstruction, config->logFilePath );
+    if( configMessage == NO_ERROR_MSG )
+    {
+        getMetaData( &metaData, config->filePath,
+                    config->logInstruction, config->logFilePath );
+    }
 
     clearList( metaData );
 

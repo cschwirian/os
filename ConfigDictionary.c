@@ -26,7 +26,6 @@ int getConfig( ConfigDictionary *config, const char *fileName )
     FILE *filePointer;
     int strIndex, dataStrIndex, charAsInt, stepIndex;
     char strBuffer[ MAX_STR_LEN ], dataStrBuffer[ STD_STR_LEN ];
-    Boolean inProgress = True;
 
     filePointer = fopen( fileName, READ_ONLY_FLAG );
 
@@ -55,97 +54,106 @@ int getConfig( ConfigDictionary *config, const char *fileName )
 
         stepIndex = 0;
 
-        while( inProgress == True )
+        while( feof( filePointer ) == NOT_AT_FILE_END )
         {
-            // Push off the newline.
             charAsInt = fgetc( filePointer );
 
-            if( feof( filePointer ) == NOT_AT_FILE_END )
+            strIndex = 0;
+
+            while( charAsInt != (int)( COLON ) &&
+                   feof( filePointer ) == NOT_AT_FILE_END )
             {
-                strIndex = 0;
+                strBuffer[ strIndex ] = (char)( charAsInt );
 
-                while( charAsInt != (int)( COLON ) )
-                {
-                    strBuffer[ strIndex ] = (char)( charAsInt );
+                strIndex++;
 
-                    strIndex++;
+                strBuffer[ strIndex ] = NULL_CHAR;
 
-                    strBuffer[ strIndex ] = NULL_CHAR;
-
-                    charAsInt = fgetc( filePointer );
-
-                    if( charAsInt == (int)( '.' ) )
-                    {
-                        if( compareString( strBuffer, "End Simulator Configuration File" ) == 0 )
-                        {
-                            fclose( filePointer );
-                            return logConfig( config, config->logFilePath );
-
-                        }
-                        else
-                        {
-                            fclose( filePointer );
-                            return FILE_END_ERROR;
-                        }
-                    }
-                }
-
-                // Push off colon.
                 charAsInt = fgetc( filePointer );
 
-                // Skip whitespace.
-                while( charAsInt == (int)( SPACE ) )
+                if( charAsInt == (int)( PERIOD ) )
                 {
-                    charAsInt = fgetc( filePointer );
+                    if( compareString( strBuffer, "End Simulator Configuration File" ) == 0 )
+                    {
+                        fclose( filePointer );
+                        return logConfig( config, config->logFilePath );
+
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return FILE_END_ERROR;
+                    }
                 }
+            }
 
-                dataStrIndex = 0;
+            // Push off colon.
+            charAsInt = fgetc( filePointer );
 
-                while( charAsInt != (int)( NEWLINE ) )
-                {
-                    dataStrBuffer[ dataStrIndex ] = (char)( charAsInt );
+            // Skip whitespace.
+            while( charAsInt == (int)( SPACE ) )
+            {
+                charAsInt = fgetc( filePointer );
+            }
 
-                    dataStrIndex++;
+            dataStrIndex = 0;
 
-                    dataStrBuffer[ dataStrIndex ] = NULL_CHAR;
+            while( charAsInt != (int)( NEWLINE ) &&
+                   feof( filePointer ) == NOT_AT_FILE_END )
+            {
+                dataStrBuffer[ dataStrIndex ] = (char)( charAsInt );
 
-                    charAsInt = fgetc( filePointer );
-                }
+                dataStrIndex++;
 
-                switch( stepIndex )
-                {
-                    case VERSION:
-                        if( compareString( strBuffer, "Version/Phase" ) == 0 )
+                dataStrBuffer[ dataStrIndex ] = NULL_CHAR;
+
+                charAsInt = fgetc( filePointer );
+            }
+
+            switch( stepIndex )
+            {
+                case VERSION:
+                    if( compareString( strBuffer, "Version/Phase" ) == 0 )
+                    {
+                        int tempVersion = stringToInt( dataStrBuffer );
+                        if( versionIsValid( tempVersion ) )
                         {
-                            config->versionNumber =  stringToInt( dataStrBuffer );
+                            config->versionNumber = tempVersion;
                         }
                         else
                         {
                             fclose( filePointer );
-                            return DATA_ORDER_ERROR;
+                            return DATA_ERROR;
                         }
-                        break;
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return DATA_ORDER_ERROR;
+                    }
+                    break;
 
-                    case FILE_PATH:
-                        if( compareString( strBuffer, "File Path" ) == 0 )
-                        {
-                            copyString( config->filePath, dataStrBuffer );
-                        }
-                        else
-                        {
-                            fclose( filePointer );
-                            return DATA_ORDER_ERROR;
-                        }
-                        break;
+                case FILE_PATH:
+                    if( compareString( strBuffer, "File Path" ) == 0 )
+                    {
+                        copyString( config->filePath, dataStrBuffer );
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return DATA_ORDER_ERROR;
+                    }
+                    break;
 
-                    case CPU_CODE:
-                        if( compareString( strBuffer, "CPU Scheduling Code" ) == 0 )
+                case CPU_CODE:
+                    if( compareString( strBuffer, "CPU Scheduling Code" ) == 0 )
+                    {
+                        if ( cpuCodeIsValid( dataStrBuffer ) )
                         {
                             if( compareString( dataStrBuffer, "NONE" ) == 0 )
                             {
                                 copyString( config->schedulingCode, "FCFS-N" );
                             }
-                            // TODO: Else if validate input
                             else
                             {
                                 copyString( config->schedulingCode, dataStrBuffer );
@@ -154,92 +162,141 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                         else
                         {
                             fclose( filePointer );
-                            return DATA_ORDER_ERROR;
+                            return DATA_ERROR;
                         }
-                        break;
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return DATA_ORDER_ERROR;
+                    }
+                    break;
 
-                    case QUANTUM_TIME:
-                        if( compareString( strBuffer, "Quantum Time (cycles)" ) == 0 )
+                case QUANTUM_TIME:
+                    if( compareString( strBuffer, "Quantum Time (cycles)" ) == 0 )
+                    {
+                        int tempQuantumTime = stringToInt( dataStrBuffer );
+                        if( quantumTimeIsValid( tempQuantumTime ) )
                         {
-                            config->quantumTime = stringToInt( dataStrBuffer );
+                            config->quantumTime = tempQuantumTime;
                         }
                         else
                         {
                             fclose( filePointer );
-                            return DATA_ORDER_ERROR;
+                            return DATA_ERROR;
                         }
-                        break;
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return DATA_ORDER_ERROR;
+                    }
+                    break;
 
-                    case MEMORY:
-                        if( compareString( strBuffer, "Memory Available (KB)" ) == 0 )
+                case MEMORY:
+                    if( compareString( strBuffer, "Memory Available (KB)" ) == 0 )
+                    {
+                        int tempMemory = stringToInt( dataStrBuffer );
+                        if( memoryIsValid( tempMemory ) )
                         {
-                            config->memoryAvailible = stringToInt( dataStrBuffer );
+                            config->memoryAvailible = tempMemory;
                         }
                         else
                         {
                             fclose( filePointer );
-                            return DATA_ORDER_ERROR;
+                            return DATA_ERROR;
                         }
-                        break;
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return DATA_ORDER_ERROR;
+                    }
+                    break;
 
-                    case P_CYCLE_TIME:
-                        if( compareString( strBuffer, "Processor Cycle Time (msec)" ) == 0 )
+                case P_CYCLE_TIME:
+                    if( compareString( strBuffer, "Processor Cycle Time (msec)" ) == 0 )
+                    {
+                        int tempCycle = stringToInt( dataStrBuffer );
+                        if( processorCycleIsValid( tempCycle ) )
                         {
-                            config->processorCycleTime = stringToInt( dataStrBuffer );
+                            config->processorCycleTime = tempCycle;
                         }
                         else
                         {
                             fclose( filePointer );
-                            return DATA_ORDER_ERROR;
+                            return DATA_ERROR;
                         }
-                        break;
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return DATA_ORDER_ERROR;
+                    }
+                    break;
 
-                    case IO_CYCLE_TIME:
-                        if( compareString( strBuffer, "I/O Cycle Time (msec)" ) == 0 )
+                case IO_CYCLE_TIME:
+                    if( compareString( strBuffer, "I/O Cycle Time (msec)" ) == 0 )
+                    {
+                        int tempCycle = stringToInt( dataStrBuffer );
+                        if( ioCycleIsValid( tempCycle ) )
                         {
-                            config->ioCyleTime = stringToInt( dataStrBuffer );
+                            config->ioCyleTime = tempCycle;
                         }
                         else
                         {
                             fclose( filePointer );
-                            return DATA_ORDER_ERROR;
+                            return DATA_ERROR;
                         }
-                        break;
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return DATA_ORDER_ERROR;
+                    }
+                    break;
 
-                    case LOG_INSTRUCTION:
-                        if( compareString( strBuffer, "Log To" ) == 0 )
+                case LOG_INSTRUCTION:
+                    if( compareString( strBuffer, "Log To" ) == 0 )
+                    {
+                        if( logInstructionIsValid( dataStrBuffer ) )
                         {
                             copyString( config->logInstruction, dataStrBuffer );
                         }
                         else
                         {
                             fclose( filePointer );
-                            return DATA_ORDER_ERROR;
+                            return DATA_ERROR;
                         }
-                        break;
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return DATA_ORDER_ERROR;
+                    }
+                    break;
 
-                    case LOG_PATH:
-                        if( compareString( strBuffer, "Log File Path" ) == 0 )
+                case LOG_PATH:
+                    if( compareString( strBuffer, "Log File Path" ) == 0 )
+                    {
+                        if( compareString( config->logInstruction, "MONITOR" ) == 0 )
                         {
-                            if( compareString( config->logInstruction, "MONITOR" ) == 0 )
-                            {
-                                copyString( config->logFilePath, "none" );
-                            }
-                            else
-                            {
-                                copyString( config->logFilePath, dataStrBuffer );
-                            }
+                            copyString( config->logFilePath, "none" );
                         }
                         else
                         {
-                            fclose( filePointer );
-                            return DATA_ORDER_ERROR;
+                            copyString( config->logFilePath, dataStrBuffer );
                         }
-                        break;
-                }
-
-                stepIndex++;
+                    }
+                    else
+                    {
+                        fclose( filePointer );
+                        return DATA_ORDER_ERROR;
+                    }
+                    break;
             }
+
+            stepIndex++;
         }
     }
     else
@@ -256,7 +313,7 @@ int getConfig( ConfigDictionary *config, const char *fileName )
 int logConfig( ConfigDictionary *config, const char *fileName )
 {
     if( compareString( config->logInstruction, "Both" ) == 0 ||
-        compareString( config->logInstruction, "File" ) )
+        compareString( config->logInstruction, "File" ) == 0 )
     {
         FILE *filePointer;
 
@@ -285,8 +342,9 @@ int logConfig( ConfigDictionary *config, const char *fileName )
 
         fclose( filePointer );
     }
-    if(compareString( config->logInstruction, "Monitor" ) == 0 ||
-        compareString( config->logInstruction, "Both" ) == 0 )
+
+    if( compareString( config->logInstruction, "Monitor" ) == 0 ||
+        compareString( config->logInstruction, "Both" )    == 0 )
     {
         printf( "Config File Log\n");
         printf( "===============\n");
@@ -312,6 +370,83 @@ int logConfig( ConfigDictionary *config, const char *fileName )
 
     return NO_ERROR_MSG;
 
+}
+
+int versionIsValid( int versionNumber )
+{
+    if( versionNumber >= 0 && versionNumber <= 10 )
+    {
+        return True;
+    }
+
+    return False;
+}
+
+int cpuCodeIsValid( char *cpuCode )
+{
+    if( compareString( cpuCode, "NONE" )   == 0 ||
+        compareString( cpuCode, "FCFS-N" ) == 0 ||
+        compareString( cpuCode, "SJF-N" )  == 0 ||
+        compareString( cpuCode, "SRTF-P" ) == 0 ||
+        compareString( cpuCode, "FCFS-P" ) == 0 ||
+        compareString( cpuCode, "RR-P" )   == 0 )
+    {
+        return True;
+    }
+
+    return False;
+}
+
+int quantumTimeIsValid( int quantumTime )
+{
+    if( quantumTime >= 0 && quantumTime <= 100 )
+    {
+        return True;
+    }
+
+    return False;
+}
+
+int memoryIsValid( int memory )
+{
+    if( memory >= 0 && memory <= 1048576 )
+    {
+        return True;
+    }
+
+    return False;
+}
+
+int processorCycleIsValid( int processorCycle )
+{
+    if( processorCycle >= 0 && processorCycle <= 1000 )
+    {
+        return True;
+    }
+
+    return False;
+}
+
+int ioCycleIsValid( int ioCycle )
+{
+    if( ioCycle >= 0 && ioCycle <= 10000 )
+    {
+        return True;
+    }
+
+    return False;
+}
+
+int logInstructionIsValid( char *instruction )
+{
+    if( compareString( instruction, "Monitor" ) == 0 ||
+        compareString( instruction, "File" )    == 0 ||
+        compareString( instruction, "Both" )    == 0 )
+    {
+        return True;
+    }
+
+    return False;
 }
 
 #endif

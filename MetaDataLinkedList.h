@@ -18,9 +18,6 @@
 
 #include "Utilities.h"
 
-// global constants, forward declaration
-
-// struct declaration
 typedef struct MetaDataNode
 {
     char commandLetter;
@@ -29,13 +26,13 @@ typedef struct MetaDataNode
     struct MetaDataNode *next;
 } MetaDataNode;
 
-// function prototypes
 MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode );
 MetaDataNode *clearList( MetaDataNode *headNode );
 MetaDataNode *makeNode( char inCmdLetter, char *inOperation, int inCmdValue );
 int getMetaData( MetaDataNode **headNode, char *fileName,
                  char *instruction, char *logFilePath );
-                 
+
 int logMetaData( MetaDataNode *headNode, char *instruction, char *logFilePath );
+int operationIsValid( char *operation );
 
 #endif

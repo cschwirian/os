@@ -116,7 +116,7 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
             {
                 strIndex = 0;
 
-                while( charAsInt != (int)( '.' ) )
+                while( charAsInt != (int)( PERIOD ) )
                 {
                     strBuffer[ strIndex ] = (char)( charAsInt );
                     strIndex++;
@@ -148,7 +148,8 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
             strIndex = 0;
 
             charAsInt = fgetc( filePointer );
-            while( charAsInt != (char)( CLOSE_PAREN ) )
+            while( charAsInt != (char)( CLOSE_PAREN ) &&
+                   feof( filePointer ) == NOT_AT_FILE_END )
             {
                 tempOperation[ strIndex ] = (char)( charAsInt );
                 strIndex++;
@@ -159,12 +160,19 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
             strIndex = 0;
 
             charAsInt = fgetc( filePointer );
-            while( charAsInt != (int)( SEMICOLON ) && charAsInt != (int)( '.' ) )
+            while( charAsInt != (int)( SEMICOLON ) &&
+                   charAsInt != (int)( PERIOD ) &&
+                   feof( filePointer ) == NOT_AT_FILE_END )
             {
                 strBuffer[ strIndex ] = (char)( charAsInt );
                 strIndex++;
                 strBuffer[ strIndex ] = NULL_CHAR;
                 charAsInt = fgetc( filePointer );
+            }
+
+            if( operationIsValid( tempOperation ) == False )
+            {
+                return DATA_ERROR;
             }
 
             tempNode = makeNode( tempCmdLetter, tempOperation, stringToInt( strBuffer ) );
@@ -179,7 +187,7 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
 int logMetaData( MetaDataNode *headNode, char *instruction, char *logFilePath )
 {
     if( compareString( instruction, "Monitor" ) == 0 ||
-        compareString( instruction, "Both" ) )
+        compareString( instruction, "Both" ) == 0 )
     {
         MetaDataNode *currentNode = headNode;
 
@@ -197,11 +205,10 @@ int logMetaData( MetaDataNode *headNode, char *instruction, char *logFilePath )
 
             currentNode = currentNode->next;
         }
-
-        return NO_ERROR_MSG;
     }
+
     if( compareString( instruction, "File" ) == 0 ||
-        compareString( instruction, "Both" ) )
+        compareString( instruction, "Both" ) == 0 )
     {
         FILE *filePointer;
 
@@ -225,10 +232,27 @@ int logMetaData( MetaDataNode *headNode, char *instruction, char *logFilePath )
         }
 
         fclose( filePointer );
-        return NO_ERROR_MSG;
     }
 
-    return UNKNOWN_ERROR;
+    return NO_ERROR_MSG;
+}
+
+int operationIsValid( char *operation )
+{
+    if( compareString( operation, "access" )     == 0 ||
+        compareString( operation, "allocate" )   == 0 ||
+        compareString( operation, "end" )        == 0 ||
+        compareString( operation, "hard drive" ) == 0 ||
+        compareString( operation, "keyboard" )   == 0 ||
+        compareString( operation, "printer" )    == 0 ||
+        compareString( operation, "monitor" )    == 0 ||
+        compareString( operation, "run" )        == 0 ||
+        compareString( operation, "start" )      == 0 )
+    {
+        return True;
+    }
+
+    return False;
 }
 
 #endif
