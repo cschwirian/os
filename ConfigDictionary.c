@@ -75,7 +75,7 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                                      "End Simulator Configuration File" ) == 0 )
                     {
                         fclose( filePointer );
-                        return logConfig( config, config->logFilePath );
+                        return NO_ERROR_MSG;
 
                     }
                     else

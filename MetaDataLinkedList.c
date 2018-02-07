@@ -128,7 +128,7 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
                                    "End Program Meta-Data Code" ) == 0 )
                 {
                     fclose( filePointer );
-                    return logMetaData( *headNode, instruction, logFilePath );
+                    return NO_ERROR_MSG;
                 }
                 else
                 {
