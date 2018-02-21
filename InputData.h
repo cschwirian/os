@@ -15,6 +15,7 @@
 
 #include "ConfigDictionary.h"
 #include "MetaDataLinkedList.h"
+#include "ProcessList.h"
 
 int main( int argc, char *argv[] );
 
