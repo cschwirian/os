@@ -3,11 +3,17 @@ DEBUG = -g
 CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
 LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
 
-Sim01 : Utilities.o ConfigDictionary.o MetaDataLinkedList.o InputData.o
-	$(CC) $(LFLAGS) Utilities.o ConfigDictionary.o MetaDataLinkedList.o InputData.o -o Sim01
+Sim01 : Utilities.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o
+	$(CC) $(LFLAGS) Utilities.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o -o Sim01
 
 InputData.o : InputData.c InputData.h
 	$(CC) $(CFLAGS) InputData.c
+
+ProcessList.o : ProcessList.c ProcessList.h LogData.o Utilities.h
+	$(CC) $(CFLAGS) ProcessList.c
+
+LogData.o : LogData.c LogData.h Utilities.h
+	$(CC) $(CFLAGS) LogData.c
 
 MetaDataLinkedList.o : MetaDataLinkedList.c MetaDataLinkedList.h Utilities.h
 	$(CC) $(CFLAGS) MetaDataLinkedList.c

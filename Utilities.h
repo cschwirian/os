@@ -56,6 +56,15 @@ enum ERROR_MESSAGE_CODES
     FILE_NOT_FOUND = 7
 };
 
+enum PROCESS_ERROR_CODES
+{
+    NO_PROCESS_ERROR = 10,
+    NO_SYSTEM_START = 11,
+    NO_SYSTEM_END = 12,
+    MISSING_PROCESS_END = 13,
+    PROCESS_FORMAT_ERROR = 14
+};
+
 void copyString( char *target, char *original );
 int compareString( char *string1, char *string2 );
 int stringToInt( char *string );

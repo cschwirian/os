@@ -5,16 +5,14 @@
 
 #include "Utilities.h"
 
-const int LINE_LENGTH = 80;
-
 typedef struct LogData
 {
-    char logLine[ LINE_LENGTH ];
-    LogData next;
+    char logLine[ 80 ];     // 80 serves as the logfile line length.
+    struct LogData *next;
 } LogData;
 
 void addLine( LogData *data, char *line );
-void clearData( LogData *data );
+LogData *clearData( LogData *data );
 void logToFile( LogData *data, char *fileName );
 
 #endif
