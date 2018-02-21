@@ -4,19 +4,19 @@ CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
 LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
 
 Sim01 : Utilities.o ConfigDictionary.o MetaDataLinkedList.o InputData.o
-    $(CC) $(LFLAGS)
+	$(CC) $(LFLAGS) Utilities.o ConfigDictionary.o MetaDataLinkedList.o InputData.o -o Sim01
 
 InputData.o : InputData.c InputData.h
-    $(CC) $(CFLAGS) InputData.c
+	$(CC) $(CFLAGS) InputData.c
 
 MetaDataLinkedList.o : MetaDataLinkedList.c MetaDataLinkedList.h Utilities.h
-    $(CC) $(CFLAGS) MetaDataLinkedList.c
+	$(CC) $(CFLAGS) MetaDataLinkedList.c
 
 ConfigDictionary.o : ConfigDictionary.c ConfigDictionary.h Utilities.h
-    $(CC) $(CFLAGS) ConfigDictionary.c
+	$(CC) $(CFLAGS) ConfigDictionary.c
 
 Utilities.o : Utilities.c Utilities.h
-    $(CC) $(CFLAGS) Utilities.c
+	$(CC) $(CFLAGS) Utilities.c
 
 clean:
-    \rm *.o Sim01
+	\rm *.o Sim01 *.lgf
