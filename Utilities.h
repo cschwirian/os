@@ -62,7 +62,8 @@ enum PROCESS_ERROR_CODES
     NO_SYSTEM_START = 11,
     NO_SYSTEM_END = 12,
     MISSING_PROCESS_END = 13,
-    PROCESS_FORMAT_ERROR = 14
+    PROCESS_FORMAT_ERROR = 14,
+    PROCESS_MEMORY_ERROR = 15
 };
 
 void copyString( char *target, char *original );
