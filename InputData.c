@@ -17,7 +17,7 @@
 
 int main( int argc, char *argv[] )
 {
-    int configMessage, metaDataMessage;
+    int configMessage, metaDataMessage, processMessage;
 
 
     printf( "Parsing Operating System Data...\n" );
@@ -42,13 +42,19 @@ int main( int argc, char *argv[] )
     printf( "Total Program Runtime: %d ms\n", getTotalRuntime( metaData, config ) );
 
     ProcessList *pList = NULL;
+    processMessage = UNKNOWN_ERROR;
 
     if( metaDataMessage == NO_ERROR_MSG )
     {
-        populateList( &pList, metaData );
+        processMessage = populateList( &pList, metaData );
     }
 
     printf( "Process List Populated...\n" );
+
+    if( processMessage == NO_PROCESS_ERROR )
+    {
+        runProcesses( pList, config );
+    }
 
     free( config );
     config = NULL;

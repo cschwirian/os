@@ -100,7 +100,71 @@ int populateList( ProcessList **pList, MetaDataNode *data )
 
 int runProcesses( ProcessList *pList, ConfigDictionary *config )
 {
-    return 1;
+    int memoryAvailible, processCount;
+    MetaDataNode *process;
+    pthread_t threadID;
+    pthread_attr_t threadAttr;
+
+    if( pList == NULL )
+    {
+        return EMPTY_PROGRAM_ERROR;
+    }
+    else if( config == NULL )
+    {
+        return UNKNOWN_CONFIGURATION_ERROR;
+    }
+
+    memoryAvailible = config->memoryAvailible;
+    processCount = 0;
+
+    while( pList != NULL )
+    {
+        printf( "Running Process %d...\n", processCount );
+        printf( "Total Process Runtime: %d\n", getTotalRuntime( pList->process, config ) );
+
+        process = pList->process;
+        while( process != NULL )
+        {
+            printf( "Running Process %d: ", processCount );
+            printf( "%c %s %d\n", process->commandLetter, process->operation, process->commandValue );
+            process = process->next;
+
+            if( process->commandLetter == 'I' )
+            {
+                pthread_attr_init( &threadAttr );
+                pthread_create( &threadID, &threadAttr, runInput, (void *)process->commandValue );
+                pthread_join( threadID, NULL );
+            }
+            else if( process->commandLetter == 'O' )
+            {
+                pthread_attr_init( &threadAttr );
+                pthread_create( &threadID, &threadAttr, runOutput, (void *)process->commandValue );
+                pthread_join( threadID, NULL );
+            }
+            else if( process->commandLetter == 'P' )
+            {
+                pthread_attr_init( &threadAttr );
+                pthread_create( &threadID, &threadAttr, runProcessor, (void *)process->commandValue );
+                pthread_join( threadID, NULL );
+            }
+            else if( process->commandLetter == 'M' )
+            {
+                printf( "memory management " );
+                printf( "%s action start\n", process->operation );
+                printf( "memory management " );
+                printf( "%s action end\n", process->operation );
+            }
+            else
+            {
+                return PROCESS_FORMAT_ERROR;
+            }
+        }
+
+        pList = pList->next;
+        processCount++;
+    }
+
+    return NO_PROCESS_ERROR;
 }
 
 ProcessList *addProcess( ProcessList *pList, ProcessList *newProcess )
