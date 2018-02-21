@@ -25,7 +25,7 @@ typedef struct ConfigDictionary
     int quantumTime;
     int memoryAvailible;
     int processorCycleTime;
-    int ioCyleTime;
+    int ioCycleTime;
     char logInstruction[ 8 ];
     char logFilePath[ 30 ];
 } ConfigDictionary;

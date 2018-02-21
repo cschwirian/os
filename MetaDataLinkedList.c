@@ -46,6 +46,18 @@ MetaDataNode *makeNode( char inCmdLetter, char *inOperation, int inCmdValue )
     return newNode;
 }
 
+MetaDataNode *copyNode( MetaDataNode *original )
+{
+    MetaDataNode *newNode = (MetaDataNode *)malloc( sizeof( MetaDataNode ) );
+
+    newNode->commandLetter = original->commandLetter;
+    copyString( newNode->operation, original->operation );
+    newNode->commandValue = original->commandValue;
+    newNode->next = NULL;
+
+    return newNode;
+}
+
 MetaDataNode *clearList( MetaDataNode *headNode )
 {
     if( headNode == NULL )

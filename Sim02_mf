@@ -4,7 +4,7 @@ CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
 LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
 
 Sim01 : Utilities.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o
-	$(CC) $(LFLAGS) Utilities.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o -o Sim01
+	$(CC) $(LFLAGS) Utilities.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o -o Sim02
 
 InputData.o : InputData.c InputData.h
 	$(CC) $(CFLAGS) InputData.c
@@ -25,4 +25,4 @@ Utilities.o : Utilities.c Utilities.h
 	$(CC) $(CFLAGS) Utilities.c
 
 clean:
-	\rm *.o Sim01 *.lgf
+	\rm *.o Sim02 *.lgf

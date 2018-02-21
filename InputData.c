@@ -17,22 +17,45 @@
 
 int main( int argc, char *argv[] )
 {
+    int configMessage, metaDataMessage;
+
+
+    printf( "Parsing Operating System Data...\n" );
+
     ConfigDictionary *config = malloc( sizeof( ConfigDictionary ) );
 
-    int configMessage = getConfig(config, argv[ 1 ] );
+    configMessage = getConfig(config, argv[ 1 ] );
+
+    printf( "Configuration Data Parsed...\n" );
 
     MetaDataNode *metaData = NULL;
+    metaDataMessage = UNKNOWN_ERROR;
 
     if( configMessage == NO_ERROR_MSG )
     {
-        getMetaData( &metaData, config->filePath,
+        metaDataMessage = getMetaData( &metaData, config->filePath,
                     config->logInstruction, config->logFilePath );
     }
 
-    clearList( metaData );
+    printf( "Metadata Parsed...\n" );
+
+    printf( "Total Program Runtime: %d ms\n", getTotalRuntime( metaData, config ) );
+
+    ProcessList *pList = NULL;
+
+    if( metaDataMessage == NO_ERROR_MSG )
+    {
+        populateList( &pList, metaData );
+    }
+
+    printf( "Process List Populated...\n" );
 
     free( config );
     config = NULL;
+
+    clearList( metaData );
+
+    clearProcessList( pList );
 }
 
 #endif

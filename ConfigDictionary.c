@@ -240,7 +240,7 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                         int tempCycle = stringToInt( dataStrBuffer );
                         if( ioCycleIsValid( tempCycle ) )
                         {
-                            config->ioCyleTime = tempCycle;
+                            config->ioCycleTime = tempCycle;
                         }
                         else
                         {
@@ -334,7 +334,7 @@ int logConfig( ConfigDictionary *config, const char *fileName )
         fprintf( filePointer, "Memory Available   : ");
         fprintf( filePointer, "%d\n", config->processorCycleTime );
         fprintf( filePointer, "I/O Cycle Time     : ");
-        fprintf( filePointer, "%d\n", config->ioCyleTime );
+        fprintf( filePointer, "%d\n", config->ioCycleTime );
         fprintf( filePointer, "Log To             : ");
         fprintf( filePointer, "%s\n", config->logInstruction );
         fprintf( filePointer, "Log File Name      : ");
@@ -361,7 +361,7 @@ int logConfig( ConfigDictionary *config, const char *fileName )
         printf( "Memory Available   : ");
         printf( "%d\n", config->processorCycleTime );
         printf( "I/O Cycle Time     : ");
-        printf( "%d\n", config->ioCyleTime );
+        printf( "%d\n", config->ioCycleTime );
         printf( "Log To             : ");
         printf( "%s\n", config->logInstruction );
         printf( "Log File Name      : ");

@@ -28,8 +28,9 @@ typedef struct MetaDataNode
 } MetaDataNode;
 
 MetaDataNode *addNode( MetaDataNode *headNode, MetaDataNode *newNode );
-MetaDataNode *clearList( MetaDataNode *headNode );
 MetaDataNode *makeNode( char inCmdLetter, char *inOperation, int inCmdValue );
+MetaDataNode *copyNode( MetaDataNode *original );
+MetaDataNode *clearList( MetaDataNode *headNode );
 
 int getMetaData( MetaDataNode **headNode, char *fileName,
                  char *instruction, char *logFilePath );
