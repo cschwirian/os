@@ -69,6 +69,14 @@ enum PROCESS_ERROR_CODES
     UNKNOWN_CONFIGURATION_ERROR = 17
 };
 
+enum PCB_STATES
+{
+    NEW_STATE = 0,
+    READY_STATE = 1,
+    RUNNING_STATE = 2,
+    EXIT_STATE = 3
+};
+
 void copyString( char *target, char *original );
 int compareString( char *string1, char *string2 );
 int stringToInt( char *string );

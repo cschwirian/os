@@ -34,6 +34,7 @@ int populateList( ProcessList **pList, MetaDataNode *data )
 
                 currentProcess = (ProcessList *)malloc( sizeof( ProcessList ) );
                 currentProcess->process = NULL;
+                currentProcess->state = NEW_STATE;
                 currentProcess->next = NULL;
             }
             else if( compareString( currentData->operation, "end") == 0 &&
@@ -98,12 +99,37 @@ int populateList( ProcessList **pList, MetaDataNode *data )
     return PROCESS_FORMAT_ERROR;
 }
 
-int runProcesses( ProcessList *pList, ConfigDictionary *config )
+int runProcesses( ProcessList *pList,
+                  ConfigDictionary *config,
+                  MetaDataNode *data )
 {
-    int memoryAvailible, processCount;
+    int memoryAvailible, processCount, processCode;
+    int *timePointer;
+    char timeString[ 10 ];
     MetaDataNode *process;
     pthread_t threadID;
     pthread_attr_t threadAttr;
+
+    accessTimer( ZERO_TIMER, timeString );
+    printf( "Time: %s, System Start\n", timeString );
+
+    accessTimer( LAP_TIMER, timeString );
+    printf( "Time: %s, OS: Begin PCB Creation\n", timeString );
+
+    processCode = populateList( &pList, data );
+
+    accessTimer( LAP_TIMER, timeString );
+    printf( "Time: %s, OS: All processes initialized in New state\n", timeString );
+
+    setProcessStates( pList, READY_STATE );
+
+    accessTimer( LAP_TIMER, timeString );
+    printf( "Time: %s, OS: All proceses now set in Ready state\n", timeString );
+
+    if( processCode != NO_PROCESS_ERROR )
+    {
+        return processCode;
+    }
 
     if( pList == NULL )
     {
@@ -119,50 +145,111 @@ int runProcesses( ProcessList *pList, ConfigDictionary *config )
 
     while( pList != NULL )
     {
-        printf( "Running Process %d...\n", processCount );
-        printf( "Total Process Runtime: %d\n", getTotalRuntime( pList->process, config ) );
+
+        accessTimer( LAP_TIMER, timeString );
+        printf( "Time: %s, OS: %s strategy selects Process %d with time %d msec\n",
+                timeString,
+                config->schedulingCode,
+                processCount,
+                getTotalRuntime( pList->process, config ) );
+
+        pList->state = RUNNING_STATE;
+
+        accessTimer( LAP_TIMER, timeString );
+        printf( "Time: %s, OS: Process %d set in Running state\n", timeString, processCount );
 
         process = pList->process;
         while( process != NULL )
         {
-            printf( "Running Process %d: ", processCount );
-            printf( "%c %s %d\n", process->commandLetter, process->operation, process->commandValue );
-            process = process->next;
+            accessTimer( LAP_TIMER, timeString );
+            printf( "Time: %s, Process %d, ", timeString, processCount );
 
             if( process->commandLetter == 'I' )
             {
+                printf( "%s input start\n", process->operation );
+
+                timePointer = (int *)malloc( sizeof( int ) );
+                *timePointer = process->commandValue;
+                *timePointer = (*timePointer) * config->ioCycleTime;
+
                 pthread_attr_init( &threadAttr );
-                pthread_create( &threadID, &threadAttr, runInput, (void *)process->commandValue );
+                pthread_create( &threadID, &threadAttr, runInput, (void *)timePointer );
                 pthread_join( threadID, NULL );
+
+                free( timePointer );
+
+                accessTimer( LAP_TIMER, timeString );
+                printf( "Time: %s, Process %d, ", timeString, processCount );
+                printf( "%s input end\n", process->operation );
             }
             else if( process->commandLetter == 'O' )
             {
+                printf( "%s output start\n", process->operation );
+
+                timePointer = (int *)malloc( sizeof( int ) );
+                *timePointer = process->commandValue;
+                *timePointer = (*timePointer) * config->ioCycleTime;
+
                 pthread_attr_init( &threadAttr );
-                pthread_create( &threadID, &threadAttr, runOutput, (void *)process->commandValue );
+                pthread_create( &threadID, &threadAttr, runOutput, (void *)timePointer );
                 pthread_join( threadID, NULL );
+
+                free( timePointer );
+
+                accessTimer( LAP_TIMER, timeString );
+                printf( "Time: %s, Process %d, ", timeString, processCount );
+                printf( "%s output end\n", process->operation );
             }
             else if( process->commandLetter == 'P' )
             {
+                printf( "run operation start\n");
+
+                timePointer = (int *)malloc( sizeof( int ) );
+                *timePointer = process->commandValue;
+                *timePointer = (*timePointer) * config->processorCycleTime;
+
                 pthread_attr_init( &threadAttr );
-                pthread_create( &threadID, &threadAttr, runProcessor, (void *)process->commandValue );
+                pthread_create( &threadID, &threadAttr, runProcessor, (void *)timePointer );
                 pthread_join( threadID, NULL );
+
+                free( timePointer );
+
+                accessTimer( LAP_TIMER, timeString );
+                printf( "Time: %s, Process %d, ", timeString, processCount );
+                printf( "run operation end\n");
             }
             else if( process->commandLetter == 'M' )
             {
                 printf( "memory management " );
                 printf( "%s action start\n", process->operation );
+
+                accessTimer( LAP_TIMER, timeString );
+                printf( "Time: %s, Process %d, ", timeString, processCount );
                 printf( "memory management " );
                 printf( "%s action end\n", process->operation );
             }
             else
             {
+                accessTimer( STOP_TIMER, timeString );
+
                 return PROCESS_FORMAT_ERROR;
             }
+
+            process = process->next;
         }
+        pList->state = EXIT_STATE;
+
+        accessTimer( LAP_TIMER, timeString );
+        printf( "Time: %s, OS: Process %d set in Exit state\n",
+                timeString,
+                processCount );
 
         pList = pList->next;
         processCount++;
     }
+
+    accessTimer( STOP_TIMER, timeString );
+    printf( "Time: %s, System Stop\n", timeString );
 
     return NO_PROCESS_ERROR;
 }
@@ -247,6 +334,33 @@ ProcessList *clearProcessList( ProcessList *pList )
     pList = NULL;
 
     return pList;
+}
+
+void *runInput( void *time )
+{
+    runTimer( *(int *)time );
+    pthread_exit( NULL );
+}
+
+void *runOutput( void *time )
+{
+    runTimer( *(int *)time );
+    pthread_exit( NULL );
+}
+
+void *runProcessor( void *time )
+{
+    runTimer( *(int *)time );
+    pthread_exit( NULL );
+}
+
+void setProcessStates( ProcessList *pList, int state )
+{
+    while( pList != NULL )
+    {
+        pList->state = state;
+        pList = pList->next;
+    }
 }
 
 #endif

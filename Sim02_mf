@@ -3,13 +3,13 @@ DEBUG = -g
 CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
 LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
 
-Sim01 : Utilities.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o
-	$(CC) $(LFLAGS) Utilities.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o -o Sim02
+Sim02 : Utilities.o simtimer.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o
+	$(CC) $(LFLAGS) Utilities.o simtimer.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o -o Sim02
 
 InputData.o : InputData.c InputData.h
 	$(CC) $(CFLAGS) InputData.c
 
-ProcessList.o : ProcessList.c ProcessList.h LogData.o Utilities.h
+ProcessList.o : ProcessList.c ProcessList.h LogData.h simtimer.h Utilities.h
 	$(CC) $(CFLAGS) ProcessList.c
 
 LogData.o : LogData.c LogData.h Utilities.h
@@ -20,6 +20,9 @@ MetaDataLinkedList.o : MetaDataLinkedList.c MetaDataLinkedList.h Utilities.h
 
 ConfigDictionary.o : ConfigDictionary.c ConfigDictionary.h Utilities.h
 	$(CC) $(CFLAGS) ConfigDictionary.c
+
+simtimer.o : simtimer.c simtimer.h Utilities.h
+	$(CC) $(CFLAGS) simtimer.c
 
 Utilities.o : Utilities.c Utilities.h
 	$(CC) $(CFLAGS) Utilities.c

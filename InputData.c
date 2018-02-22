@@ -19,14 +19,9 @@ int main( int argc, char *argv[] )
 {
     int configMessage, metaDataMessage, processMessage;
 
-
-    printf( "Parsing Operating System Data...\n" );
-
     ConfigDictionary *config = malloc( sizeof( ConfigDictionary ) );
 
     configMessage = getConfig(config, argv[ 1 ] );
-
-    printf( "Configuration Data Parsed...\n" );
 
     MetaDataNode *metaData = NULL;
     metaDataMessage = UNKNOWN_ERROR;
@@ -37,23 +32,12 @@ int main( int argc, char *argv[] )
                     config->logInstruction, config->logFilePath );
     }
 
-    printf( "Metadata Parsed...\n" );
-
-    printf( "Total Program Runtime: %d ms\n", getTotalRuntime( metaData, config ) );
-
     ProcessList *pList = NULL;
     processMessage = UNKNOWN_ERROR;
 
     if( metaDataMessage == NO_ERROR_MSG )
     {
-        processMessage = populateList( &pList, metaData );
-    }
-
-    printf( "Process List Populated...\n" );
-
-    if( processMessage == NO_PROCESS_ERROR )
-    {
-        runProcesses( pList, config );
+        processMessage = runProcesses( pList, config, metaData );
     }
 
     free( config );
