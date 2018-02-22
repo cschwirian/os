@@ -22,7 +22,6 @@ int populateList( ProcessList **pList, MetaDataNode *data )
 
     while( currentData != NULL )
     {
-        //printf( "Current command: %c | commandValue = %d\n", currentData->commandLetter, currentData->commandValue );
         if( currentData->commandLetter == 'A' )
         {
             if( compareString( currentData->operation, "start") == 0 &&
@@ -105,26 +104,53 @@ int runProcesses( ProcessList *pList,
 {
     int processCount, processCode;
     int *timePointer;
-    char timeString[ 10 ];
+    char timeString[ 10 ], logBuffer[ 81 ];
+    Boolean logToFile, logToMonitor;
     MetaDataNode *process;
+    LogData *logData;
     pthread_t threadID;
     pthread_attr_t threadAttr;
 
+    logToFile = False;
+    logToMonitor = False;
+    logData = NULL;
+
+    if( compareString( config->logInstruction, "File" ) == 0 ||
+        compareString( config->logInstruction, "Both" ) == 0 )
+    {
+        logToFile = True;
+        logData = (LogData *)malloc( sizeof( LogData ) );
+    }
+
+    if( compareString( config->logInstruction, "Monitor" ) == 0 ||
+        compareString( config->logInstruction, "Both" ) == 0 )
+    {
+        logToMonitor = True;
+    }
+
     accessTimer( ZERO_TIMER, timeString );
-    printf( "Time: %s, System Start\n", timeString );
+    sprintf( logBuffer, "Time: %s, System Start\n", timeString );
+    followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
     accessTimer( LAP_TIMER, timeString );
-    printf( "Time: %s, OS: Begin PCB Creation\n", timeString );
+    sprintf( logBuffer, "Time: %s, OS: Begin PCB Creation\n", timeString );
+    followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
     processCode = populateList( &pList, data );
 
     accessTimer( LAP_TIMER, timeString );
-    printf( "Time: %s, OS: All processes initialized in New state\n", timeString );
+    sprintf( logBuffer,
+             "Time: %s, OS: All processes initialized in New state\n",
+             timeString );
+    followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
     setProcessStates( pList, READY_STATE );
 
     accessTimer( LAP_TIMER, timeString );
-    printf( "Time: %s, OS: All proceses now set in Ready state\n", timeString );
+    sprintf( logBuffer,
+             "Time: %s, OS: All proceses now set in Ready state\n",
+             timeString );
+    followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
     if( processCode != NO_PROCESS_ERROR )
     {
@@ -146,109 +172,151 @@ int runProcesses( ProcessList *pList,
     {
 
         accessTimer( LAP_TIMER, timeString );
-        printf( "Time: %s, OS: %s strategy selects Process %d with time %d msec\n",
+        sprintf( logBuffer,
+                "Time: %s, OS: %s strategy selects Process %d with time %d msec\n",
                 timeString,
                 config->schedulingCode,
                 processCount,
                 getTotalRuntime( pList->process, config ) );
 
+        followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
+
         pList->state = RUNNING_STATE;
 
         accessTimer( LAP_TIMER, timeString );
-        printf( "Time: %s, OS: Process %d set in Running state\n", timeString, processCount );
+        sprintf( logBuffer,
+                 "Time: %s, OS: Process %d set in Running state\n",
+                 timeString, processCount );
+
+        followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
         process = pList->process;
         while( process != NULL )
         {
             accessTimer( LAP_TIMER, timeString );
-            printf( "Time: %s, Process %d, ", timeString, processCount );
 
             if( process->commandLetter == 'I' )
             {
-                printf( "%s input start\n", process->operation );
+                sprintf( logBuffer,
+                         "Time: %s, Process %d, %s input start\n",
+                         timeString, processCount, process->operation );
+                followLogInstruction( logData, logToFile,
+                                      logToMonitor, logBuffer );
 
                 timePointer = (int *)malloc( sizeof( int ) );
                 *timePointer = process->commandValue;
                 *timePointer = (*timePointer) * config->ioCycleTime;
 
                 pthread_attr_init( &threadAttr );
-                pthread_create( &threadID, &threadAttr, runInput, (void *)timePointer );
+                pthread_create( &threadID, &threadAttr,
+                                runInput, (void *)timePointer );
                 pthread_join( threadID, NULL );
 
                 free( timePointer );
 
                 accessTimer( LAP_TIMER, timeString );
-                printf( "Time: %s, Process %d, ", timeString, processCount );
-                printf( "%s input end\n", process->operation );
+                sprintf( logBuffer,
+                         "Time: %s, Process %d, %s input end\n",
+                         timeString, processCount, process->operation );
             }
             else if( process->commandLetter == 'O' )
             {
-                printf( "%s output start\n", process->operation );
+                sprintf( logBuffer,
+                         "Time: %s, Process %d, %s output start\n",
+                         timeString, processCount, process->operation );
+
+                followLogInstruction( logData, logToFile,
+                                      logToMonitor, logBuffer );
 
                 timePointer = (int *)malloc( sizeof( int ) );
                 *timePointer = process->commandValue;
                 *timePointer = (*timePointer) * config->ioCycleTime;
 
                 pthread_attr_init( &threadAttr );
-                pthread_create( &threadID, &threadAttr, runOutput, (void *)timePointer );
+                pthread_create( &threadID, &threadAttr,
+                                runOutput, (void *)timePointer );
                 pthread_join( threadID, NULL );
 
                 free( timePointer );
 
                 accessTimer( LAP_TIMER, timeString );
-                printf( "Time: %s, Process %d, ", timeString, processCount );
-                printf( "%s output end\n", process->operation );
+                sprintf( logBuffer,
+                         "Time: %s, Process %d, %s output end\n",
+                         timeString, processCount, process->operation );
             }
             else if( process->commandLetter == 'P' )
             {
-                printf( "run operation start\n");
+                sprintf( logBuffer,
+                         "Time: %s, Process %d, run operation start\n",
+                         timeString, processCount );
+
+                followLogInstruction( logData, logToFile,
+                                      logToMonitor, logBuffer );
 
                 timePointer = (int *)malloc( sizeof( int ) );
                 *timePointer = process->commandValue;
                 *timePointer = (*timePointer) * config->processorCycleTime;
 
                 pthread_attr_init( &threadAttr );
-                pthread_create( &threadID, &threadAttr, runProcessor, (void *)timePointer );
+                pthread_create( &threadID, &threadAttr,
+                                runProcessor, (void *)timePointer );
                 pthread_join( threadID, NULL );
 
                 free( timePointer );
 
                 accessTimer( LAP_TIMER, timeString );
-                printf( "Time: %s, Process %d, ", timeString, processCount );
-                printf( "run operation end\n");
+                sprintf( logBuffer,
+                         "Time: %s, Process %d, run operation end\n",
+                         timeString, processCount );
             }
             else if( process->commandLetter == 'M' )
             {
-                printf( "memory management " );
-                printf( "%s action start\n", process->operation );
+                sprintf( logBuffer,
+                         "Time: %s, Process %d, memory management %s action start\n",
+                         timeString, processCount, process->operation );
+
+                followLogInstruction( logData, logToFile,
+                                      logToMonitor, logBuffer );
 
                 accessTimer( LAP_TIMER, timeString );
-                printf( "Time: %s, Process %d, ", timeString, processCount );
-                printf( "memory management " );
-                printf( "%s action end\n", process->operation );
+                sprintf( logBuffer,
+                         "Time: %s, Process %d, memory management %s action end\n",
+                         timeString, processCount, process->operation );
             }
             else
             {
                 accessTimer( STOP_TIMER, timeString );
+                clearData( logData );
 
                 return PROCESS_FORMAT_ERROR;
             }
+
+            followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
             process = process->next;
         }
         pList->state = EXIT_STATE;
 
         accessTimer( LAP_TIMER, timeString );
-        printf( "Time: %s, OS: Process %d set in Exit state\n",
-                timeString,
-                processCount );
+        sprintf( logBuffer,
+                 "Time: %s, OS: Process %d set in Exit state\n",
+                 timeString, processCount );
+
+        followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
         pList = pList->next;
         processCount++;
     }
 
     accessTimer( STOP_TIMER, timeString );
-    printf( "Time: %s, System Stop\n", timeString );
+    sprintf( logBuffer, "Time: %s, System Stop\n", timeString );
+    followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
+
+    if( logToFile == True )
+    {
+        logDataToFile( logData, config->logFilePath );
+    }
+    clearData( logData );
 
     return NO_PROCESS_ERROR;
 }

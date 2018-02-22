@@ -46,7 +46,22 @@ LogData *clearData( LogData *data )
     return data;
 }
 
-void logToFile( LogData *data, char *fileName )
+void followLogInstruction( LogData *data,
+                           Boolean logToFile,
+                           Boolean logToMonitor,
+                           char *logBuffer )
+{
+    if( logToMonitor == True )
+    {
+        printf( "%s", logBuffer );
+    }
+    if( logToFile == True )
+    {
+        addLine( data, logBuffer );
+    }
+}
+
+void logDataToFile( LogData *data, char *fileName )
 {
     FILE *filePointer = fopen( fileName, WRITE_ONLY_FLAG );
 

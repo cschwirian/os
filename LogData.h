@@ -5,12 +5,18 @@
 
 typedef struct LogData
 {
-    char logLine[ 80 ];     // 80 serves as the logfile line length.
+    char logLine[ 81 ];     // 81 serves as the logfile line length plus \0.
     struct LogData *next;
 } LogData;
 
 void addLine( LogData *data, char *line );
 LogData *clearData( LogData *data );
-void logToFile( LogData *data, char *fileName );
+
+void followLogInstruction( LogData *data,
+                           Boolean logToFile,
+                           Boolean logToMonitor,
+                           char *logBuffer );
+
+void logDataToFile( LogData *data, char *fileName );
 
 #endif
