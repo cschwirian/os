@@ -6,3 +6,6 @@ its most up to date state.
 
 7/2/2018
 Sim02 created and brought up to date to begin development.
+
+22/2/2018
+Sim02 probably finished pending the methodology for counting memory runtime.
