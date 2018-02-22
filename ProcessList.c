@@ -103,7 +103,7 @@ int runProcesses( ProcessList *pList,
                   ConfigDictionary *config,
                   MetaDataNode *data )
 {
-    int memoryAvailible, processCount, processCode;
+    int processCount, processCode;
     int *timePointer;
     char timeString[ 10 ];
     MetaDataNode *process;
@@ -140,7 +140,6 @@ int runProcesses( ProcessList *pList,
         return UNKNOWN_CONFIGURATION_ERROR;
     }
 
-    memoryAvailible = config->memoryAvailible;
     processCount = 0;
 
     while( pList != NULL )

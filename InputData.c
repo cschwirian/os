@@ -17,7 +17,7 @@
 
 int main( int argc, char *argv[] )
 {
-    int configMessage, metaDataMessage, processMessage;
+    int configMessage, metaDataMessage;
 
     ConfigDictionary *config = malloc( sizeof( ConfigDictionary ) );
 
@@ -33,11 +33,10 @@ int main( int argc, char *argv[] )
     }
 
     ProcessList *pList = NULL;
-    processMessage = UNKNOWN_ERROR;
 
     if( metaDataMessage == NO_ERROR_MSG )
     {
-        processMessage = runProcesses( pList, config, metaData );
+        runProcesses( pList, config, metaData );
     }
 
     free( config );
