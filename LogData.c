@@ -69,7 +69,9 @@ void logDataToFile( LogData *data, char *fileName )
 
     while( current != NULL )
     {
-        fprintf( filePointer, "%s\n", current->logLine );
+        fprintf( filePointer, "%s", current->logLine );
+
+        current = current->next;
     }
 
     fclose( filePointer );
