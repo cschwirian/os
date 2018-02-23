@@ -109,7 +109,6 @@ int runProcesses( ProcessList *pList,
     MetaDataNode *process;
     LogData *logData;
     pthread_t threadID;
-    pthread_attr_t threadAttr;
 
     logToFile = False;
     logToMonitor = False;
@@ -207,8 +206,7 @@ int runProcesses( ProcessList *pList,
                 *timePointer = process->commandValue;
                 *timePointer = (*timePointer) * config->ioCycleTime;
 
-                pthread_attr_init( &threadAttr );
-                pthread_create( &threadID, &threadAttr,
+                pthread_create( &threadID, NULL,
                                 runInput, (void *)timePointer );
                 pthread_join( threadID, NULL );
 
@@ -232,8 +230,7 @@ int runProcesses( ProcessList *pList,
                 *timePointer = process->commandValue;
                 *timePointer = (*timePointer) * config->ioCycleTime;
 
-                pthread_attr_init( &threadAttr );
-                pthread_create( &threadID, &threadAttr,
+                pthread_create( &threadID, NULL,
                                 runOutput, (void *)timePointer );
                 pthread_join( threadID, NULL );
 
@@ -257,8 +254,7 @@ int runProcesses( ProcessList *pList,
                 *timePointer = process->commandValue;
                 *timePointer = (*timePointer) * config->processorCycleTime;
 
-                pthread_attr_init( &threadAttr );
-                pthread_create( &threadID, &threadAttr,
+                pthread_create( &threadID, NULL,
                                 runProcessor, (void *)timePointer );
                 pthread_join( threadID, NULL );
 
