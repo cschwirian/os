@@ -45,8 +45,7 @@ int populateList( ProcessList **pList, MetaDataNode *data )
                 }
                 else
                 {
-                    clearList( currentProcess->process );
-                    free( currentProcess );
+                    clearProcess( currentProcess );
                     return PROCESS_FORMAT_ERROR;
                 }
 
@@ -54,7 +53,7 @@ int populateList( ProcessList **pList, MetaDataNode *data )
 
                 *pList = addProcess( *pList, currentProcess );
 
-                free( currentProcess );
+                clearProcess( currentProcess );
             }
         }
         else if( currentData->commandLetter == 'S' )
@@ -137,6 +136,11 @@ int runProcesses( ProcessList *pList,
 
     processCode = populateList( &pList, data );
 
+    if( processCode != NO_PROCESS_ERROR )
+    {
+        return processCode;
+    }
+
     accessTimer( LAP_TIMER, timeString );
     sprintf( logBuffer,
              "Time: %s, OS: All processes initialized in New state\n",
@@ -172,11 +176,11 @@ int runProcesses( ProcessList *pList,
 
         accessTimer( LAP_TIMER, timeString );
         sprintf( logBuffer,
-                "Time: %s, OS: %s strategy selects Process %d with time %d msec\n",
-                timeString,
-                config->schedulingCode,
-                processCount,
-                getTotalRuntime( pList->process, config ) );
+                 "Time: %s, OS: %s strategy selects Process %d with time %d msec\n",
+                 timeString,
+                 config->schedulingCode,
+                 processCount,
+                 getTotalRuntime( pList->process, config ) );
 
         followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
@@ -369,7 +373,7 @@ int getTotalRuntime( MetaDataNode *process, ConfigDictionary *config )
 
 ProcessList *clearProcess( ProcessList *pList )
 {
-    clearList( pList->process );
+    pList->process = clearList( pList->process );
 
     free( pList );
 

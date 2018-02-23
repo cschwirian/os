@@ -42,9 +42,9 @@ int main( int argc, char *argv[] )
     free( config );
     config = NULL;
 
-    clearList( metaData );
+    metaData = clearList( metaData );
 
-    clearProcessList( pList );
+    pList = clearProcessList( pList );
 }
 
 #endif
