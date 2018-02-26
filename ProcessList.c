@@ -54,7 +54,7 @@ int populateList( ProcessList **pList, MetaDataNode *data )
 
                 *pList = addProcess( *pList, currentProcess );
 
-                free( currentProcess );
+                clearProcess( currentProcess );
             }
         }
         else if( currentData->commandLetter == 'S' )
