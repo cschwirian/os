@@ -1,7 +1,7 @@
 CC = gcc
 DEBUG = -g
 CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
-LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
+LFLAGS = -Wall -std=c99 -pedantic -pthread $(DEBUG)
 
 Sim02 : Utilities.o simtimer.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o
 	$(CC) $(LFLAGS) Utilities.o simtimer.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o -o Sim02
