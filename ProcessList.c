@@ -114,13 +114,10 @@ int runProcesses( ProcessList *pList,
                   ConfigDictionary *config,
                   MetaDataNode *data )
 {
-    int processCount, processCode;
-    int *timePointer;
-    char timeString[ 10 ], logBuffer[ 81 ];
-    Boolean logToFile, logToMonitor;
-    MetaDataNode *process;
-    LogData *logData;
-    pthread_t threadID;
+    if( compareString( config->schedulingCode, "FCFS-N" ) != 0 )
+    {
+        return UNKNOWN_CONFIGURATION_ERROR;
+    }
 
     logToFile = False;
     logToMonitor = False;
