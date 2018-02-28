@@ -65,7 +65,7 @@ int populateList( ProcessList **pList, MetaDataNode *data )
                 currentData = currentData->next;
 
                 *pList = addProcess( *pList, currentProcess );
-                clearProcess( currentProcess );
+                free( currentProcess );
             }
         }
         else if( currentData->commandLetter == 'S' )
@@ -335,7 +335,9 @@ ProcessList *addProcess( ProcessList *pList, ProcessList *newProcess )
         return pList;
     }
 
-    pList = newProcess;
+    pList = (ProcessList *)malloc( sizeof( ProcessList ) );
+    pList->process = newProcess->process;
+    pList->state = newProcess->state;
     pList->next = NULL;
 
     return pList;
