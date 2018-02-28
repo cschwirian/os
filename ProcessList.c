@@ -114,11 +114,6 @@ int runProcesses( ProcessList *pList,
                   ConfigDictionary *config,
                   MetaDataNode *data )
 {
-    if( compareString( config->schedulingCode, "FCFS-N" ) != 0 )
-    {
-        return UNKNOWN_CONFIGURATION_ERROR;
-    }
-
     logToFile = False;
     logToMonitor = False;
     logData = NULL;
