@@ -65,8 +65,7 @@ int populateList( ProcessList **pList, MetaDataNode *data )
                 currentData = currentData->next;
 
                 *pList = addProcess( *pList, currentProcess );
-
-                free( currentProcess );
+                clearProcess( currentProcess );
             }
         }
         else if( currentData->commandLetter == 'S' )
@@ -97,7 +96,6 @@ int populateList( ProcessList **pList, MetaDataNode *data )
                                                tempNode );
 
             currentData = currentData->next;
-
             free( tempNode );
         }
         else
@@ -121,7 +119,7 @@ int runProcesses( ProcessList *pList,
     MetaDataNode *process;
     LogData *logData;
     pthread_t threadID;
-    
+
     logToFile = False;
     logToMonitor = False;
     logData = NULL;
@@ -337,8 +335,7 @@ ProcessList *addProcess( ProcessList *pList, ProcessList *newProcess )
         return pList;
     }
 
-    pList = (ProcessList *)malloc( sizeof( ProcessList ) );
-    pList->process = newProcess->process;
+    pList = newProcess;
     pList->next = NULL;
 
     return pList;

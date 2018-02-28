@@ -82,7 +82,7 @@ int getMetaData( MetaDataNode **headNode, char *fileName,
     int strIndex, charAsInt;
     char tempCmdLetter;
     char strBuffer[ MAX_STR_LEN ], tempOperation[ STD_STR_LEN ];
-    MetaDataNode *tempNode = malloc( sizeof( MetaDataNode ) );
+    MetaDataNode *tempNode;
 
     filePointer = fopen( fileName, READ_ONLY_FLAG );
 
