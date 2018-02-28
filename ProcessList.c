@@ -1,4 +1,16 @@
-
+/**
+  * ProcessList.c
+  *
+  * Created by -REDACTED- on 12 February 2018
+  *
+  * Takes in and runs a simulated program
+  *
+  * Requires ProcessList.h
+  *
+  * Version 1.0 26/2/2018
+  *
+  * Version 0.1 (Development) 12/2/2018
+**/
 
 #ifndef ProcessList_C
 #define ProcessList_C
