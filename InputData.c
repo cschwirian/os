@@ -20,8 +20,12 @@ int main( int argc, char *argv[] )
     int configMessage, metaDataMessage;
 
     ConfigDictionary *config = malloc( sizeof( ConfigDictionary ) );
+    configMessage = UNKNOWN_ERROR;
 
-    configMessage = getConfig(config, argv[ 1 ] );
+    if( argc == 2 )
+    {
+        configMessage = getConfig(config, argv[ 1 ] );
+    }
 
     MetaDataNode *metaData = NULL;
     metaDataMessage = UNKNOWN_ERROR;
