@@ -65,7 +65,8 @@ MetaDataNode *clearList( MetaDataNode *headNode )
         return NULL;
     }
 
-    if( headNode->next != NULL )     {
+    if( headNode->next != NULL )
+    {
         clearList( headNode->next );
     }
 

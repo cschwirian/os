@@ -108,11 +108,9 @@ int populateList( ProcessList **pList, MetaDataNode *data )
     return PROCESS_FORMAT_ERROR;
 }
 
-int runProcesses( ProcessList *pList,
-                  ConfigDictionary *config,
-                  MetaDataNode *data )
+int runProcesses( ProcessList *pList, ConfigDictionary *config )
 {
-    int processCount, processCode;
+    int processCount;
     int *timePointer;
     char timeString[ 10 ], logBuffer[ 81 ];
     Boolean logToFile, logToMonitor;
@@ -145,8 +143,6 @@ int runProcesses( ProcessList *pList,
     sprintf( logBuffer, "Time: %s, OS: Begin PCB Creation\n", timeString );
     followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
-    processCode = populateList( &pList, data );
-
     accessTimer( LAP_TIMER, timeString );
     sprintf( logBuffer,
              "Time: %s, OS: All processes initialized in New state\n",
@@ -160,11 +156,6 @@ int runProcesses( ProcessList *pList,
              "Time: %s, OS: All proceses now set in Ready state\n",
              timeString );
     followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
-
-    if( processCode != NO_PROCESS_ERROR )
-    {
-        return processCode;
-    }
 
     if( pList == NULL )
     {
@@ -404,7 +395,6 @@ ProcessList *clearProcessList( ProcessList *pList )
     clearList( pList->process );
 
     free( pList );
-
     pList = NULL;
 
     return pList;

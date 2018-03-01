@@ -29,9 +29,7 @@ typedef struct ProcessList
 
 int populateList( ProcessList **pList, MetaDataNode *data );
 
-int runProcesses( ProcessList *pList,
-                  ConfigDictionary *config,
-                  MetaDataNode *data );
+int runProcesses( ProcessList *pList, ConfigDictionary *config );
 
 ProcessList *addProcess( ProcessList *pList, ProcessList *process );
 ProcessList *addEmptyProcess( ProcessList *pList );
