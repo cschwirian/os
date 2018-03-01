@@ -46,7 +46,7 @@ int main( int argc, char *argv[] )
 
     if( processCode == NO_PROCESS_ERROR )
     {
-        runProcesses( pList, config);
+        runProcesses( pList, config );
     }
 
     free( config );

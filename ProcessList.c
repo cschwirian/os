@@ -143,6 +143,15 @@ int runProcesses( ProcessList *pList, ConfigDictionary *config )
     sprintf( logBuffer, "Time: %s, OS: Begin PCB Creation\n", timeString );
     followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
+    if( pList == NULL )
+    {
+        return EMPTY_PROGRAM_ERROR;
+    }
+    else if( config == NULL )
+    {
+            return UNKNOWN_CONFIGURATION_ERROR;
+    }
+
     accessTimer( LAP_TIMER, timeString );
     sprintf( logBuffer,
              "Time: %s, OS: All processes initialized in New state\n",
@@ -157,14 +166,6 @@ int runProcesses( ProcessList *pList, ConfigDictionary *config )
              timeString );
     followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
-    if( pList == NULL )
-    {
-        return EMPTY_PROGRAM_ERROR;
-    }
-    else if( config == NULL )
-    {
-        return UNKNOWN_CONFIGURATION_ERROR;
-    }
 
     processCount = 0;
 
