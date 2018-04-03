@@ -149,7 +149,7 @@ int runProcesses( ProcessList *pList, ConfigDictionary *config )
     }
     else if( config == NULL )
     {
-            return UNKNOWN_CONFIGURATION_ERROR;
+        return UNKNOWN_CONFIGURATION_ERROR;
     }
 
     accessTimer( LAP_TIMER, timeString );
