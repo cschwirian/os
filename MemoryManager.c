@@ -1,3 +1,15 @@
+/**
+  * MemoryManager.c
+  *
+  * Created by -REDACTED- on 4 April 2018
+  *
+  * Performs the actions of a MMU
+  *
+  * Requires MemoryManager.h
+  *
+  * Version 1.0 4/4/2018
+**/
+
 #ifndef MemoryManager_C
 #define MemoryManager_C
 
