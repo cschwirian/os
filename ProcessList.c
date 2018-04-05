@@ -293,12 +293,8 @@ int runProcesses( ProcessList *pList, MetaDataNode *data,
                 memoryCommand = process->commandValue;
 
                 segment = (int)( memoryCommand / SEG_OFFSET );
-
-                base = (int)( memoryCommand / BASE_OFFSET );
-                base -= segment * SEG_OFFSET;
-
-                offset = memoryCommand - ( segment * SEG_OFFSET );
-                offset -= base * BASE_OFFSET;
+                base = memoryCommand % SEG_OFFSET;
+                offset = memoryCommand % BASE_OFFSET;
 
                 sprintf( logBuffer,
                          "Time: %s, Process %d, MMU %s: %d/%d/%d start\n",
