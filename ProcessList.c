@@ -293,7 +293,7 @@ int runProcesses( ProcessList *pList, MetaDataNode *data,
                 memoryCommand = process->commandValue;
 
                 segment = (int)( memoryCommand / SEG_OFFSET );
-                base = memoryCommand % SEG_OFFSET;
+                base = (int)( memoryCommand / BASE_OFFSET ) % BASE_OFFSET;
                 offset = memoryCommand % BASE_OFFSET;
 
                 sprintf( logBuffer,
@@ -364,6 +364,9 @@ int runProcesses( ProcessList *pList, MetaDataNode *data,
                         sprintf( logBuffer,
                                  "Time: %s, OS: Process %d, Segmentation Fault - Process Ended\n",
                                  timeString, processNum );
+
+						 followLogInstruction( logData, logToFile,
+                                               logToMonitor, logBuffer );
 
                         break;
                     }
