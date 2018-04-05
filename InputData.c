@@ -41,19 +41,18 @@ int main( int argc, char *argv[] )
 
     if( metaDataMessage == NO_ERROR_MSG )
     {
-        processCode = populateList( &pList, metaData );
+        processCode = populateList( &pList, metaData, config );
     }
 
     if( processCode == NO_PROCESS_ERROR )
     {
-        runProcesses( pList, config );
+        runProcesses( pList, metaData, config );
     }
 
     free( config );
     config = NULL;
 
     clearList( metaData );
-
     clearProcessList( pList );
 }
 

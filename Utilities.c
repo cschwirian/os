@@ -20,6 +20,8 @@
 const int STD_STR_LEN = 40;
 const int MAX_STR_LEN = 60;
 const int NOT_AT_FILE_END = 0;
+const int SEG_OFFSET = 1000000;
+const int BASE_OFFSET = 1000;
 const char READ_ONLY_FLAG[] = "r";
 const char WRITE_ONLY_FLAG[] = "w";
 const char APPEND[] = "a";

@@ -23,7 +23,7 @@ typedef struct ConfigDictionary
     char filePath[ 30 ];
     char schedulingCode[ 7 ];
     int quantumTime;
-    int memoryAvailible;
+    int memoryAvailable;
     int processorCycleTime;
     int ioCycleTime;
     char logInstruction[ 8 ];

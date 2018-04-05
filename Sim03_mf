@@ -3,14 +3,17 @@ DEBUG = -g
 CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
 LFLAGS = -Wall -std=c99 -pedantic -pthread $(DEBUG)
 
-Sim02 : Utilities.o simtimer.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o
-	$(CC) $(LFLAGS) Utilities.o simtimer.o ConfigDictionary.o MetaDataLinkedList.o LogData.o ProcessList.o InputData.o -o Sim02
+Sim03 : Utilities.o simtimer.o ConfigDictionary.o MetaDataLinkedList.o MemoryManager.o LogData.o ProcessList.o InputData.o
+	$(CC) $(LFLAGS) Utilities.o simtimer.o ConfigDictionary.o MetaDataLinkedList.o MemoryManager.o LogData.o ProcessList.o InputData.o -o Sim03
 
 InputData.o : InputData.c InputData.h
 	$(CC) $(CFLAGS) InputData.c
 
 ProcessList.o : ProcessList.c ProcessList.h LogData.h simtimer.h Utilities.h
 	$(CC) $(CFLAGS) ProcessList.c
+
+MemoryManager.o : MemoryManager.c MemoryManager.h Utilities.h
+	$(CC) $(CFLAGS) MemoryManager.c
 
 LogData.o : LogData.c LogData.h Utilities.h
 	$(CC) $(CFLAGS) LogData.c
@@ -28,4 +31,4 @@ Utilities.o : Utilities.c Utilities.h
 	$(CC) $(CFLAGS) Utilities.c
 
 clean:
-	\rm *.o Sim02 *.lgf
+	\rm *.o Sim03 *.lgf

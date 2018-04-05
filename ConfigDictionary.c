@@ -196,7 +196,7 @@ int getConfig( ConfigDictionary *config, const char *fileName )
                         int tempMemory = stringToInt( dataStrBuffer );
                         if( memoryIsValid( tempMemory ) )
                         {
-                            config->memoryAvailible = tempMemory;
+                            config->memoryAvailable = tempMemory;
                         }
                         else
                         {
@@ -330,7 +330,7 @@ int logConfig( ConfigDictionary *config, const char *fileName )
         fprintf( filePointer, "Quantum Time       : ");
         fprintf( filePointer, "%d\n", config->quantumTime );
         fprintf( filePointer, "Process Cycle Time : ");
-        fprintf( filePointer, "%d\n", config->memoryAvailible );
+        fprintf( filePointer, "%d\n", config->memoryAvailable );
         fprintf( filePointer, "Memory Available   : ");
         fprintf( filePointer, "%d\n", config->processorCycleTime );
         fprintf( filePointer, "I/O Cycle Time     : ");
@@ -357,7 +357,7 @@ int logConfig( ConfigDictionary *config, const char *fileName )
         printf( "Quantum Time       : ");
         printf( "%d\n", config->quantumTime );
         printf( "Process Cycle Time : ");
-        printf( "%d\n", config->memoryAvailible );
+        printf( "%d\n", config->memoryAvailable );
         printf( "Memory Available   : ");
         printf( "%d\n", config->processorCycleTime );
         printf( "I/O Cycle Time     : ");

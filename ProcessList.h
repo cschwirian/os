@@ -15,6 +15,7 @@
 #ifndef ProcessList_H
 #define ProcessList_H
 
+#include "MemoryManager.h"
 #include "LogData.h"
 #include "MetaDataLinkedList.h"
 #include "ConfigDictionary.h"
@@ -24,15 +25,19 @@ typedef struct ProcessList
 {
     MetaDataNode *process;
     int state;
+    int processNum;
+    int timeRemaining;
     struct ProcessList *next;
 } ProcessList;
 
-int populateList( ProcessList **pList, MetaDataNode *data );
+int populateList( ProcessList **pList, MetaDataNode *data,
+                  ConfigDictionary *config );
 
-int runProcesses( ProcessList *pList, ConfigDictionary *config );
-
+int runProcesses( ProcessList *pList, MetaDataNode *data,
+                  ConfigDictionary *config );
+                  
 ProcessList *addProcess( ProcessList *pList, ProcessList *process );
-ProcessList *addEmptyProcess( ProcessList *pList );
+ProcessList *sortProcesses( ProcessList *pList, char *schedulingCode );
 int getTotalRuntime( MetaDataNode *process, ConfigDictionary *config );
 ProcessList *clearProcess( ProcessList *pList );
 ProcessList *clearProcessList( ProcessList *pList );
