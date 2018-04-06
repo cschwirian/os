@@ -17,11 +17,15 @@
 
 int main( int argc, char *argv[] )
 {
-    int configMessage, metaDataMessage;
+    int configMessage, metaDataMessage, processCode;
 
     ConfigDictionary *config = malloc( sizeof( ConfigDictionary ) );
+    configMessage = UNKNOWN_ERROR;
 
-    configMessage = getConfig(config, argv[ 1 ] );
+    if( argc == 2 )
+    {
+        configMessage = getConfig(config, argv[ 1 ] );
+    }
 
     MetaDataNode *metaData = NULL;
     metaDataMessage = UNKNOWN_ERROR;
@@ -33,18 +37,29 @@ int main( int argc, char *argv[] )
     }
 
     ProcessList *pList = NULL;
+    processCode = UNKNOWN_ERROR;
 
     if( metaDataMessage == NO_ERROR_MSG )
     {
-        runProcesses( pList, config, metaData );
+        processCode = populateList( &pList, metaData, config );
+    }
+
+    if( processCode == NO_PROCESS_ERROR )
+    {
+        runProcesses( pList, metaData, config );
     }
 
     free( config );
     config = NULL;
 
+<<<<<<< HEAD
     metaData = clearList( metaData );
 
     pList = clearProcessList( pList );
+=======
+    clearList( metaData );
+    clearProcessList( pList );
+>>>>>>> 1a02ff6baea7cd5a73b836ec5fb384d722705297
 }
 
 #endif

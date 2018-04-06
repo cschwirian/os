@@ -32,6 +32,8 @@ enum
 const int STD_STR_LEN;
 const int MAX_STR_LEN;
 const int NOT_AT_FILE_END;
+const int SEG_OFFSET;
+const int BASE_OFFSET;
 const char READ_ONLY_FLAG[ 1 ];
 const char WRITE_ONLY_FLAG[ 1 ];
 const char APPEND[ 1 ];

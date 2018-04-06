@@ -1,3 +1,17 @@
+/**
+  * LogData.c
+  *
+  * Created by -REDACTED- on 12 February 2018
+  *
+  * Takes in and logs relevant information
+  *
+  * Requires LogData.h
+  *
+  * Version 1.0 26/2/2018
+  *
+  * Version 0.1 (Development) 12/2/2018
+**/
+
 #ifndef LogData_C
 #define LogData_C
 
