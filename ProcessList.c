@@ -48,6 +48,7 @@ int populateList( ProcessList **pList, MetaDataNode *data,
 
                 currentProcess = (ProcessList *)malloc( sizeof( ProcessList ) );
                 currentProcess->process = NULL;
+				currentProcess->currentProcess = NULL;
                 currentProcess->state = NEW_STATE;
                 currentProcess->next = NULL;
             }
@@ -69,6 +70,7 @@ int populateList( ProcessList **pList, MetaDataNode *data,
 
                 currentProcess->processNum = processCount;
                 currentProcess->timeRemaining = getTotalRuntime( currentProcess->process, config );
+				currentProcess->currentProcess = currentProcess->process;
 
                 *pList = addProcess( *pList, currentProcess );
                 free( currentProcess );
@@ -423,6 +425,7 @@ ProcessList *addProcess( ProcessList *pList, ProcessList *newProcess )
 
     pList = (ProcessList *)malloc( sizeof( ProcessList ) );
     pList->process = newProcess->process;
+	pList->currentProcess = newProcess->currentProcess;
     pList->processNum = newProcess->processNum;
     pList->timeRemaining = newProcess->timeRemaining;
     pList->state = newProcess->state;

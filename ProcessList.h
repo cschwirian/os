@@ -24,6 +24,7 @@
 typedef struct ProcessList
 {
     MetaDataNode *process;
+	MetaDataNode *currentProcess;
     int state;
     int processNum;
     int timeRemaining;
@@ -35,7 +36,7 @@ int populateList( ProcessList **pList, MetaDataNode *data,
 
 int runProcesses( ProcessList *pList, MetaDataNode *data,
                   ConfigDictionary *config );
-                  
+
 ProcessList *addProcess( ProcessList *pList, ProcessList *process );
 ProcessList *sortProcesses( ProcessList *pList, char *schedulingCode );
 int getTotalRuntime( MetaDataNode *process, ConfigDictionary *config );
