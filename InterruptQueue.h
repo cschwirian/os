@@ -9,17 +9,23 @@
   *
 **/
 
-#ifndef INTERRUPT_H
-#define INTERRUPT_H
+#ifndef InterruptQueue_H
+#define InterruptQueue_H
+
+#include "Utilities.h"
 
 typedef struct Interrupt
 {
     int processNum;
     char endTime[ 10 ];
+    char ioType[ 10 ];
+    char operation[ 10 ];
     struct Interrupt *next;
 } Interrupt;
 
-void addInterrupt( int processNum, char *endTime, Interrupt *queue );
-Interrupt checkForInterrupt( char *currentTime, Interrupt *queue );
+Interrupt *addInterrupt( int processNum, char *endTime,
+                   char *ioType, char *operation, Interrupt *queue );
 
-#endif INTERRUPT_H
+Interrupt *checkForInterrupt( char *currentTime, Interrupt *queue );
+
+#endif

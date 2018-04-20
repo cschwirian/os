@@ -78,7 +78,9 @@ int stringToInt( char *string )
     return returnVal;
 }
 
-float stringToFloat( char *string )
+// TODO: Fix this
+
+float stringToFloat( char *s )
 {
     float rez = 0, fact = 1;
     for( int point_seen = 0; *s; s++ )
