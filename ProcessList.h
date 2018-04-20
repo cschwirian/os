@@ -37,6 +37,9 @@ int populateList( ProcessList **pList, MetaDataNode *data,
 int runProcesses( ProcessList *pList, MetaDataNode *data,
                   ConfigDictionary *config );
 
+int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
+                            ConfigDictionary *config );
+
 ProcessList *addProcess( ProcessList *pList, ProcessList *process );
 ProcessList *sortProcesses( ProcessList *pList, char *schedulingCode );
 int getTotalRuntime( MetaDataNode *process, ConfigDictionary *config );

@@ -48,6 +48,10 @@ int main( int argc, char *argv[] )
     {
         runProcesses( pList, metaData, config );
     }
+    else if( processCode == NO_PROCESS_ERROR_P )
+    {
+        runProcessesPreemptive( pList, metaData, config );
+    }
 
     free( config );
     config = NULL;
