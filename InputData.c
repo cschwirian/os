@@ -57,7 +57,6 @@ int main( int argc, char *argv[] )
     config = NULL;
 
     clearList( metaData );
-    clearProcessList( pList );
 }
 
 #endif

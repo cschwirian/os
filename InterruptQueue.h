@@ -17,15 +17,15 @@
 typedef struct Interrupt
 {
     int processNum;
-    char endTime[ 10 ];
+    float endTime;
     char ioType[ 10 ];
     char operation[ 10 ];
     struct Interrupt *next;
 } Interrupt;
 
-Interrupt *addInterrupt( int processNum, char *endTime,
+Interrupt *addInterrupt( int processNum, float endTime,
                    char *ioType, char *operation, Interrupt *queue );
 
-Interrupt *checkForInterrupt( char *currentTime, Interrupt *queue );
+Interrupt *checkForInterrupt( float currentTime, Interrupt **queue );
 
 #endif

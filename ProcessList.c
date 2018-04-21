@@ -433,7 +433,7 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
     float currentTime, addedTime;
     char timeString[ 10 ], logBuffer[ 81 ];
     Boolean logToFile, logToMonitor;
-    ProcessList *originalProcessList;
+    ProcessList *originalProcessList, *tempPList;
     LogData *logData;
     MMU *memory;
     Interrupt *interruptQueue, *currentInterrupt;
@@ -497,7 +497,6 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
     followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
 
     setProcessStates( pList, READY_STATE );
-    printList( pList );
     originalProcessList = pList;
 
     accessTimer( LAP_TIMER, timeString );
@@ -508,17 +507,64 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
 
     while( !isExited( originalProcessList ) )
     {
-        printf("pls\n");
         if( isIdle( originalProcessList ) )
         {
             accessTimer( LAP_TIMER, timeString );
-            sprintf( logBuffer, "Time: %s, OS: CPU Idle", timeString );
+            sprintf( logBuffer, "Time: %s, OS: CPU Idle\n", timeString );
             followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
         }
-        while( isIdle( originalProcessList ) );
+        while( isIdle( originalProcessList ) )
+        {
+            accessTimer( LAP_TIMER, timeString );
+            currentTime = stringToFloat( timeString );
+            currentInterrupt = checkForInterrupt( currentTime, &interruptQueue );
+            while( currentInterrupt != NULL )
+            {
+                accessTimer( LAP_TIMER, timeString );
+                sprintf( logBuffer,
+                         "Time: %s, OS: Interrupt, Process %d\n",
+                         timeString, currentInterrupt->processNum );
+
+                followLogInstruction( logData, logToFile,
+                                      logToMonitor, logBuffer );
+
+                accessTimer( LAP_TIMER, timeString );
+                sprintf( logBuffer,
+                         "Time: %s, Process %d, %s %s end\n",
+                         timeString, currentInterrupt->processNum,
+                         currentInterrupt->operation,
+                         currentInterrupt->ioType );
+
+                followLogInstruction( logData, logToFile,
+                                      logToMonitor, logBuffer );
+
+                tempPList = originalProcessList;
+                while( tempPList != NULL )
+                {
+                    if( tempPList->processNum == currentInterrupt->processNum )
+                    {
+                        tempPList->state = READY_STATE;
+                        break;
+                    }
+
+                    tempPList = tempPList->next;
+                }
+
+                accessTimer( LAP_TIMER, timeString );
+                sprintf( logBuffer,
+                         "Time: %s, OS: Process %d set in Ready state\n \n",
+                         timeString, currentInterrupt->processNum );
+
+                followLogInstruction( logData, logToFile,
+                                      logToMonitor, logBuffer );
+
+                free( currentInterrupt );
+
+                currentInterrupt = checkForInterrupt( currentTime, &interruptQueue );
+            }
+        }
 
         originalProcessList = sortProcesses( originalProcessList, config->schedulingCode );
-        printList( originalProcessList );
         pList = getReadyProcess( originalProcessList );
 
         accessTimer( LAP_TIMER, timeString );
@@ -543,7 +589,8 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
         processNum = pList->processNum;
 
         quantum = config->quantumTime;
-        while( pList->currentProcess != NULL && pList->timeRemaining > 0 && quantum > 0 )
+        while( pList->currentProcess != NULL && pList->timeRemaining > 0 &&
+               quantum > 0 )
         {
             accessTimer( LAP_TIMER, timeString );
 
@@ -556,19 +603,20 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
                 followLogInstruction( logData, logToFile,
                                       logToMonitor, logBuffer );
 
+
                 pList->timeRemaining -= pList->currentProcess->commandValue * config->ioCycleTime;
-                pList->currentProcess = pList->currentProcess->next;
 
                 currentTime = stringToFloat( timeString );
                 addedTime = pList->currentProcess->commandValue * config->ioCycleTime;
                 addedTime *= .001;
                 currentTime += addedTime;
 
-                sprintf( timeString, "%f", currentTime );
+                interruptQueue = addInterrupt( pList->processNum, currentTime,
+                                               "input",
+                                               pList->currentProcess->operation,
+                                               interruptQueue );
 
-                addInterrupt( pList->processNum, timeString,
-                              "input", pList->currentProcess->operation, interruptQueue );
-
+                pList->currentProcess = pList->currentProcess->next;
                 pList->state = BLOCKED_STATE;
                 break;
             }
@@ -582,29 +630,32 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
                                       logToMonitor, logBuffer );
 
                 pList->timeRemaining -= pList->currentProcess->commandValue * config->ioCycleTime;
-                pList->currentProcess = pList->currentProcess->next;
 
                 currentTime = stringToFloat( timeString );
                 addedTime = pList->currentProcess->commandValue * config->ioCycleTime;
                 addedTime *= .001;
                 currentTime += addedTime;
 
-                sprintf( timeString, "%f", currentTime );
+                interruptQueue = addInterrupt( pList->processNum, currentTime,
+                                               "output",
+                                               pList->currentProcess->operation,
+                                               interruptQueue );
 
-                addInterrupt( pList->processNum, timeString,
-                              "output", pList->currentProcess->operation, interruptQueue );
-
+                pList->currentProcess = pList->currentProcess->next;
                 pList->state = BLOCKED_STATE;
                 break;
             }
             else if( pList->currentProcess->commandLetter == 'P' )
             {
-                sprintf( logBuffer,
-                         "Time: %s, Process %d, run operation start\n",
-                         timeString, processNum );
+                if( quantum == config->quantumTime )
+                {
+                    sprintf( logBuffer,
+                             "Time: %s, Process %d, run operation start\n",
+                             timeString, processNum );
 
-                followLogInstruction( logData, logToFile,
-                                      logToMonitor, logBuffer );
+                    followLogInstruction( logData, logToFile,
+                                          logToMonitor, logBuffer );
+                }
 
                 runTimer( config->processorCycleTime );
 
@@ -625,50 +676,12 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
                     pList->currentProcess = pList->currentProcess->next;
                 }
 
-                currentInterrupt = checkForInterrupt( timeString, interruptQueue );
-                while( currentInterrupt != NULL )
+                currentTime = stringToFloat( timeString );
+
+                currentInterrupt = checkForInterrupt( currentTime, &interruptQueue );
+                if( currentInterrupt != NULL )
                 {
-                    accessTimer( LAP_TIMER, timeString );
-                    sprintf( logBuffer,
-                             "Time: %s, OS: Interrupt, Process %d\n",
-                             timeString, processNum );
-
-                    followLogInstruction( logData, logToFile,
-                                          logToMonitor, logBuffer );
-
-                    accessTimer( LAP_TIMER, timeString );
-                    sprintf( logBuffer,
-                             "Time: %s, Process %d, %s %s end\n",
-                             timeString, currentInterrupt->processNum,
-                             currentInterrupt->operation,
-                             currentInterrupt->ioType );
-
-                    followLogInstruction( logData, logToFile,
-                                          logToMonitor, logBuffer );
-
-                    pList = originalProcessList;
-                    while( pList != NULL )
-                    {
-                        if( pList->processNum == currentInterrupt->processNum )
-                        {
-                            pList->state = READY_STATE;
-                            break;
-                        }
-
-                        pList = pList->next;
-                    }
-
-                    accessTimer( LAP_TIMER, timeString );
-                    sprintf( logBuffer,
-                             "Time: %s, OS: Process %d set in Ready state\n",
-                             timeString, currentInterrupt->processNum );
-
-                    followLogInstruction( logData, logToFile,
-                                          logToMonitor, logBuffer );
-
-                    free( currentInterrupt );
-
-                    currentInterrupt = checkForInterrupt( timeString, interruptQueue );
+                    break;
                 }
             }
             else if( pList->currentProcess->commandLetter == 'M' )
@@ -687,7 +700,6 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
                 followLogInstruction( logData, logToFile,
                                       logToMonitor, logBuffer );
 
-
                 if( compareString( pList->currentProcess->operation, "allocate") == 0 )
                 {
                     if( isValidAlloc( memory, segment, base, offset ) &&
@@ -705,6 +717,7 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
 
                         followLogInstruction( logData, logToFile,
                                               logToMonitor, logBuffer );
+
 
                         pList->currentProcess = pList->currentProcess->next;
                     }
@@ -726,7 +739,7 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
                         followLogInstruction( logData, logToFile,
                                               logToMonitor, logBuffer );
 
-                        pList->currentProcess = pList->currentProcess->next;
+                        pList->state = EXIT_STATE;
 
                         break;
                     }
@@ -739,6 +752,9 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
                         sprintf( logBuffer,
                                  "Time: %s, Process %d, MMU %s: Successful\n",
                                  timeString, processNum, pList->currentProcess->operation );
+
+                        followLogInstruction( logData, logToFile,
+                                              logToMonitor, logBuffer );
 
                         pList->currentProcess = pList->currentProcess->next;
                     }
@@ -760,7 +776,7 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
 						followLogInstruction( logData, logToFile,
                                               logToMonitor, logBuffer );
 
-                        pList->currentProcess = pList->currentProcess->next;
+                        pList->state = EXIT_STATE;
 
                         break;
                     }
@@ -777,7 +793,16 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
             }
         }
 
-        if( pList->timeRemaining == 0 )
+        if( pList->state == BLOCKED_STATE )
+        {
+            accessTimer( LAP_TIMER, timeString );
+            sprintf( logBuffer,
+                     "Time: %s, OS: Process %d set in Blocked state\n\n",
+                     timeString, processNum );
+
+            followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
+        }
+        else if( pList->timeRemaining == 0 || pList->state == EXIT_STATE )
         {
             pList->state = EXIT_STATE;
 
@@ -788,16 +813,67 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
 
             followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
         }
-        else if( pList->state == BLOCKED_STATE )
+        else if( currentInterrupt != NULL )
         {
-            accessTimer( LAP_TIMER, timeString );
-            sprintf( logBuffer,
-                     "Time: %s, OS: Process %d set in Blocked state\n\n",
-                     timeString, processNum );
+            while( currentInterrupt != NULL )
+            {
+                accessTimer( LAP_TIMER, timeString );
+                sprintf( logBuffer,
+                         "Time: %s, OS: Interrupt, Process %d\n",
+                         timeString, currentInterrupt->processNum );
 
-            followLogInstruction( logData, logToFile, logToMonitor, logBuffer );
+                followLogInstruction( logData, logToFile,
+                                      logToMonitor, logBuffer );
+
+                if( pList->state != READY_STATE )
+                {
+                    pList->state = READY_STATE;
+
+                    accessTimer( LAP_TIMER, timeString );
+                    sprintf( logBuffer,
+                           "Time: %s, OS: Process %d set in Ready state\n",
+                           timeString, processNum );
+
+                    followLogInstruction( logData, logToFile,
+                                        logToMonitor, logBuffer );
+                }
+
+                accessTimer( LAP_TIMER, timeString );
+                sprintf( logBuffer,
+                         "Time: %s, Process %d, %s %s end\n",
+                         timeString, currentInterrupt->processNum,
+                         currentInterrupt->operation,
+                         currentInterrupt->ioType );
+
+                followLogInstruction( logData, logToFile,
+                                      logToMonitor, logBuffer );
+
+                tempPList = originalProcessList;
+                while( tempPList != NULL )
+                {
+                    if( tempPList->processNum == currentInterrupt->processNum )
+                    {
+                        tempPList->state = READY_STATE;
+                        break;
+                    }
+
+                    tempPList = tempPList->next;
+                }
+
+                accessTimer( LAP_TIMER, timeString );
+                sprintf( logBuffer,
+                         "Time: %s, OS: Process %d set in Ready state\n\n",
+                         timeString, currentInterrupt->processNum );
+
+                followLogInstruction( logData, logToFile,
+                                      logToMonitor, logBuffer );
+
+                free( currentInterrupt );
+
+                currentInterrupt = checkForInterrupt( currentTime, &interruptQueue );
+            }
         }
-        else if( pList->state != READY_STATE )
+        else if( pList->state == RUNNING_STATE )
         {
             accessTimer( LAP_TIMER, timeString );
             sprintf( logBuffer,
@@ -917,11 +993,12 @@ ProcessList *getReadyProcess( ProcessList *pList )
 {
     while( pList != NULL )
     {
-        printf( "%d\n", pList->processNum );
         if( pList->state == READY_STATE )
         {
             return pList;
         }
+
+        pList = pList->next;
     }
 
     return NULL;
@@ -1046,15 +1123,6 @@ void setProcessStates( ProcessList *pList, int state )
     while( pList != NULL )
     {
         pList->state = state;
-        pList = pList->next;
-    }
-}
-
-void printList( ProcessList *pList )
-{
-    while( pList != NULL )
-    {
-        printf( "%d\n", pList->processNum );
         pList = pList->next;
     }
 }

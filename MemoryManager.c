@@ -28,6 +28,7 @@ MMU *addSegment( MMU *memory, int segment, int base, int offset, int processNum 
     memory->base = base;
     memory->offset = offset;
     memory->processNum = processNum;
+    memory->next = NULL;
 
     return memory;
 }
@@ -70,12 +71,7 @@ Boolean isValidAccess( MMU *memory, int segment, int base, int offset )
     {
         if( memory->segment == segment )
         {
-            if( memory->base > base )
-            {
-                memory = memory->next;
-                continue;
-            }
-            else if( memory->base <= base )
+            if( memory->base <= base )
             {
                 if( base + offset - 1 <= memory->base + memory->offset - 1 )
                 {

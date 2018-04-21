@@ -14,28 +14,31 @@
 
 #include "InterruptQueue.h"
 
-Interrupt *addInterrupt( int processNum, char *endTime,
+Interrupt *addInterrupt( int processNum, float endTime,
                    char *ioType, char *operation, Interrupt *queue )
 {
     Interrupt *currentInterrupt, *temp;
-
     if( queue == NULL )
     {
         queue = malloc( sizeof( Interrupt ) );
         queue->processNum = processNum;
-        copyString( queue->endTime, endTime );
+        // copyString( queue->endTime, endTime );
+        // sprintf( queue->endTime, "%f", endTime );
+        queue->endTime = endTime;
         copyString( queue->ioType, ioType );
         copyString( queue->operation, operation );
         queue->next = NULL;
 
         return queue;
     }
-    else if( compareString( time, (char *)queue->endTime ) < 0 )
+    else if( endTime < queue->endTime )
     {
         currentInterrupt = queue;
         queue = malloc( sizeof( Interrupt ) );
         queue->processNum = processNum;
-        copyString( queue->endTime, endTime );
+        // copyString( queue->endTime, endTime );
+        // sprintf( queue->endTime, "%f", endTime );
+        queue->endTime = endTime;
         copyString( queue->ioType, ioType );
         copyString( queue->operation, operation );
         queue->next = currentInterrupt;
@@ -46,12 +49,14 @@ Interrupt *addInterrupt( int processNum, char *endTime,
     currentInterrupt = queue;
     while( currentInterrupt->next != NULL )
     {
-        if( compareString( time, (char *)currentInterrupt->next->endTime) < 0 )
+        if(  endTime < currentInterrupt->next->endTime )
         {
             temp = currentInterrupt->next;
             currentInterrupt->next = malloc( sizeof( Interrupt ) );
             currentInterrupt->next->processNum = processNum;
-            copyString( currentInterrupt->next->endTime, endTime );
+            // copyString( currentInterrupt->next->endTime,  endTime );
+            // sprintf( currentInterrupt->next->endTime, "%f", endTime );
+            currentInterrupt->next->endTime = endTime;
             copyString( currentInterrupt->next->ioType, ioType );
             copyString( currentInterrupt->next->operation, operation );
             currentInterrupt->next->next = temp;
@@ -64,7 +69,9 @@ Interrupt *addInterrupt( int processNum, char *endTime,
 
     currentInterrupt->next = malloc( sizeof( Interrupt ) );
     currentInterrupt->next->processNum = processNum;
-    copyString( currentInterrupt->next->endTime, endTime );
+    // copyString( currentInterrupt->next->endTime,  endTime );
+    // sprintf( currentInterrupt->next->endTime, "%f", endTime );
+    currentInterrupt->next->endTime = endTime;
     copyString( currentInterrupt->next->ioType, ioType );
     copyString( currentInterrupt->next->operation, operation );
     currentInterrupt->next->next = NULL;
@@ -72,18 +79,35 @@ Interrupt *addInterrupt( int processNum, char *endTime,
     return queue;
 }
 
-Interrupt *checkForInterrupt( char *currentTime, Interrupt *queue )
+Interrupt *checkForInterrupt( float currentTime, Interrupt **queue )
 {
-    Interrupt *returnInter = NULL;
+    Interrupt *returnInter;
+    returnInter = NULL;
 
-    if( compareString( currentTime, queue->endTime ) >= 0 )
+    if( *queue != NULL )
     {
-        returnInter = queue;
+        if( currentTime >= (*queue)->endTime )
+        {
+            returnInter = *queue;
+
+            *queue = (*queue)->next;
+        }
+    }
+
+    return returnInter;
+}
+
+void printInterrupts( Interrupt *queue )
+{
+    printf("interrupts:\n");
+    while( queue != NULL )
+    {
+        printf("%d, ", queue->processNum);
 
         queue = queue->next;
     }
 
-    return returnInter;
+    printf("\n");
 }
 
 #endif
