@@ -65,7 +65,8 @@ Boolean isValidAlloc( MMU *memory, int segment, int base, int offset )
     return True;
 }
 
-Boolean isValidAccess( MMU *memory, int segment, int base, int offset )
+Boolean isValidAccess( MMU *memory, int segment, int base,
+                       int offset, int processNum )
 {
     while( memory != NULL )
     {
@@ -75,7 +76,10 @@ Boolean isValidAccess( MMU *memory, int segment, int base, int offset )
             {
                 if( base + offset - 1 <= memory->base + memory->offset - 1 )
                 {
-                    return True;
+                    if( processNum == memory->processNum )
+                    {
+                        return True;
+                    }
                 }
             }
         }

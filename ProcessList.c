@@ -355,7 +355,7 @@ int runProcesses( ProcessList *pList, MetaDataNode *data,
                 }
                 else if( compareString( process->operation, "access") == 0 )
                 {
-                    if( isValidAccess( memory, segment, base, offset ) )
+                    if( isValidAccess( memory, segment, base, offset, processNum ) )
                     {
                         accessTimer( LAP_TIMER, timeString );
                         sprintf( logBuffer,
@@ -746,7 +746,7 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
                 }
                 else if( compareString( pList->currentProcess->operation, "access") == 0 )
                 {
-                    if( isValidAccess( memory, segment, base, offset ) )
+                    if( isValidAccess( memory, segment, base, offset, processNum ) )
                     {
                         accessTimer( LAP_TIMER, timeString );
                         sprintf( logBuffer,
