@@ -84,6 +84,6 @@ enum PCB_STATES
 void copyString( char *target, char *original );
 int compareString( char *string1, char *string2 );
 int stringToInt( char *string );
-float stringToFloat( char *s );
+float stringToFloat( char *string );
 
 #endif

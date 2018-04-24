@@ -78,30 +78,29 @@ int stringToInt( char *string )
     return returnVal;
 }
 
-// TODO: Fix this
-
-float stringToFloat( char *s )
+float stringToFloat( char *string )
 {
-    float rez = 0, fact = 1;
-    for( int point_seen = 0; *s; s++ )
+    int digit;
+    float rez = 0, factor = 1;
+    for( int decimalSeen = 0; *string; string++ )
     {
-        if(*s == '.')
+        if( *string == '.' )
         {
-          point_seen = 1;
+          decimalSeen = 1;
           continue;
         }
-        int d = *s - '0';
+        digit = *string - '0';
 
-        if (d >= 0 && d <= 9)
+        if ( digit >= 0 && digit <= 9 )
         {
-            if (point_seen)
+            if ( decimalSeen )
             {
-                fact /= 10.0f;
+                factor /= 10.0f;
             }
-            rez = rez * 10.0f + (float)d;
+            rez = rez * 10.0f + (float)digit;
         }
     }
-    return rez * fact;
+    return rez * factor;
 }
 
 #endif
