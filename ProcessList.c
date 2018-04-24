@@ -7,6 +7,8 @@
   *
   * Requires ProcessList.h
   *
+  * Version 1.1 20/4/2018
+  *
   * Version 1.0 26/2/2018
   *
   * Version 0.1 (Development) 12/2/2018

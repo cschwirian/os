@@ -7,6 +7,7 @@
   *
   * Requires InterruptQueue.h
   *
+  * Version 1.0 20/4/2018
 **/
 
 #ifndef InterruptQueue_C
