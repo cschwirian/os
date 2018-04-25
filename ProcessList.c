@@ -562,6 +562,8 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
 
                 free( currentInterrupt );
 
+                originalProcessList = sortProcesses( originalProcessList, config->schedulingCode );
+
                 currentInterrupt = checkForInterrupt( currentTime, &interruptQueue );
             }
         }
@@ -872,6 +874,8 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
 
                 free( currentInterrupt );
 
+                originalProcessList = sortProcesses( originalProcessList, config->schedulingCode );
+
                 currentInterrupt = checkForInterrupt( currentTime, &interruptQueue );
             }
         }
@@ -942,10 +946,48 @@ ProcessList *sortProcesses( ProcessList *pList, char *schedulingCode )
     }
 
     if( compareString( schedulingCode, "FCFS-N" ) == 0 ||
-        compareString( schedulingCode, "FCFS-P" ) == 0 ||
-        compareString( schedulingCode, "RR-P" ) == 0 )
+        compareString( schedulingCode, "FCFS-P" ) == 0 )
     {
         return pList;
+    }
+    else if( compareString( schedulingCode, "RR-P" ) == 0 )
+    {
+        iterator = NULL;
+
+        do
+        {
+            swapped = False;
+            current = pList;
+
+            while( current->next != iterator )
+            {
+                if( current->state == BLOCKED_STATE )
+                {
+                    tempTime = current->timeRemaining;
+                    tempNum = current->processNum;
+                    tempState = current->state;
+                    tempData = current->process;
+                    tempCurrent = current->currentProcess;
+
+                    current->timeRemaining = current->next->timeRemaining;
+                    current->processNum = current->next->processNum;
+                    current->state = current->next->state;
+                    current->process = current->next->process;
+                    current->currentProcess = current->next->currentProcess;
+
+                    current->next->timeRemaining = tempTime;
+                    current->next->processNum = tempNum;
+                    current->next->state = tempState;
+                    current->next->process = tempData;
+                    current->next->currentProcess = tempCurrent;
+
+                    swapped = True;
+                }
+                current = current->next;
+            }
+            iterator = current;
+        }
+        while( swapped == True );
     }
     else if( compareString( schedulingCode, "SJF-N" ) == 0 ||
              compareString( schedulingCode, "SRTF-P" ) == 0 )
