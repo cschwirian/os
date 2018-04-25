@@ -129,8 +129,7 @@ int populateList( ProcessList **pList, MetaDataNode *data,
     return PROCESS_FORMAT_ERROR;
 }
 
-int runProcesses( ProcessList *pList, MetaDataNode *data,
-                  ConfigDictionary *config )
+int runProcesses( ProcessList *pList, ConfigDictionary *config )
 {
     int memoryAvailable, processNum, segment, base, offset, memoryCommand;
     int *timePointer;
@@ -175,15 +174,10 @@ int runProcesses( ProcessList *pList, MetaDataNode *data,
 
         return EMPTY_PROGRAM_ERROR;
     }
-    else if( data == NULL )
-    {
-        clearData( logData );
-
-        return UNKNOWN_ERROR;
-    }
     else if( config == NULL )
     {
         clearData( logData );
+        clearProcessList( pList );
 
         return UNKNOWN_CONFIGURATION_ERROR;
     }
@@ -427,8 +421,7 @@ int runProcesses( ProcessList *pList, MetaDataNode *data,
     return NO_PROCESS_ERROR;
 }
 
-int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
-                            ConfigDictionary *config )
+int runProcessesPreemptive( ProcessList *pList, ConfigDictionary *config )
 {
     int memoryAvailable, processNum, segment, base, offset, memoryCommand;
     int quantum;
@@ -477,13 +470,6 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
 
         return EMPTY_PROGRAM_ERROR;
     }
-    else if( data == NULL )
-    {
-        clearData( logData );
-        clearProcessList( pList );
-
-        return UNKNOWN_ERROR;
-    }
     else if( config == NULL )
     {
         clearData( logData );
@@ -519,6 +505,7 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
         {
             accessTimer( LAP_TIMER, timeString );
             currentTime = stringToFloat( timeString );
+
             currentInterrupt = checkForInterrupt( currentTime, &interruptQueue );
             while( currentInterrupt != NULL )
             {
@@ -678,6 +665,14 @@ int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
                                           logToMonitor, logBuffer );
 
                     pList->currentProcess = pList->currentProcess->next;
+                    
+                    accessTimer( LAP_TIMER, timeString );
+                    sprintf( logBuffer,
+                             "Time: %s, Process %d, run operation start\n",
+                             timeString, processNum );
+
+                    followLogInstruction( logData, logToFile,
+                                          logToMonitor, logBuffer );
                 }
 
                 currentTime = stringToFloat( timeString );

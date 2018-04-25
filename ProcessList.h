@@ -35,12 +35,8 @@ typedef struct ProcessList
 int populateList( ProcessList **pList, MetaDataNode *data,
                   ConfigDictionary *config );
 
-int runProcesses( ProcessList *pList, MetaDataNode *data,
-                  ConfigDictionary *config );
-
-int runProcessesPreemptive( ProcessList *pList, MetaDataNode *data,
-                            ConfigDictionary *config );
-
+int runProcesses( ProcessList *pList, ConfigDictionary *config );
+int runProcessesPreemptive( ProcessList *pList, ConfigDictionary *config );
 ProcessList *addProcess( ProcessList *pList, ProcessList *process );
 ProcessList *sortProcesses( ProcessList *pList, char *schedulingCode );
 ProcessList *getReadyProcess( ProcessList *pList );

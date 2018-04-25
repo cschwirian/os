@@ -81,26 +81,29 @@ int stringToInt( char *string )
 float stringToFloat( char *string )
 {
     int digit;
-    float rez = 0, factor = 1;
-    for( int decimalSeen = 0; *string; string++ )
+    Boolean decimalSeen;
+    float carry = 0, factor = 1;
+    
+    for( decimalSeen = False; *string; string++ )
     {
         if( *string == '.' )
         {
-          decimalSeen = 1;
+          decimalSeen = True;
           continue;
         }
         digit = *string - '0';
 
-        if ( digit >= 0 && digit <= 9 )
+        if( digit >= 0 && digit <= 9 )
         {
-            if ( decimalSeen )
+            if( decimalSeen )
             {
                 factor /= 10.0f;
             }
-            rez = rez * 10.0f + (float)digit;
+            carry = carry * 10.0f + (float)digit;
         }
     }
-    return rez * factor;
+
+    return carry * factor;
 }
 
 #endif
