@@ -52,11 +52,11 @@ int main( int argc, char *argv[] )
 
     if( processCode == NO_PROCESS_ERROR )
     {
-        runProcesses( pList, metaData, config );
+        runProcesses( pList, config );
     }
     else if( processCode == NO_PROCESS_ERROR_P )
     {
-        runProcessesPreemptive( pList, metaData, config );
+        runProcessesPreemptive( pList, config );
     }
 
     free( config );

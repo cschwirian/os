@@ -19,6 +19,8 @@
 
 void addLine( LogData *data, char *line )
 {
+    LogData *current;
+    
     if( data == NULL )
     {
         data = (LogData *)malloc( sizeof( LogData ) );
@@ -27,7 +29,7 @@ void addLine( LogData *data, char *line )
     }
     else
     {
-        LogData *current = data;
+        current = data;
         while( current->next != NULL )
         {
             current = current->next;
