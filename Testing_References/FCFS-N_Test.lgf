@@ -1,0 +1,88 @@
+Time:  0.000000, System Start
+Time:  0.000023, OS: Begin PCB Creation
+Time:  0.000027, OS: All processes initialized in New state
+Time:  0.000031, OS: All proceses now set in Ready state
+Time:  0.000034, OS: FCFS-N strategy selects Process 0 with time 2190 msec
+Time:  0.000039, OS: Process 0 set in Running state
+Time:  0.000042, Process 0, MMU allocate: 0/123/400 start
+Time:  0.000051, Process 0, MMU allocate: Successful
+Time:  0.000066, Process 0, hard drive input start
+Time:  0.660271, Process 0, hard drive input end
+Time:  0.660282, Process 0, hard drive output start
+Time:  1.200361, Process 0, hard drive output end
+Time:  1.200374, Process 0, run operation start
+Time:  1.300449, Process 0, run operation end
+Time:  1.300459, Process 0, MMU access: 0/200/200 start
+Time:  1.300463, Process 0, MMU access: Successful
+Time:  1.300477, Process 0, run operation start
+Time:  1.350546, Process 0, run operation end
+Time:  1.350556, Process 0, keyboard input start
+Time:  1.550632, Process 0, keyboard input end
+Time:  1.550644, Process 0, keyboard input start
+Time:  1.790725, Process 0, keyboard input end
+Time:  1.790736, Process 0, run operation start
+Time:  2.190843, Process 0, run operation end
+Time:  2.190857, Process 0, MMU access: 0/123/100 start
+Time:  2.190860, Process 0, MMU access: Successful
+Time:  2.190863, OS: Process 0 set in Exit state
+Time:  2.190876, OS: FCFS-N strategy selects Process 1 with time 1970 msec
+Time:  2.190878, OS: Process 1 set in Running state
+Time:  2.190880, Process 1, MMU allocate: 0/100/700 start
+Time:  2.190883, Process 1, MMU allocate: Failed
+Time:  2.190884, OS: Process 1, Segmentation Fault - Process Ended
+Time:  2.190887, OS: Process 1 set in Exit state
+Time:  2.190888, OS: FCFS-N strategy selects Process 2 with time 2260 msec
+Time:  2.190891, OS: Process 2 set in Running state
+Time:  2.190894, Process 2, run operation start
+Time:  2.290971, Process 2, run operation end
+Time:  2.290996, Process 2, MMU access: 12/345/678 start
+Time:  2.290998, Process 2, MMU access: Failed
+Time:  2.291000, OS: Process 2, Segmentation Fault - Process Ended
+Time:  2.291003, OS: Process 2 set in Exit state
+Time:  2.291004, OS: FCFS-N strategy selects Process 3 with time 3230 msec
+Time:  2.291017, OS: Process 3 set in Running state
+Time:  2.291019, Process 3, run operation start
+Time:  2.391274, Process 3, run operation end
+Time:  2.391297, Process 3, hard drive input start
+Time:  3.051398, Process 3, hard drive input end
+Time:  3.051423, Process 3, hard drive output start
+Time:  3.591505, Process 3, hard drive output end
+Time:  3.591518, Process 3, run operation start
+Time:  3.691612, Process 3, run operation end
+Time:  3.691638, Process 3, printer output start
+Time:  3.891757, Process 3, printer output end
+Time:  3.891768, Process 3, printer output start
+Time:  4.351877, Process 3, printer output end
+Time:  4.351890, Process 3, run operation start
+Time:  4.521964, Process 3, run operation end
+Time:  4.521988, Process 3, run operation start
+Time:  4.742081, Process 3, run operation end
+Time:  4.742093, Process 3, keyboard input start
+Time:  5.082195, Process 3, keyboard input end
+Time:  5.082209, Process 3, hard drive output start
+Time:  5.522310, Process 3, hard drive output end
+Time:  5.522324, OS: Process 3 set in Exit state
+Time:  5.522326, OS: FCFS-N strategy selects Process 4 with time 2390 msec
+Time:  5.522328, OS: Process 4 set in Running state
+Time:  5.522330, Process 4, printer output start
+Time:  5.922392, Process 4, printer output end
+Time:  5.922423, Process 4, hard drive input start
+Time:  6.362519, Process 4, hard drive input end
+Time:  6.362545, Process 4, hard drive output start
+Time:  6.902661, Process 4, hard drive output end
+Time:  6.902684, Process 4, run operation start
+Time:  7.002779, Process 4, run operation end
+Time:  7.002808, Process 4, MMU allocate: 12/200/200 start
+Time:  7.002811, Process 4, MMU allocate: Successful
+Time:  7.002814, Process 4, run operation start
+Time:  7.122894, Process 4, run operation end
+Time:  7.122918, Process 4, run operation start
+Time:  7.273002, Process 4, run operation end
+Time:  7.273016, Process 4, MMU access: 12/200/100 start
+Time:  7.273019, Process 4, MMU access: Successful
+Time:  7.273021, Process 4, run operation start
+Time:  7.473084, Process 4, run operation end
+Time:  7.473108, Process 4, hard drive input start
+Time:  7.913215, Process 4, hard drive input end
+Time:  7.913241, OS: Process 4 set in Exit state
+Time:  7.913243, System Stop

@@ -1,0 +1,397 @@
+Time:  0.000000, System Start
+Time:  0.000050, OS: Begin PCB Creation
+Time:  0.000058, OS: All processes initialized in New state
+Time:  0.000065, OS: All proceses now set in Ready state
+Time:  0.000073, OS: FCFS-P strategy selects Process 0 with time 2190 msec
+Time:  0.000082, OS: Process 0 set in Running state
+Time:  0.000093, Process 0, MMU allocate: 0/123/400 start
+Time:  0.000105, Process 0, MMU allocate: Successful
+Time:  0.000115, Process 0, hard drive input start
+Time:  0.000125, OS: Process 0 set in Blocked state
+
+Time:  0.000141, OS: FCFS-P strategy selects Process 1 with time 1970 msec
+Time:  0.000151, OS: Process 1 set in Running state
+Time:  0.000160, Process 1, MMU allocate: 0/100/700 start
+Time:  0.000171, Process 1, MMU allocate: Failed
+Time:  0.000180, OS: Process 1, Segmentation Fault - Process Ended
+Time:  0.000190, OS: Process 1 set in Exit state
+
+Time:  0.000202, OS: FCFS-P strategy selects Process 2 with time 2260 msec
+Time:  0.000210, OS: Process 2 set in Running state
+Time:  0.000219, Process 2, run operation start
+Time:  0.050230, OS: Process 2 quantum time out
+Time:  0.050238, OS: Process 2 set in Ready state
+
+Time:  0.050251, OS: FCFS-P strategy selects Process 2 with time 2210 msec
+Time:  0.050253, OS: Process 2 set in Running state
+Time:  0.050254, Process 2, run operation start
+Time:  0.100257, Process 2, run operation end
+Time:  0.100266, OS: Process 2 quantum time out
+Time:  0.100280, OS: Process 2 set in Ready state
+
+Time:  0.100283, OS: FCFS-P strategy selects Process 2 with time 2160 msec
+Time:  0.100286, OS: Process 2 set in Running state
+Time:  0.100288, Process 2, MMU access: 12/345/678 start
+Time:  0.100301, Process 2, MMU access: Failed
+Time:  0.100303, OS: Process 2, Segmentation Fault - Process Ended
+Time:  0.100305, OS: Process 2 set in Exit state
+
+Time:  0.100308, OS: FCFS-P strategy selects Process 3 with time 3230 msec
+Time:  0.100309, OS: Process 3 set in Running state
+Time:  0.100311, Process 3, run operation start
+Time:  0.150314, OS: Process 3 quantum time out
+Time:  0.150322, OS: Process 3 set in Ready state
+
+Time:  0.150335, OS: FCFS-P strategy selects Process 3 with time 3180 msec
+Time:  0.150337, OS: Process 3 set in Running state
+Time:  0.150338, Process 3, run operation start
+Time:  0.200341, Process 3, run operation end
+Time:  0.200349, OS: Process 3 quantum time out
+Time:  0.200360, OS: Process 3 set in Ready state
+
+Time:  0.200363, OS: FCFS-P strategy selects Process 3 with time 3130 msec
+Time:  0.200364, OS: Process 3 set in Running state
+Time:  0.200367, Process 3, hard drive input start
+Time:  0.200370, OS: Process 3 set in Blocked state
+
+Time:  0.200383, OS: FCFS-P strategy selects Process 4 with time 2390 msec
+Time:  0.200385, OS: Process 4 set in Running state
+Time:  0.200388, Process 4, printer output start
+Time:  0.200390, OS: Process 4 set in Blocked state
+
+Time:  0.200393, OS: CPU Idle
+Time:  0.600390, OS: Interrupt, Process 4
+Time:  0.600402, Process 4, printer output end
+Time:  0.600404, OS: Process 4 set in Ready state
+ 
+Time:  0.600406, OS: FCFS-P strategy selects Process 4 with time 1990 msec
+Time:  0.600408, OS: Process 4 set in Running state
+Time:  0.600410, Process 4, hard drive input start
+Time:  0.600412, OS: Process 4 set in Blocked state
+
+Time:  0.600415, OS: CPU Idle
+Time:  0.660125, OS: Interrupt, Process 0
+Time:  0.660135, Process 0, hard drive input end
+Time:  0.660147, OS: Process 0 set in Ready state
+ 
+Time:  0.660150, OS: FCFS-P strategy selects Process 0 with time 1530 msec
+Time:  0.660152, OS: Process 0 set in Running state
+Time:  0.660155, Process 0, hard drive output start
+Time:  0.660169, OS: Process 0 set in Blocked state
+
+Time:  0.660172, OS: CPU Idle
+Time:  0.860371, OS: Interrupt, Process 3
+Time:  0.860378, Process 3, hard drive input end
+Time:  0.860390, OS: Process 3 set in Ready state
+ 
+Time:  0.860392, OS: FCFS-P strategy selects Process 3 with time 2470 msec
+Time:  0.860394, OS: Process 3 set in Running state
+Time:  0.860397, Process 3, hard drive output start
+Time:  0.860412, OS: Process 3 set in Blocked state
+
+Time:  0.860415, OS: CPU Idle
+Time:  1.040413, OS: Interrupt, Process 4
+Time:  1.040421, Process 4, hard drive input end
+Time:  1.040424, OS: Process 4 set in Ready state
+ 
+Time:  1.040438, OS: FCFS-P strategy selects Process 4 with time 1550 msec
+Time:  1.040441, OS: Process 4 set in Running state
+Time:  1.040444, Process 4, hard drive output start
+Time:  1.040448, OS: Process 4 set in Blocked state
+
+Time:  1.040462, OS: CPU Idle
+Time:  1.200168, OS: Interrupt, Process 0
+Time:  1.200176, Process 0, hard drive output end
+Time:  1.200178, OS: Process 0 set in Ready state
+ 
+Time:  1.200180, OS: FCFS-P strategy selects Process 0 with time 990 msec
+Time:  1.200182, OS: Process 0 set in Running state
+Time:  1.200184, Process 0, run operation start
+Time:  1.250186, OS: Process 0 quantum time out
+Time:  1.250196, OS: Process 0 set in Ready state
+
+Time:  1.250200, OS: FCFS-P strategy selects Process 0 with time 940 msec
+Time:  1.250214, OS: Process 0 set in Running state
+Time:  1.250217, Process 0, run operation start
+Time:  1.300220, Process 0, run operation end
+Time:  1.300242, OS: Process 0 quantum time out
+Time:  1.300243, OS: Process 0 set in Ready state
+
+Time:  1.300247, OS: FCFS-P strategy selects Process 0 with time 890 msec
+Time:  1.300260, OS: Process 0 set in Running state
+Time:  1.300263, Process 0, MMU access: 0/200/200 start
+Time:  1.300266, Process 0, MMU access: Successful
+Time:  1.300270, Process 0, run operation start
+Time:  1.350272, Process 0, run operation end
+Time:  1.350291, OS: Process 0 quantum time out
+Time:  1.350293, OS: Process 0 set in Ready state
+
+Time:  1.350296, OS: FCFS-P strategy selects Process 0 with time 840 msec
+Time:  1.350299, OS: Process 0 set in Running state
+Time:  1.350302, Process 0, keyboard input start
+Time:  1.350315, OS: Process 0 set in Blocked state
+
+Time:  1.350318, OS: CPU Idle
+Time:  1.400401, OS: Interrupt, Process 3
+Time:  1.400420, Process 3, hard drive output end
+Time:  1.400422, OS: Process 3 set in Ready state
+ 
+Time:  1.400424, OS: FCFS-P strategy selects Process 3 with time 1930 msec
+Time:  1.400427, OS: Process 3 set in Running state
+Time:  1.400441, Process 3, run operation start
+Time:  1.450444, OS: Process 3 quantum time out
+Time:  1.450463, OS: Process 3 set in Ready state
+
+Time:  1.450465, OS: FCFS-P strategy selects Process 3 with time 1880 msec
+Time:  1.450467, OS: Process 3 set in Running state
+Time:  1.450471, Process 3, run operation start
+Time:  1.500485, Process 3, run operation end
+Time:  1.500504, OS: Process 3 quantum time out
+Time:  1.500506, OS: Process 3 set in Ready state
+
+Time:  1.500508, OS: FCFS-P strategy selects Process 3 with time 1830 msec
+Time:  1.500512, OS: Process 3 set in Running state
+Time:  1.500514, Process 3, printer output start
+Time:  1.500527, OS: Process 3 set in Blocked state
+
+Time:  1.500530, OS: CPU Idle
+Time:  1.550316, OS: Interrupt, Process 0
+Time:  1.550336, Process 0, keyboard input end
+Time:  1.550339, OS: Process 0 set in Ready state
+ 
+Time:  1.550346, OS: FCFS-P strategy selects Process 0 with time 640 msec
+Time:  1.550359, OS: Process 0 set in Running state
+Time:  1.550361, Process 0, keyboard input start
+Time:  1.550364, OS: Process 0 set in Blocked state
+
+Time:  1.550366, OS: CPU Idle
+Time:  1.580448, OS: Interrupt, Process 4
+Time:  1.580466, Process 4, hard drive output end
+Time:  1.580468, OS: Process 4 set in Ready state
+ 
+Time:  1.580470, OS: FCFS-P strategy selects Process 4 with time 1010 msec
+Time:  1.580474, OS: Process 4 set in Running state
+Time:  1.580487, Process 4, run operation start
+Time:  1.630490, OS: Process 4 quantum time out
+Time:  1.630511, OS: Process 4 set in Ready state
+
+Time:  1.630514, OS: FCFS-P strategy selects Process 4 with time 960 msec
+Time:  1.630518, OS: Process 4 set in Running state
+Time:  1.630532, Process 4, run operation start
+Time:  1.680536, Process 4, run operation end
+Time:  1.680556, OS: Process 4 quantum time out
+Time:  1.680558, OS: Process 4 set in Ready state
+
+Time:  1.680562, OS: FCFS-P strategy selects Process 4 with time 910 msec
+Time:  1.680566, OS: Process 4 set in Running state
+Time:  1.680580, Process 4, MMU allocate: 12/200/200 start
+Time:  1.680585, Process 4, MMU allocate: Successful
+Time:  1.680597, Process 4, run operation start
+Time:  1.710601, OS: Interrupt, Process 3
+Time:  1.710621, OS: Process 4 set in Ready state
+Time:  1.710623, Process 3, printer output end
+Time:  1.710625, OS: Process 3 set in Ready state
+
+Time:  1.710630, OS: FCFS-P strategy selects Process 3 with time 1630 msec
+Time:  1.710644, OS: Process 3 set in Running state
+Time:  1.710647, Process 3, printer output start
+Time:  1.710650, OS: Process 3 set in Blocked state
+
+Time:  1.710653, OS: FCFS-P strategy selects Process 4 with time 880 msec
+Time:  1.710656, OS: Process 4 set in Running state
+Time:  1.710659, Process 4, run operation start
+Time:  1.760661, OS: Process 4 quantum time out
+Time:  1.760685, OS: Process 4 set in Ready state
+
+Time:  1.760688, OS: FCFS-P strategy selects Process 4 with time 830 msec
+Time:  1.760702, OS: Process 4 set in Running state
+Time:  1.760705, Process 4, run operation start
+Time:  1.800707, Process 4, run operation end
+Time:  1.800727, OS: Interrupt, Process 0
+Time:  1.800729, OS: Process 4 set in Ready state
+Time:  1.800731, Process 0, keyboard input end
+Time:  1.800735, OS: Process 0 set in Ready state
+
+Time:  1.800749, OS: FCFS-P strategy selects Process 0 with time 400 msec
+Time:  1.800752, OS: Process 0 set in Running state
+Time:  1.800755, Process 0, run operation start
+Time:  1.850758, OS: Process 0 quantum time out
+Time:  1.850777, OS: Process 0 set in Ready state
+
+Time:  1.850780, OS: FCFS-P strategy selects Process 0 with time 350 msec
+Time:  1.850785, OS: Process 0 set in Running state
+Time:  1.850797, Process 0, run operation start
+Time:  1.900800, OS: Process 0 quantum time out
+Time:  1.900820, OS: Process 0 set in Ready state
+
+Time:  1.900823, OS: FCFS-P strategy selects Process 0 with time 300 msec
+Time:  1.900826, OS: Process 0 set in Running state
+Time:  1.900839, Process 0, run operation start
+Time:  1.950842, OS: Process 0 quantum time out
+Time:  1.950860, OS: Process 0 set in Ready state
+
+Time:  1.950863, OS: FCFS-P strategy selects Process 0 with time 250 msec
+Time:  1.950865, OS: Process 0 set in Running state
+Time:  1.950868, Process 0, run operation start
+Time:  2.000881, OS: Process 0 quantum time out
+Time:  2.000899, OS: Process 0 set in Ready state
+
+Time:  2.000902, OS: FCFS-P strategy selects Process 0 with time 200 msec
+Time:  2.000906, OS: Process 0 set in Running state
+Time:  2.000919, Process 0, run operation start
+Time:  2.050922, OS: Process 0 quantum time out
+Time:  2.050940, OS: Process 0 set in Ready state
+
+Time:  2.050943, OS: FCFS-P strategy selects Process 0 with time 150 msec
+Time:  2.050947, OS: Process 0 set in Running state
+Time:  2.050960, Process 0, run operation start
+Time:  2.100966, OS: Process 0 quantum time out
+Time:  2.100984, OS: Process 0 set in Ready state
+
+Time:  2.100987, OS: FCFS-P strategy selects Process 0 with time 100 msec
+Time:  2.100991, OS: Process 0 set in Running state
+Time:  2.101004, Process 0, run operation start
+Time:  2.151007, OS: Process 0 quantum time out
+Time:  2.151025, OS: Process 0 set in Ready state
+
+Time:  2.151029, OS: FCFS-P strategy selects Process 0 with time 50 msec
+Time:  2.151032, OS: Process 0 set in Running state
+Time:  2.151046, Process 0, run operation start
+Time:  2.181050, OS: Interrupt, Process 3
+Time:  2.181077, OS: Process 0 set in Ready state
+Time:  2.181080, Process 3, printer output end
+Time:  2.181084, OS: Process 3 set in Ready state
+
+Time:  2.181104, OS: FCFS-P strategy selects Process 0 with time 20 msec
+Time:  2.181108, OS: Process 0 set in Running state
+Time:  2.181111, Process 0, run operation start
+Time:  2.201114, Process 0, run operation end
+Time:  2.201129, OS: Process 0 set in Exit state
+
+Time:  2.201132, OS: FCFS-P strategy selects Process 3 with time 1170 msec
+Time:  2.201134, OS: Process 3 set in Running state
+Time:  2.201137, Process 3, run operation start
+Time:  2.251151, OS: Process 3 quantum time out
+Time:  2.251172, OS: Process 3 set in Ready state
+
+Time:  2.251175, OS: FCFS-P strategy selects Process 3 with time 1120 msec
+Time:  2.251178, OS: Process 3 set in Running state
+Time:  2.251191, Process 3, run operation start
+Time:  2.301194, OS: Process 3 quantum time out
+Time:  2.301214, OS: Process 3 set in Ready state
+
+Time:  2.301218, OS: FCFS-P strategy selects Process 3 with time 1070 msec
+Time:  2.301222, OS: Process 3 set in Running state
+Time:  2.301235, Process 3, run operation start
+Time:  2.351238, OS: Process 3 quantum time out
+Time:  2.351257, OS: Process 3 set in Ready state
+
+Time:  2.351260, OS: FCFS-P strategy selects Process 3 with time 1020 msec
+Time:  2.351263, OS: Process 3 set in Running state
+Time:  2.351276, Process 3, run operation start
+Time:  2.371284, Process 3, run operation end
+Time:  2.401302, OS: Process 3 quantum time out
+Time:  2.401323, OS: Process 3 set in Ready state
+
+Time:  2.401326, OS: FCFS-P strategy selects Process 3 with time 970 msec
+Time:  2.401330, OS: Process 3 set in Running state
+Time:  2.401344, Process 3, run operation start
+Time:  2.451347, OS: Process 3 quantum time out
+Time:  2.451367, OS: Process 3 set in Ready state
+
+Time:  2.451370, OS: FCFS-P strategy selects Process 3 with time 920 msec
+Time:  2.451374, OS: Process 3 set in Running state
+Time:  2.451388, Process 3, run operation start
+Time:  2.501391, OS: Process 3 quantum time out
+Time:  2.501410, OS: Process 3 set in Ready state
+
+Time:  2.501413, OS: FCFS-P strategy selects Process 3 with time 870 msec
+Time:  2.501418, OS: Process 3 set in Running state
+Time:  2.501431, Process 3, run operation start
+Time:  2.551435, OS: Process 3 quantum time out
+Time:  2.551457, OS: Process 3 set in Ready state
+
+Time:  2.551460, OS: FCFS-P strategy selects Process 3 with time 820 msec
+Time:  2.551465, OS: Process 3 set in Running state
+Time:  2.551479, Process 3, run operation start
+Time:  2.591482, Process 3, run operation end
+Time:  2.591502, Process 3, keyboard input start
+Time:  2.591505, OS: Process 3 set in Blocked state
+
+Time:  2.591510, OS: FCFS-P strategy selects Process 4 with time 790 msec
+Time:  2.591524, OS: Process 4 set in Running state
+Time:  2.591527, Process 4, run operation start
+Time:  2.641530, OS: Process 4 quantum time out
+Time:  2.641554, OS: Process 4 set in Ready state
+
+Time:  2.641560, OS: FCFS-P strategy selects Process 4 with time 740 msec
+Time:  2.641575, OS: Process 4 set in Running state
+Time:  2.641579, Process 4, run operation start
+Time:  2.691583, OS: Process 4 quantum time out
+Time:  2.691605, OS: Process 4 set in Ready state
+
+Time:  2.691610, OS: FCFS-P strategy selects Process 4 with time 690 msec
+Time:  2.691624, OS: Process 4 set in Running state
+Time:  2.691633, Process 4, run operation start
+Time:  2.741637, Process 4, run operation end
+Time:  2.741657, OS: Process 4 quantum time out
+Time:  2.741660, OS: Process 4 set in Ready state
+
+Time:  2.741665, OS: FCFS-P strategy selects Process 4 with time 640 msec
+Time:  2.741681, OS: Process 4 set in Running state
+Time:  2.741684, Process 4, MMU access: 12/200/100 start
+Time:  2.741689, Process 4, MMU access: Successful
+Time:  2.741693, Process 4, run operation start
+Time:  2.791697, OS: Process 4 quantum time out
+Time:  2.791719, OS: Process 4 set in Ready state
+
+Time:  2.791725, OS: FCFS-P strategy selects Process 4 with time 590 msec
+Time:  2.791740, OS: Process 4 set in Running state
+Time:  2.791746, Process 4, run operation start
+Time:  2.841766, OS: Process 4 quantum time out
+Time:  2.841788, OS: Process 4 set in Ready state
+
+Time:  2.841792, OS: FCFS-P strategy selects Process 4 with time 540 msec
+Time:  2.841807, OS: Process 4 set in Running state
+Time:  2.841811, Process 4, run operation start
+Time:  2.891815, OS: Process 4 quantum time out
+Time:  2.891835, OS: Process 4 set in Ready state
+
+Time:  2.891841, OS: FCFS-P strategy selects Process 4 with time 490 msec
+Time:  2.891856, OS: Process 4 set in Running state
+Time:  2.891861, Process 4, run operation start
+Time:  2.941871, Process 4, run operation end
+Time:  2.941891, OS: Interrupt, Process 3
+Time:  2.941895, OS: Process 4 set in Ready state
+Time:  2.941910, Process 3, keyboard input end
+Time:  2.941915, OS: Process 3 set in Ready state
+
+Time:  2.941920, OS: FCFS-P strategy selects Process 3 with time 440 msec
+Time:  2.941924, OS: Process 3 set in Running state
+Time:  2.941927, Process 3, hard drive output start
+Time:  2.941932, OS: Process 3 set in Blocked state
+
+Time:  2.941936, OS: FCFS-P strategy selects Process 4 with time 440 msec
+Time:  2.941940, OS: Process 4 set in Running state
+Time:  2.941944, Process 4, hard drive input start
+Time:  2.941947, OS: Process 4 set in Blocked state
+
+Time:  2.941954, OS: CPU Idle
+Time:  3.381933, OS: Interrupt, Process 3
+Time:  3.381948, Process 3, hard drive output end
+Time:  3.381954, OS: Process 3 set in Ready state
+ 
+Time:  3.381960, OS: FCFS-P strategy selects Process 3 with time 0 msec
+Time:  3.381966, OS: Process 3 set in Running state
+Time:  3.381971, OS: Process 3 set in Exit state
+
+Time:  3.381977, OS: CPU Idle
+Time:  3.381982, OS: Interrupt, Process 4
+Time:  3.381987, Process 4, hard drive input end
+Time:  3.381992, OS: Process 4 set in Ready state
+ 
+Time:  3.381997, OS: FCFS-P strategy selects Process 4 with time 0 msec
+Time:  3.382002, OS: Process 4 set in Running state
+Time:  3.382007, OS: Process 4 set in Exit state
+
+Time:  3.382012, System Stop
