@@ -20,7 +20,7 @@
 void addLine( LogData *data, char *line )
 {
     LogData *current;
-    
+
     if( data == NULL )
     {
         data = (LogData *)malloc( sizeof( LogData ) );
@@ -81,7 +81,7 @@ void logDataToFile( LogData *data, char *fileName )
 {
     FILE *filePointer = fopen( fileName, WRITE_ONLY_FLAG );
 
-    LogData *current = data;
+    LogData *current = data->next;
 
     while( current != NULL )
     {

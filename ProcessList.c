@@ -665,7 +665,7 @@ int runProcessesPreemptive( ProcessList *pList, ConfigDictionary *config )
                                           logToMonitor, logBuffer );
 
                     pList->currentProcess = pList->currentProcess->next;
-                    
+
                     accessTimer( LAP_TIMER, timeString );
                     sprintf( logBuffer,
                              "Time: %s, Process %d, run operation start\n",
