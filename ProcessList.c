@@ -594,8 +594,9 @@ int runProcessesPreemptive( ProcessList *pList, ConfigDictionary *config )
                 followLogInstruction( logData, logToFile,
                                       logToMonitor, logBuffer );
 
-
                 pList->timeRemaining -= pList->currentProcess->commandValue * config->ioCycleTime;
+
+                accessTimer( LAP_TIMER, timeString );
 
                 currentTime = stringToFloat( timeString );
                 addedTime = pList->currentProcess->commandValue * config->ioCycleTime;
@@ -621,6 +622,8 @@ int runProcessesPreemptive( ProcessList *pList, ConfigDictionary *config )
                                       logToMonitor, logBuffer );
 
                 pList->timeRemaining -= pList->currentProcess->commandValue * config->ioCycleTime;
+
+                accessTimer( LAP_TIMER, timeString );
 
                 currentTime = stringToFloat( timeString );
                 addedTime = pList->currentProcess->commandValue * config->ioCycleTime;
@@ -665,14 +668,6 @@ int runProcessesPreemptive( ProcessList *pList, ConfigDictionary *config )
                                           logToMonitor, logBuffer );
 
                     pList->currentProcess = pList->currentProcess->next;
-
-                    accessTimer( LAP_TIMER, timeString );
-                    sprintf( logBuffer,
-                             "Time: %s, Process %d, run operation start\n",
-                             timeString, processNum );
-
-                    followLogInstruction( logData, logToFile,
-                                          logToMonitor, logBuffer );
                 }
 
                 currentTime = stringToFloat( timeString );
@@ -907,6 +902,17 @@ int runProcessesPreemptive( ProcessList *pList, ConfigDictionary *config )
     clearProcessList( originalProcessList );
 
     return NO_PROCESS_ERROR;
+}
+
+void printList( ProcessList *pList )
+{
+    printf("processes: ");
+    while( pList != NULL )
+    {
+        printf( "%d: %d, ", pList->processNum, pList->state );
+        pList = pList->next;
+    }
+    printf("\n");
 }
 
 ProcessList *addProcess( ProcessList *pList, ProcessList *newProcess )

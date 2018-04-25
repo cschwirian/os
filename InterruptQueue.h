@@ -18,8 +18,8 @@ typedef struct Interrupt
 {
     int processNum;
     float endTime;
-    char ioType[ 10 ];
-    char operation[ 10 ];
+    char ioType[ 30 ];
+    char operation[ 30 ];
     struct Interrupt *next;
 } Interrupt;
 

@@ -62,7 +62,7 @@ enum ERROR_MESSAGE_CODES
 enum PROCESS_ERROR_CODES
 {
     NO_PROCESS_ERROR = 10,
-    NO_PROCESS_ERROR_P = 18,            // For preemptive processes.
+    NO_PROCESS_ERROR_P = 18,
     NO_SYSTEM_START = 11,
     NO_SYSTEM_END = 12,
     MISSING_PROCESS_END = 13,

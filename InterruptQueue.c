@@ -46,7 +46,7 @@ Interrupt *addInterrupt( int processNum, float endTime,
     currentInterrupt = queue;
     while( currentInterrupt->next != NULL )
     {
-        if(  endTime < currentInterrupt->next->endTime )
+        if(  endTime <= currentInterrupt->next->endTime )
         {
             temp = currentInterrupt->next;
             currentInterrupt->next = malloc( sizeof( Interrupt ) );
@@ -63,7 +63,7 @@ Interrupt *addInterrupt( int processNum, float endTime,
     }
 
     currentInterrupt->next = malloc( sizeof( Interrupt ) );
-    currentInterrupt->processNum = processNum;
+    currentInterrupt->next->processNum = processNum;
     currentInterrupt->next->endTime = endTime;
     copyString( currentInterrupt->next->ioType, ioType );
     copyString( currentInterrupt->next->operation, operation );
