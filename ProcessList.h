@@ -40,6 +40,7 @@ int runProcessesPreemptive( ProcessList *pList, ConfigDictionary *config );
 ProcessList *addProcess( ProcessList *pList, ProcessList *process );
 ProcessList *sortProcesses( ProcessList *pList, char *schedulingCode );
 ProcessList *getReadyProcess( ProcessList *pList );
+ProcessList *getRunningProcess( ProcessList *pList );
 Boolean isIdle( ProcessList *pList );
 Boolean isExited( ProcessList *pList );
 int getTotalRuntime( MetaDataNode *process, ConfigDictionary *config );

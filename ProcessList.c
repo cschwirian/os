@@ -904,17 +904,6 @@ int runProcessesPreemptive( ProcessList *pList, ConfigDictionary *config )
     return NO_PROCESS_ERROR;
 }
 
-void printList( ProcessList *pList )
-{
-    printf("processes: ");
-    while( pList != NULL )
-    {
-        printf( "%d: %d, ", pList->processNum, pList->state );
-        pList = pList->next;
-    }
-    printf("\n");
-}
-
 ProcessList *addProcess( ProcessList *pList, ProcessList *newProcess )
 {
     if( pList != NULL )
@@ -1039,6 +1028,21 @@ ProcessList *getReadyProcess( ProcessList *pList )
     while( pList != NULL )
     {
         if( pList->state == READY_STATE )
+        {
+            return pList;
+        }
+
+        pList = pList->next;
+    }
+
+    return NULL;
+}
+
+ProcessList *getRunningProcess( ProcessList *pList )
+{
+    while( pList != NULL )
+    {
+        if( pList->state == RUNNING_STATE )
         {
             return pList;
         }
