@@ -62,6 +62,7 @@ enum ERROR_MESSAGE_CODES
 enum PROCESS_ERROR_CODES
 {
     NO_PROCESS_ERROR = 10,
+    NO_PROCESS_ERROR_P = 18,
     NO_SYSTEM_START = 11,
     NO_SYSTEM_END = 12,
     MISSING_PROCESS_END = 13,
@@ -76,11 +77,13 @@ enum PCB_STATES
     NEW_STATE = 0,
     READY_STATE = 1,
     RUNNING_STATE = 2,
-    EXIT_STATE = 3
+    BLOCKED_STATE = 3,
+    EXIT_STATE = 4
 };
 
 void copyString( char *target, char *original );
 int compareString( char *string1, char *string2 );
 int stringToInt( char *string );
+float stringToFloat( char *string );
 
 #endif

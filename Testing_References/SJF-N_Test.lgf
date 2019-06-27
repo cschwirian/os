@@ -1,0 +1,88 @@
+Time:  0.000000, System Start
+Time:  0.000041, OS: Begin PCB Creation
+Time:  0.000048, OS: All processes initialized in New state
+Time:  0.000055, OS: All proceses now set in Ready state
+Time:  0.000061, OS: SJF-N strategy selects Process 1 with time 1970 msec
+Time:  0.000068, OS: Process 1 set in Running state
+Time:  0.000079, Process 1, MMU allocate: 0/100/700 start
+Time:  0.000089, Process 1, MMU allocate: Failed
+Time:  0.000096, OS: Process 1, Segmentation Fault - Process Ended
+Time:  0.000104, OS: Process 1 set in Exit state
+Time:  0.000115, OS: SJF-N strategy selects Process 0 with time 2190 msec
+Time:  0.000124, OS: Process 0 set in Running state
+Time:  0.000132, Process 0, MMU allocate: 0/123/400 start
+Time:  0.000141, Process 0, MMU allocate: Successful
+Time:  0.000149, Process 0, hard drive input start
+Time:  0.660417, Process 0, hard drive input end
+Time:  0.660428, Process 0, hard drive output start
+Time:  1.200486, Process 0, hard drive output end
+Time:  1.200499, Process 0, run operation start
+Time:  1.300590, Process 0, run operation end
+Time:  1.300601, Process 0, MMU access: 0/200/200 start
+Time:  1.300604, Process 0, MMU access: Successful
+Time:  1.300607, Process 0, run operation start
+Time:  1.350677, Process 0, run operation end
+Time:  1.350702, Process 0, keyboard input start
+Time:  1.550815, Process 0, keyboard input end
+Time:  1.550837, Process 0, keyboard input start
+Time:  1.790930, Process 0, keyboard input end
+Time:  1.790941, Process 0, run operation start
+Time:  2.191037, Process 0, run operation end
+Time:  2.191049, Process 0, MMU access: 0/123/100 start
+Time:  2.191069, Process 0, MMU access: Successful
+Time:  2.191072, OS: Process 0 set in Exit state
+Time:  2.191074, OS: SJF-N strategy selects Process 2 with time 2260 msec
+Time:  2.191077, OS: Process 2 set in Running state
+Time:  2.191081, Process 2, run operation start
+Time:  2.291158, Process 2, run operation end
+Time:  2.291183, Process 2, MMU access: 12/345/678 start
+Time:  2.291185, Process 2, MMU access: Failed
+Time:  2.291187, OS: Process 2, Segmentation Fault - Process Ended
+Time:  2.291191, OS: Process 2 set in Exit state
+Time:  2.291201, OS: SJF-N strategy selects Process 4 with time 2390 msec
+Time:  2.291209, OS: Process 4 set in Running state
+Time:  2.291220, Process 4, printer output start
+Time:  2.691265, Process 4, printer output end
+Time:  2.691277, Process 4, hard drive input start
+Time:  3.131396, Process 4, hard drive input end
+Time:  3.131421, Process 4, hard drive output start
+Time:  3.671505, Process 4, hard drive output end
+Time:  3.671519, Process 4, run operation start
+Time:  3.771751, Process 4, run operation end
+Time:  3.771765, Process 4, MMU allocate: 12/200/200 start
+Time:  3.771768, Process 4, MMU allocate: Successful
+Time:  3.771771, Process 4, run operation start
+Time:  3.891846, Process 4, run operation end
+Time:  3.891869, Process 4, run operation start
+Time:  4.041986, Process 4, run operation end
+Time:  4.041998, Process 4, MMU access: 12/200/100 start
+Time:  4.042016, Process 4, MMU access: Successful
+Time:  4.042018, Process 4, run operation start
+Time:  4.242083, Process 4, run operation end
+Time:  4.242109, Process 4, hard drive input start
+Time:  4.682185, Process 4, hard drive input end
+Time:  4.682198, OS: Process 4 set in Exit state
+Time:  4.682202, OS: SJF-N strategy selects Process 3 with time 3230 msec
+Time:  4.682204, OS: Process 3 set in Running state
+Time:  4.682207, Process 3, run operation start
+Time:  4.782281, Process 3, run operation end
+Time:  4.782308, Process 3, hard drive input start
+Time:  5.442374, Process 3, hard drive input end
+Time:  5.442397, Process 3, hard drive output start
+Time:  5.982481, Process 3, hard drive output end
+Time:  5.982506, Process 3, run operation start
+Time:  6.082590, Process 3, run operation end
+Time:  6.082604, Process 3, printer output start
+Time:  6.282845, Process 3, printer output end
+Time:  6.282868, Process 3, printer output start
+Time:  6.742975, Process 3, printer output end
+Time:  6.743001, Process 3, run operation start
+Time:  6.913084, Process 3, run operation end
+Time:  6.913098, Process 3, run operation start
+Time:  7.133205, Process 3, run operation end
+Time:  7.133232, Process 3, keyboard input start
+Time:  7.473363, Process 3, keyboard input end
+Time:  7.473389, Process 3, hard drive output start
+Time:  7.913502, Process 3, hard drive output end
+Time:  7.913529, OS: Process 3 set in Exit state
+Time:  7.913532, System Stop

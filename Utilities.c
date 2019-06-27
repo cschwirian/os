@@ -78,4 +78,32 @@ int stringToInt( char *string )
     return returnVal;
 }
 
+float stringToFloat( char *string )
+{
+    int digit;
+    Boolean decimalSeen;
+    float carry = 0, factor = 1;
+    
+    for( decimalSeen = False; *string; string++ )
+    {
+        if( *string == '.' )
+        {
+          decimalSeen = True;
+          continue;
+        }
+        digit = *string - '0';
+
+        if( digit >= 0 && digit <= 9 )
+        {
+            if( decimalSeen )
+            {
+                factor /= 10.0f;
+            }
+            carry = carry * 10.0f + (float)digit;
+        }
+    }
+
+    return carry * factor;
+}
+
 #endif

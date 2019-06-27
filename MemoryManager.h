@@ -26,7 +26,9 @@ typedef struct MMU
 
 MMU* addSegment( MMU *memory, int segment, int base, int offset, int processNum );
 Boolean isValidAlloc( MMU *memory, int segment, int base, int offset );
-Boolean isValidAccess( MMU *memory, int segment, int base, int offset );
+Boolean isValidAccess( MMU *memory, int segment, int base,
+                       int offset, int processNum );
+                       
 MMU *clearMMU( MMU *memory );
 
 #endif

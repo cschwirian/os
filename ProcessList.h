@@ -19,11 +19,13 @@
 #include "LogData.h"
 #include "MetaDataLinkedList.h"
 #include "ConfigDictionary.h"
+#include "InterruptQueue.h"
 #include "simtimer.h"
 
 typedef struct ProcessList
 {
     MetaDataNode *process;
+	MetaDataNode *currentProcess;
     int state;
     int processNum;
     int timeRemaining;
@@ -33,17 +35,20 @@ typedef struct ProcessList
 int populateList( ProcessList **pList, MetaDataNode *data,
                   ConfigDictionary *config );
 
-int runProcesses( ProcessList *pList, MetaDataNode *data,
-                  ConfigDictionary *config );
-                  
+int runProcesses( ProcessList *pList, ConfigDictionary *config );
+int runProcessesPreemptive( ProcessList *pList, ConfigDictionary *config );
 ProcessList *addProcess( ProcessList *pList, ProcessList *process );
 ProcessList *sortProcesses( ProcessList *pList, char *schedulingCode );
+ProcessList *getReadyProcess( ProcessList *pList );
+ProcessList *getRunningProcess( ProcessList *pList );
+Boolean isIdle( ProcessList *pList );
+Boolean isExited( ProcessList *pList );
 int getTotalRuntime( MetaDataNode *process, ConfigDictionary *config );
 ProcessList *clearProcess( ProcessList *pList );
 ProcessList *clearProcessList( ProcessList *pList );
+void setProcessStates( ProcessList *pList, int state );
 void *runInput( void *time );
 void *runOutput( void *time );
 void *runProcessor( void *time );
-void setProcessStates( ProcessList *pList, int state );
 
 #endif

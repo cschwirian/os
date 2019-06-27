@@ -8,6 +8,12 @@
   * Version 1.0 31/1/2018
   *
   * Version 0.1 (Development) 17/1/2018
+  *
+  * 1. My program manages concurrency with an interrupt queue. This queue
+  *    consists of stored interrupt times. When the timer passes these stored
+  *    times, an interrupt is called.
+  *
+  * 2. Memeory management is included and operational in this simulator.
 **/
 
 #ifndef InputData_C
@@ -46,14 +52,17 @@ int main( int argc, char *argv[] )
 
     if( processCode == NO_PROCESS_ERROR )
     {
-        runProcesses( pList, metaData, config );
+        runProcesses( pList, config );
+    }
+    else if( processCode == NO_PROCESS_ERROR_P )
+    {
+        runProcessesPreemptive( pList, config );
     }
 
     free( config );
     config = NULL;
 
     clearList( metaData );
-    clearProcessList( pList );
 }
 
 #endif
